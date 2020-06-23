@@ -58,17 +58,6 @@ class App extends Component {
     this.customVarieties = [];
   }
 
-  onBoilTimeChanged(e) {
-    const v = parseInt(e.target.value, 10);
-    if (!isNaN(v)) {
-      this.setState({ boilTime: v });
-    }
-  }
-
-  onBrewDateChanged(e) {
-    this.setState({ brewDate: e });
-  }
-
   newSubstitution(baseVariety) {
     return {
       maxAmount: 0.0,
@@ -102,9 +91,15 @@ class App extends Component {
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <TextField
-            label="Boil Time (minutes)"
+            label="Boil Time"
             value={this.state.boilTime}
-            onChange={this.onBoilTimeChanged.bind(this)}
+            onInput={linkState(this, "boilTime")}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">minutes</InputAdornment>
+              ),
+            }}
+            type="number"
           ></TextField>
         </Grid>
         <Grid item xs={6}>
@@ -114,7 +109,7 @@ class App extends Component {
             label="Brew Date"
             format="dd/MM/yyyy"
             value={this.state.brewDate}
-            onChange={this.onBrewDateChanged.bind(this)}
+            onInput={linkState(this, "brewDate")}
             disablePast
           />
         </Grid>
@@ -230,13 +225,17 @@ class App extends Component {
       <Grid container spacing={3} key={`${recipeIndex}_${index}`}>
         <Grid item xs={3}>
           <TextField
-            label="Up to (grams)"
+            label="Up to"
             value={substituteRecord.maxAmount}
             onChange={this.onSubstituteMaxAmountChanged.bind(
               this,
               index,
               recipeIndex
             )}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">gms</InputAdornment>,
+            }}
+            type="number"
           ></TextField>
         </Grid>
         <FormControl>
@@ -256,13 +255,19 @@ class App extends Component {
         </FormControl>
         <Grid item xs={3}>
           <TextField
-            label="Rated Alpha Acid"
+            label="Rated"
             value={substituteRecord.ratedAlphaAcid}
             onChange={this.onSubstituteRatingAAChanged.bind(
               this,
               index,
               recipeIndex
             )}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">% alpha acids</InputAdornment>
+              ),
+            }}
+            type="number"
           ></TextField>
         </Grid>
         <Grid item xs={3}>
@@ -282,16 +287,29 @@ class App extends Component {
           <TextField
             label="Required Amount"
             value={substituteRecord.calculatedRequiredAmount}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">gms</InputAdornment>,
+            }}
           ></TextField>
         </Grid>
         <Grid item xs={3}>
           <TextField
-            label="Age at Brew date (days)"
+            label="Age at Brew date"
             value={substituteRecord.calculatedAge}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">days</InputAdornment>
+              ),
+            }}
           ></TextField>
         </Grid>
         <Grid item xs={3}>
-          <TextField label="Estimated Alpha Acid"></TextField>
+          <TextField
+            label="Estimated Alpha Acid"
+            InputProps={{
+              endAdornment: <InputAdornment position="end">%</InputAdornment>,
+            }}
+          ></TextField>
         </Grid>
         <Grid item xs={3}>
           <TextField
@@ -436,12 +454,14 @@ class App extends Component {
           <CardContent>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                Recipe Amount:
-              </Grid>
-              <Grid item xs={12}>
                 <TextField
-                  id="ibu"
-                  label="IBUs"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">IBUs</InputAdornment>
+                    ),
+                  }}
+                  label="Recipe calls for"
+                  type="number"
                   value={hopRecord.ibu}
                   onChange={this.onIBUChange.bind(this, index)}
                 ></TextField>
@@ -458,8 +478,14 @@ class App extends Component {
                 </FormControl>
                 <TextField
                   id="atminutes"
-                  label="at Minutes"
+                  label="at"
                   value={hopRecord.additionTime}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">minutes</InputAdornment>
+                    ),
+                  }}
+                  type="number"
                 ></TextField>
               </Grid>
               <Grid item xs={4}>
