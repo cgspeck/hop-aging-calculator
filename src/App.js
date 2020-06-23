@@ -22,24 +22,47 @@ import TextField from "@material-ui/core/TextField";
 
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import LuxonUtils from "@date-io/luxon";
-import { DatePicker, TimePicker } from "@material-ui/pickers";
+import { DatePicker } from "@material-ui/pickers";
+import Interval from "luxon/src/interval.js";
+
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+// import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import linkState from "linkstate";
 
 import { DEFAULT_VARIETIES } from "./data";
 
 class App extends Component {
   constructor() {
     super();
-    const boilTime = new Date(0, 0, 0, 1);
     this.state = {
-      boilTime: boilTime,
+      boilTime: 60,
       brewDate: new Date(),
       hopRecords: [],
+      newHopShouldOpen: false,
+      newHopName: "",
+      newHopHSI: 60.0,
+      newHopRecipeIndex: null,
+      newHopSubstitutionIndex: null,
     };
     this.varieties = DEFAULT_VARIETIES;
+    this.customVarieties = [];
   }
 
   onBoilTimeChanged(e) {
-    this.setState({ boilTime: e });
+    const v = parseInt(e.target.value, 10);
+    if (!isNaN(v)) {
+      this.setState({ boilTime: v });
+    }
   }
 
   onBrewDateChanged(e) {
@@ -53,14 +76,13 @@ class App extends Component {
       ratedAlphaAcid: 4.5,
       ratingDate: new Date(),
       calculatedRequiredAmount: 0.0,
+      calculatedAge: 0,
       calculatedEstimatedAA: 0.0,
       calculatedEstimatedIBU: 0.0,
     };
   }
 
   newHopRecord() {
-    // const { boilTime } = this.state;
-    // TODO: convert boil time to minutes and ignore the date part
     return {
       ibu: 0.0,
       variety: this.varieties[0],
@@ -79,16 +101,11 @@ class App extends Component {
     return (
       <Grid container spacing={3}>
         <Grid item xs={6}>
-          <TimePicker
-            clearable
-            ampm={false}
-            label="Boil Time"
-            // minTime="00:20:00"
-            mintime={new Date(0, 0, 0, 8)}
-            maxtime={new Date(0, 0, 0, 18, 45)}
+          <TextField
+            label="Boil Time (minutes)"
             value={this.state.boilTime}
             onChange={this.onBoilTimeChanged.bind(this)}
-          />
+          ></TextField>
         </Grid>
         <Grid item xs={6}>
           {" "}
@@ -103,43 +120,6 @@ class App extends Component {
         </Grid>
         <Grid item xs={12}>
           <AddBox color="primary" onClick={this.onAddHopRecord.bind(this)} />
-        </Grid>
-      </Grid>
-    );
-  }
-
-  demoSubstituteRow() {
-    return (
-      <Grid container spacing={3}>
-        <Grid item xs={3}>
-          <TextField id="sub-variety" label="Up to (grams)"></TextField>
-        </Grid>
-        <Grid item xs={3}>
-          <TextField id="sub-variety" label="Substitute Variety"></TextField>
-        </Grid>
-        <Grid item xs={3}>
-          <TextField id="sub-tested-aa" label="Rated Alpha Acid"></TextField>
-        </Grid>
-        <Grid item xs={3}>
-          <DatePicker
-            id="sub-date"
-            label="Rating Date"
-            format="dd/MM/yyyy"
-            disableFuture
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField label="Requried Amount"></TextField>
-        </Grid>
-        <Grid item xs={4}>
-          <TextField label="Estimated Alpha Acid"></TextField>
-        </Grid>
-        <Grid item xs={4}>
-          <TextField label="Estimated IBU"></TextField>
-        </Grid>
-        <Grid item xs={12}>
-          Less then half of rated alpha acids, you should consider disposing of
-          it.
         </Grid>
       </Grid>
     );
@@ -165,46 +145,164 @@ class App extends Component {
   }
 
   onIBUChange(index, e) {
-    console.log(e);
-    console.log(e.target.value);
-    const value = e.target.value;
-    console.log(index);
+    const value = parseFloat(e.target.value);
+    if (isNaN(value)) {
+      return;
+    }
     var { hopRecords } = this.state;
     hopRecords[index].ibu = value;
     this.setState({ hopRecords });
   }
 
-  substituteTag(substituteRecord, index) {
+  onSubstituteHopChanged(index, recipeIndex, e) {
+    const value = e.target.value;
+    var { hopRecords } = this.state;
+    var hopRecord = hopRecords[recipeIndex];
+    var substituteRecord = hopRecord.substitutions[index];
+    substituteRecord.variety = value;
+    this.setState({ hopRecords });
+  }
+
+  onSubstituteMaxAmountChanged(index, recipeIndex, e) {
+    const value = parseFloat(e.target.value);
+    if (isNaN(value)) {
+      return;
+    }
+    var { hopRecords } = this.state;
+    var hopRecord = hopRecords[recipeIndex];
+    var substituteRecord = hopRecord.substitutions[index];
+    substituteRecord.maxAmount = value;
+    this.setState({ hopRecords });
+  }
+
+  onSubstituteRatingAAChanged(index, recipeIndex, e) {
+    const value = parseFloat(e.target.value);
+    if (isNaN(value)) {
+      return;
+    }
+    var { hopRecords } = this.state;
+    var hopRecord = hopRecords[recipeIndex];
+    var substituteRecord = hopRecord.substitutions[index];
+    substituteRecord.ratedAlphaAcid = value;
+    this.setState({ hopRecords });
+  }
+
+  onSubstituteRatingDateChanged(index, recipeIndex, e) {
+    const value = e;
+    var { hopRecords } = this.state;
+    var hopRecord = hopRecords[recipeIndex];
+    var substituteRecord = hopRecord.substitutions[index];
+    substituteRecord.ratingDate = value;
+    this.setState({ hopRecords });
+    this.calculateSubstitutionValues(index, recipeIndex);
+  }
+
+  calculateSubstitutionValues(index, recipeIndex) {
+    var { hopRecords } = this.state;
+    var hopRecord = hopRecords[recipeIndex];
+    var substituteRecord = hopRecord.substitutions[index];
+    const brewDate = this.state.brewDate;
+    console.log(brewDate);
+    console.log(this.state);
+    const hopsDate = substituteRecord.ratingDate;
+    console.log(hopsDate);
+    const interval = Interval.fromDateTimes(hopsDate, brewDate);
+
+    var calculatedRequiredAmount, calculatedAge, calculatedIBU;
+    console.log(interval);
+    calculatedAge = interval.count("days") - 1;
+
+    if (substituteRecord.maxAmount <= 0) {
+      calculatedRequiredAmount = 0;
+      calculatedIBU = 0;
+    } else {
+    }
+
+    substituteRecord.calculatedRequiredAmount = calculatedRequiredAmount;
+    substituteRecord.calculatedAge = calculatedAge;
+    substituteRecord.calculatedIBU = calculatedIBU;
+    console.log(calculatedAge);
+    this.setState({ hopRecords });
+  }
+
+  substituteTag(substituteRecord, index, recipeIndex) {
     return (
-      <Grid container spacing={3}>
+      <Grid container spacing={3} key={`${recipeIndex}_${index}`}>
         <Grid item xs={3}>
-          <CancelIcon color="secondary" />
-          <TextField id="sub-variety" label="Up to (grams)"></TextField>
+          <TextField
+            label="Up to (grams)"
+            value={substituteRecord.maxAmount}
+            onChange={this.onSubstituteMaxAmountChanged.bind(
+              this,
+              index,
+              recipeIndex
+            )}
+          ></TextField>
         </Grid>
+        <FormControl>
+          <InputLabel>Substitute Variety</InputLabel>
+          <Select
+            value={substituteRecord.variety}
+            onChange={this.onSubstituteHopChanged.bind(
+              this,
+              index,
+              recipeIndex
+            )}
+          >
+            {this.hopVarietySelectCustomItems()}
+            {this.hopVarietySelectCreateNewItem(recipeIndex, index)}
+            {this.hopVarietySelectDefaultItems()}
+          </Select>
+        </FormControl>
         <Grid item xs={3}>
-          <TextField id="sub-variety" label="Substitute Variety"></TextField>
-        </Grid>
-        <Grid item xs={3}>
-          <TextField id="sub-tested-aa" label="Rated Alpha Acid"></TextField>
+          <TextField
+            label="Rated Alpha Acid"
+            value={substituteRecord.ratedAlphaAcid}
+            onChange={this.onSubstituteRatingAAChanged.bind(
+              this,
+              index,
+              recipeIndex
+            )}
+          ></TextField>
         </Grid>
         <Grid item xs={3}>
           <DatePicker
-            id="sub-date"
             label="Rating Date"
             format="dd/MM/yyyy"
+            value={substituteRecord.ratingDate}
+            onChange={this.onSubstituteRatingDateChanged.bind(
+              this,
+              index,
+              recipeIndex
+            )}
             disableFuture
           />
         </Grid>
-        <Grid item xs={4}>
-          <TextField label="Requried Amount"></TextField>
+        <Grid item xs={3}>
+          <TextField
+            label="Required Amount"
+            value={substituteRecord.calculatedRequiredAmount}
+          ></TextField>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
+          <TextField
+            label="Age at Brew date (days)"
+            value={substituteRecord.calculatedAge}
+          ></TextField>
+        </Grid>
+        <Grid item xs={3}>
           <TextField label="Estimated Alpha Acid"></TextField>
         </Grid>
-        <Grid item xs={4}>
-          <TextField label="Estimated IBU"></TextField>
+        <Grid item xs={3}>
+          <TextField
+            label="Estimated IBU"
+            value={substituteRecord.calculatedIBU}
+          ></TextField>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={1}>
+          <CancelIcon />
+        </Grid>
+        <Grid item xs={11}>
           Less then half of rated alpha acids, you should consider disposing of
           it.
         </Grid>
@@ -212,9 +310,128 @@ class App extends Component {
     );
   }
 
+  onNewCustomHopClick(recipeIndex, substitutionIndex) {
+    this.setState({
+      newHopName: "",
+      newHopHSI: 50,
+      newHopShouldOpen: true,
+      newHopRecipeIndex: recipeIndex,
+      newHopSubstitutionIndex: substitutionIndex,
+    });
+  }
+
+  onNewCustomHopDialogCancel() {
+    this.setState({ newHopShouldOpen: false });
+  }
+
+  onNewCustomHopDialogSave() {
+    const newCustomHop = {
+      name: this.state.newHopName,
+      percentLost: this.state.newHopHSI / 100,
+    };
+    this.customVarieties.push(newCustomHop);
+    const { newHopRecipeIndex, newHopSubstitutionIndex } = this.state;
+
+    var hopRecords = this.state.hopRecords;
+
+    if (newHopSubstitutionIndex === null) {
+      hopRecords[newHopRecipeIndex].variety = newCustomHop;
+    } else {
+      hopRecords[newHopRecipeIndex].substitutions[
+        newHopSubstitutionIndex
+      ].variety = newCustomHop;
+    }
+    this.setState({ newHopShouldOpen: false, hopRecords });
+  }
+
+  newCustomHopDialogTags() {
+    return (
+      <Dialog open={this.state.newHopShouldOpen}>
+        <DialogTitle>New Custom Hop</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Name"
+            value={this.state.newHopName}
+            onInput={linkState(this, "newHopName")}
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Hop Storage Index Percentage"
+            value={this.state.newHopHSI}
+            onInput={linkState(this, "newHopHSI")}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">%</InputAdornment>,
+            }}
+            type="number"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={this.onNewCustomHopDialogCancel.bind(this)}
+            color="primary"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={this.onNewCustomHopDialogSave.bind(this)}
+            color="primary"
+          >
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+
+  hopVarietySelectCustomItems() {
+    const varieties = this.customVarieties;
+    return varieties.map((r, i) => (
+      <MenuItem value={r} key={i}>
+        {r.name}
+      </MenuItem>
+    ));
+  }
+
+  hopVarietySelectCreateNewItem(recipeIndex, substitutionIndex) {
+    return (
+      <MenuItem
+        value="newCustomHop"
+        key="newCustomHop"
+        onClick={this.onNewCustomHopClick.bind(
+          this,
+          recipeIndex,
+          substitutionIndex
+        )}
+      >
+        --- New Custom Hop... ---
+      </MenuItem>
+    );
+  }
+
+  hopVarietySelectDefaultItems() {
+    const varieties = DEFAULT_VARIETIES;
+    return varieties.map((r, i) => (
+      <MenuItem value={r} key={i}>
+        {r.name}
+      </MenuItem>
+    ));
+  }
+
+  onRecipeHopChanged(index, e) {
+    const value = e.target.value;
+    var { hopRecords } = this.state;
+    hopRecords[index].variety = value;
+    this.setState({ hopRecords });
+  }
+
   hopRecordTag(hopRecord, index) {
     return (
-      <Grid item xs={12}>
+      <Grid item xs={12} key={index}>
         <Card variant="outlined">
           <CardContent>
             <Grid container spacing={3}>
@@ -228,11 +445,17 @@ class App extends Component {
                   value={hopRecord.ibu}
                   onChange={this.onIBUChange.bind(this, index)}
                 ></TextField>
-                <TextField
-                  id="variety"
-                  label="of Hop Variety"
-                  value={hopRecord.variety.name}
-                ></TextField>
+                <FormControl>
+                  <InputLabel>of hop</InputLabel>
+                  <Select
+                    value={hopRecord.variety}
+                    onChange={this.onRecipeHopChanged.bind(this, index)}
+                  >
+                    {this.hopVarietySelectCustomItems()}
+                    {this.hopVarietySelectCreateNewItem(index, null)}
+                    {this.hopVarietySelectDefaultItems()}
+                  </Select>
+                </FormControl>
                 <TextField
                   id="atminutes"
                   label="at Minutes"
@@ -245,7 +468,9 @@ class App extends Component {
               <Grid item xs={4}>
                 I will substitute:
               </Grid>
-              {hopRecord.substitutions.map((r, i) => this.substituteTag(r, i))}
+              {hopRecord.substitutions.map((r, i) =>
+                this.substituteTag(r, i, index)
+              )}
             </Grid>
           </CardContent>
           <CardActions>
@@ -278,6 +503,7 @@ class App extends Component {
               {this.hopRecordsTags()}
             </Grid>
           </Container>
+          {this.newCustomHopDialogTags()}
         </div>
       </MuiPickersUtilsProvider>
     );
