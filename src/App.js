@@ -40,13 +40,25 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import linkState from "linkstate";
 
 import { DEFAULT_VARIETIES } from "./data";
+import {
+  calculatePostBoilVolume,
+  calculateDilutedGravity,
+  calculateHopUtilisationFactor,
+  calculateRequiredGrams,
+  calculateIBU,
+} from "./util";
 
 class App extends Component {
   constructor() {
     super();
+    this.varieties = DEFAULT_VARIETIES;
     this.state = {
       boilTime: 60,
       brewDate: new Date(),
+      boilVolume: 60,
+      boilOffRate: 11,
+      boilStartGravity: 1.041,
+      boilEndGravity: 1.05,
       hopRecords: [],
       newHopShouldOpen: false,
       newHopName: "",
@@ -54,28 +66,55 @@ class App extends Component {
       newHopRecipeIndex: null,
       newHopSubstitutionIndex: null,
     };
-    this.varieties = DEFAULT_VARIETIES;
+    this.state.hopRecords = [this.newHopRecord()];
+
     this.customVarieties = [];
   }
 
   newSubstitution(baseVariety) {
+    const { brewDate } = this.state;
+
+    // var dateOffset = 24 * 60 * 60 * 1000 * 5; //5 days
+    // var myDate = new Date();
+    // myDate.setTime(myDate.getTime() - dateOffset);
+
+    var ratingDate = new Date();
+    ratingDate.setDate(brewDate.getDate() - 1);
     return {
       maxAmount: 0.0,
       variety: baseVariety,
       ratedAlphaAcid: 4.5,
-      ratingDate: new Date(),
+      ratingDate: ratingDate,
+      storageFactor: 0.5,
+      storageTemperature: -8.0,
       calculatedRequiredAmount: 0.0,
       calculatedAge: 0,
       calculatedEstimatedAA: 0.0,
       calculatedEstimatedIBU: 0.0,
+      calculatedIBU: 0.0,
+      lowAAWarn: false,
     };
   }
 
   newHopRecord() {
+    const {
+      boilVolume,
+      boilStartGravity,
+      boilEndGravity,
+      boilTime,
+    } = this.state;
+    const utilisationFactor = calculateHopUtilisationFactor(
+      boilStartGravity,
+      boilEndGravity,
+      boilTime
+    );
     return {
       ibu: 0.0,
       variety: this.varieties[0],
-      additionTime: "60",
+      additionTime: boilTime,
+      intermediateVolume: boilVolume,
+      intermediateGravity: boilStartGravity,
+      utilisationFactor,
       substitutions: [],
     };
   }
@@ -89,7 +128,18 @@ class App extends Component {
   recipeControls() {
     return (
       <Grid container spacing={3}>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
+          {" "}
+          <DatePicker
+            id="brew-date"
+            label="Brew Date"
+            format="dd/MM/yyyy"
+            value={this.state.brewDate}
+            onInput={linkState(this, "brewDate")}
+            disablePast
+          />
+        </Grid>
+        <Grid item xs={4}>
           <TextField
             label="Boil Time"
             value={this.state.boilTime}
@@ -102,16 +152,53 @@ class App extends Component {
             type="number"
           ></TextField>
         </Grid>
-        <Grid item xs={6}>
-          {" "}
-          <DatePicker
-            id="brew-date"
-            label="Brew Date"
-            format="dd/MM/yyyy"
-            value={this.state.brewDate}
-            onInput={linkState(this, "brewDate")}
-            disablePast
-          />
+        <Grid item xs={4}>
+          <TextField
+            label="Boil Start Gravity"
+            value={this.state.boilStartGravity.toFixed(3)}
+            onInput={linkState(this, "boilStartGravity")}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">SG</InputAdornment>,
+            }}
+            type="number"
+          ></TextField>
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            label="Boil Volume"
+            value={this.state.boilVolume}
+            onInput={linkState(this, "boilVolume")}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">liters</InputAdornment>
+              ),
+            }}
+            type="number"
+          ></TextField>
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            label="Boil Off Rate"
+            value={this.state.boilOffRate}
+            onInput={linkState(this, "boilOffRate")}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">liters/hour</InputAdornment>
+              ),
+            }}
+            type="number"
+          ></TextField>
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            label="Boil End Gravity"
+            value={this.state.boilEndGravity.toFixed(3)}
+            onInput={linkState(this, "boilEndGravity")}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">SG</InputAdornment>,
+            }}
+            type="number"
+          ></TextField>
         </Grid>
         <Grid item xs={12}>
           <AddBox color="primary" onClick={this.onAddHopRecord.bind(this)} />
@@ -156,6 +243,7 @@ class App extends Component {
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.variety = value;
     this.setState({ hopRecords });
+    this.calculateSubstitutionValues(index, recipeIndex);
   }
 
   onSubstituteMaxAmountChanged(index, recipeIndex, e) {
@@ -168,6 +256,7 @@ class App extends Component {
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.maxAmount = value;
     this.setState({ hopRecords });
+    this.calculateSubstitutionValues(index, recipeIndex);
   }
 
   onSubstituteRatingAAChanged(index, recipeIndex, e) {
@@ -180,6 +269,20 @@ class App extends Component {
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.ratedAlphaAcid = value;
     this.setState({ hopRecords });
+    this.calculateSubstitutionValues(index, recipeIndex);
+  }
+
+  onSubstituteStorageTemperatureChanged(index, recipeIndex, e) {
+    const value = parseFloat(e.target.value);
+    if (isNaN(value)) {
+      return;
+    }
+    var { hopRecords } = this.state;
+    var hopRecord = hopRecords[recipeIndex];
+    var substituteRecord = hopRecord.substitutions[index];
+    substituteRecord.storageTemperature = value;
+    this.setState({ hopRecords });
+    this.calculateSubstitutionValues(index, recipeIndex);
   }
 
   onSubstituteRatingDateChanged(index, recipeIndex, e) {
@@ -192,32 +295,101 @@ class App extends Component {
     this.calculateSubstitutionValues(index, recipeIndex);
   }
 
+  onSubstituteStorageFactorChanged(index, recipeIndex, e) {
+    const value = e.target.value;
+    var { hopRecords } = this.state;
+    var hopRecord = hopRecords[recipeIndex];
+    var substituteRecord = hopRecord.substitutions[index];
+    substituteRecord.storageFactor = value;
+    this.setState({ hopRecords });
+    this.calculateSubstitutionValues(index, recipeIndex);
+  }
+
   calculateSubstitutionValues(index, recipeIndex) {
     var { hopRecords } = this.state;
     var hopRecord = hopRecords[recipeIndex];
     var substituteRecord = hopRecord.substitutions[index];
     const brewDate = this.state.brewDate;
-    console.log(brewDate);
-    console.log(this.state);
-    const hopsDate = substituteRecord.ratingDate;
-    console.log(hopsDate);
-    const interval = Interval.fromDateTimes(hopsDate, brewDate);
+    const {
+      ratedAlphaAcid,
+      ratingDate,
+      storageTemperature,
+      storageFactor,
+      maxAmount,
+    } = substituteRecord;
+    const interval = Interval.fromDateTimes(ratingDate, brewDate);
 
-    var calculatedRequiredAmount, calculatedAge, calculatedIBU;
-    console.log(interval);
+    var calculatedRequiredAmount = 0;
+    var calculatedAge, calculatedIBU, calculatedEstimatedAA;
     calculatedAge = interval.count("days") - 1;
+    // https://mathbitsnotebook.com/Algebra1/FunctionGraphs/FNGTypeExponential.html
+    // Math.pow(1 - 0.045, 20 - storageTemperature);
+    const temperatureFactor = Math.pow(1 - 0.045, 20 - storageTemperature);
+    // A O = (A N *100)/(100*%Lost)
+    // k = (lnA o - lnA N )/180
+    const { percentLost } = substituteRecord.variety;
+    const invPercentLost = Math.abs(1.0 - percentLost);
+    const An = 1.3;
+    const A0 = (An * 100) / (100 * invPercentLost);
+    const rateConstant = (Math.log(A0) - Math.log(An)) / 180;
+    // future alpha = A*1/e(k*TF*SF*Days)
+    calculatedEstimatedAA =
+      (ratedAlphaAcid * 1) /
+      Math.exp(
+        rateConstant * temperatureFactor * storageFactor * calculatedAge
+      );
 
-    if (substituteRecord.maxAmount <= 0) {
+    if (calculatedEstimatedAA < ratedAlphaAcid / 2) {
+      substituteRecord.lowAAWarn = true;
+    }
+
+    if (maxAmount <= 0) {
       calculatedRequiredAmount = 0;
       calculatedIBU = 0;
     } else {
+      const {
+        intermediateVolume,
+        intermediateGravity,
+        utilisationFactor,
+        ibu,
+      } = hopRecord;
+      calculatedRequiredAmount = calculateRequiredGrams(
+        intermediateVolume,
+        intermediateGravity,
+        ibu,
+        calculatedEstimatedAA,
+        utilisationFactor
+      );
+
+      if (calculatedRequiredAmount > maxAmount) {
+        calculatedRequiredAmount = maxAmount;
+      }
+
+      calculatedIBU = calculateIBU(
+        calculatedRequiredAmount,
+        utilisationFactor,
+        calculatedEstimatedAA,
+        intermediateVolume,
+        intermediateGravity
+      );
     }
 
     substituteRecord.calculatedRequiredAmount = calculatedRequiredAmount;
     substituteRecord.calculatedAge = calculatedAge;
     substituteRecord.calculatedIBU = calculatedIBU;
-    console.log(calculatedAge);
+    substituteRecord.calculatedEstimatedAA = calculatedEstimatedAA;
+
     this.setState({ hopRecords });
+  }
+
+  lowAAWarningMessage(substituteRecord) {
+    if (substituteRecord.lowAAWarn === true)
+      return (
+        <div>
+          Less then half of rated alpha acids, you should consider disposing of
+          it.
+        </div>
+      );
   }
 
   substituteTag(substituteRecord, index, recipeIndex) {
@@ -238,21 +410,23 @@ class App extends Component {
             type="number"
           ></TextField>
         </Grid>
-        <FormControl>
-          <InputLabel>Substitute Variety</InputLabel>
-          <Select
-            value={substituteRecord.variety}
-            onChange={this.onSubstituteHopChanged.bind(
-              this,
-              index,
-              recipeIndex
-            )}
-          >
-            {this.hopVarietySelectCustomItems()}
-            {this.hopVarietySelectCreateNewItem(recipeIndex, index)}
-            {this.hopVarietySelectDefaultItems()}
-          </Select>
-        </FormControl>
+        <Grid item xs={3}>
+          <FormControl>
+            <InputLabel>Substitute Variety</InputLabel>
+            <Select
+              value={substituteRecord.variety}
+              onChange={this.onSubstituteHopChanged.bind(
+                this,
+                index,
+                recipeIndex
+              )}
+            >
+              {this.hopVarietySelectCustomItems()}
+              {this.hopVarietySelectCreateNewItem(recipeIndex, index)}
+              {this.hopVarietySelectDefaultItems()}
+            </Select>
+          </FormControl>
+        </Grid>
         <Grid item xs={3}>
           <TextField
             label="Rated"
@@ -283,10 +457,48 @@ class App extends Component {
             disableFuture
           />
         </Grid>
+        <Grid item xs={6}>
+          <Select
+            value={substituteRecord.storageFactor}
+            label="Storage conditions"
+            onChange={this.onSubstituteStorageFactorChanged.bind(
+              this,
+              index,
+              recipeIndex
+            )}
+          >
+            <MenuItem value={0.5} key="0">
+              Sealed under vacuum or inert atmosphere
+            </MenuItem>
+            <MenuItem value={0.75} key="1">
+              Sealed but not free from oxygen
+            </MenuItem>
+            <MenuItem value={1.0} key="2">
+              Not sealed or sealed in poly bags
+            </MenuItem>
+          </Select>
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            label="Storage Temperature"
+            value={substituteRecord.storageTemperature}
+            onChange={this.onSubstituteStorageTemperatureChanged.bind(
+              this,
+              index,
+              recipeIndex
+            )}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">&deg;c</InputAdornment>
+              ),
+            }}
+            type="number"
+          ></TextField>
+        </Grid>
         <Grid item xs={3}>
           <TextField
             label="Required Amount"
-            value={substituteRecord.calculatedRequiredAmount}
+            value={substituteRecord.calculatedRequiredAmount.toFixed(1)}
             InputProps={{
               endAdornment: <InputAdornment position="end">gms</InputAdornment>,
             }}
@@ -309,20 +521,20 @@ class App extends Component {
             InputProps={{
               endAdornment: <InputAdornment position="end">%</InputAdornment>,
             }}
+            value={substituteRecord.calculatedEstimatedAA.toFixed(1)}
           ></TextField>
         </Grid>
         <Grid item xs={3}>
           <TextField
             label="Estimated IBU"
-            value={substituteRecord.calculatedIBU}
+            value={substituteRecord.calculatedIBU.toFixed(1)}
           ></TextField>
         </Grid>
         <Grid item xs={1}>
           <CancelIcon />
         </Grid>
         <Grid item xs={11}>
-          Less then half of rated alpha acids, you should consider disposing of
-          it.
+          {this.lowAAWarningMessage(substituteRecord)}
         </Grid>
       </Grid>
     );
@@ -447,13 +659,64 @@ class App extends Component {
     this.setState({ hopRecords });
   }
 
+  onAdditionTimeChange(index, e) {
+    const value = parseInt(e.target.value, 10);
+    if (isNaN(value)) {
+      return;
+    }
+
+    const {
+      boilTime,
+      boilVolume,
+      boilStartGravity,
+      boilEndGravity,
+      boilOffRate,
+    } = this.state;
+    if (value > boilTime) {
+      return;
+    }
+
+    if (value < 0) {
+      return;
+    }
+    const { hopRecords } = this.state;
+    var additionRecord = hopRecords[index];
+    additionRecord.additionTime = value;
+
+    const { additionTime } = additionRecord;
+
+    const intermediateVolume = calculatePostBoilVolume(
+      boilVolume,
+      boilOffRate,
+      boilTime - additionTime
+    );
+    additionRecord.intermediateVolume = intermediateVolume;
+
+    const intermediateGravity = calculateDilutedGravity(
+      boilVolume,
+      boilStartGravity,
+      intermediateVolume
+    );
+    additionRecord.intermediateGravity = intermediateGravity;
+
+    const utilisationFactor = calculateHopUtilisationFactor(
+      boilStartGravity,
+      boilEndGravity,
+      boilTime
+    );
+
+    additionRecord.utilisationFactor = utilisationFactor;
+
+    this.setState({ hopRecords });
+  }
+
   hopRecordTag(hopRecord, index) {
     return (
       <Grid item xs={12} key={index}>
         <Card variant="outlined">
           <CardContent>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+              <Grid item xs={3}>
                 <TextField
                   InputProps={{
                     endAdornment: (
@@ -465,6 +728,8 @@ class App extends Component {
                   value={hopRecord.ibu}
                   onChange={this.onIBUChange.bind(this, index)}
                 ></TextField>
+              </Grid>
+              <Grid item xs={3}>
                 <FormControl>
                   <InputLabel>of hop</InputLabel>
                   <Select
@@ -476,8 +741,9 @@ class App extends Component {
                     {this.hopVarietySelectDefaultItems()}
                   </Select>
                 </FormControl>
+              </Grid>
+              <Grid item xs={3}>
                 <TextField
-                  id="atminutes"
                   label="at"
                   value={hopRecord.additionTime}
                   InputProps={{
@@ -486,6 +752,18 @@ class App extends Component {
                     ),
                   }}
                   type="number"
+                  onChange={this.onAdditionTimeChange.bind(this, index)}
+                ></TextField>
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  label="Intermediate Gravity"
+                  value={hopRecord.intermediateGravity.toFixed(3)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">SG</InputAdornment>
+                    ),
+                  }}
                 ></TextField>
               </Grid>
               <Grid item xs={4}>
