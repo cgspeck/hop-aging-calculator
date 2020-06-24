@@ -16,6 +16,8 @@ import AddBox from "@material-ui/icons/AddBox";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import CancelIcon from "@material-ui/icons/Cancel";
+import Check from "@material-ui/icons/Check";
+import Warning from "@material-ui/icons/Warning";
 
 import TextField from "@material-ui/core/TextField";
 // import InputAdornment from "@material-ui/core/InputAdornment";
@@ -90,7 +92,6 @@ class App extends Component {
       calculatedRequiredAmount: 0.0,
       calculatedAge: 0,
       calculatedEstimatedAA: 0.0,
-      calculatedEstimatedIBU: 0.0,
       calculatedIBU: 0.0,
       lowAAWarn: false,
     };
@@ -116,6 +117,7 @@ class App extends Component {
       intermediateGravity: boilStartGravity,
       utilisationFactor,
       substitutions: [],
+      ibuRequirementSatisfied: true,
     };
   }
 
@@ -135,7 +137,7 @@ class App extends Component {
             label="Brew Date"
             format="dd/MM/yyyy"
             value={this.state.brewDate}
-            onInput={linkState(this, "brewDate")}
+            onChange={linkState(this, "brewDate")}
             disablePast
           />
         </Grid>
@@ -352,11 +354,28 @@ class App extends Component {
         intermediateGravity,
         utilisationFactor,
         ibu,
+        ibuRequirementSatisfied,
       } = hopRecord;
+
+      var calcIBURequirementSatisifed = ibuRequirementSatisfied;
+      // clip wanted ibu to total of this hop addition
+      const existingIBUs = hopRecord.substitutions.reduce((acc, cur, idx) => {
+        if (idx === index) {
+          return acc + 0;
+        } else {
+          return acc + cur.calculatedIBU;
+        }
+      }, 0);
+      const wantedIBU = ibu - existingIBUs;
+
+      if (wantedIBU < 0) {
+        wantedIBU = 0;
+      }
+
       calculatedRequiredAmount = calculateRequiredGrams(
         intermediateVolume,
         intermediateGravity,
-        ibu,
+        wantedIBU,
         calculatedEstimatedAA,
         utilisationFactor
       );
@@ -372,12 +391,17 @@ class App extends Component {
         intermediateVolume,
         intermediateGravity
       );
+
+      if (calculatedIBU === wantedIBU) {
+        calcIBURequirementSatisifed = true;
+      }
     }
 
     substituteRecord.calculatedRequiredAmount = calculatedRequiredAmount;
     substituteRecord.calculatedAge = calculatedAge;
     substituteRecord.calculatedIBU = calculatedIBU;
     substituteRecord.calculatedEstimatedAA = calculatedEstimatedAA;
+    hopRecord.ibuRequirementSatisfied = calcIBURequirementSatisifed;
 
     this.setState({ hopRecords });
   }
@@ -710,7 +734,17 @@ class App extends Component {
     this.setState({ hopRecords });
   }
 
+  hopAdditionIBUStatusTag(ibuRequirementSatisfied) {
+    if (ibuRequirementSatisfied === true) {
+      return <Check></Check>;
+    } else {
+      return <Warning></Warning>;
+    }
+  }
+
   hopRecordTag(hopRecord, index) {
+    const { ibuRequirementSatisfied } = hopRecord;
+
     return (
       <Grid item xs={12} key={index}>
         <Card variant="outlined">
@@ -728,6 +762,7 @@ class App extends Component {
                   value={hopRecord.ibu}
                   onChange={this.onIBUChange.bind(this, index)}
                 ></TextField>
+                {this.hopAdditionIBUStatusTag(ibuRequirementSatisfied)}
               </Grid>
               <Grid item xs={3}>
                 <FormControl>
@@ -801,7 +836,7 @@ class App extends Component {
       <MuiPickersUtilsProvider utils={LuxonUtils}>
         <div className="App">
           <Container>
-            Hop Aging Calculator
+            <h1>Hop Aging Calculator</h1>
             <Grid container spacing={1}>
               {this.recipeControls()}
               {this.hopRecordsTags()}
