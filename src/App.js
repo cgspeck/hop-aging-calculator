@@ -228,88 +228,104 @@ class App extends Component {
     });
   }
 
-  onIBUChange(index, e) {
+  calculateSubstitutionValuesFromHopAddition(hopRecordIndex) {
+    var { hopRecords } = this.state;
+    const hopRecord = hopRecords[hopRecordIndex];
+    if (hopRecord.substitutions.length > 0) {
+      this.calculateSubstitutionValues(0, hopRecordIndex);
+    } else {
+      const ibu = hopRecord.ibu;
+      hopRecords[hopRecordIndex].ibuRequirementSatisfied =
+        ibu > 0 ? false : true;
+    }
+    this.setState({
+      hopRecords,
+    });
+  }
+
+  onIBUChange(hopRecordIndex, e) {
     const value = parseFloat(e.target.value);
     if (isNaN(value)) {
       return;
     }
     var { hopRecords } = this.state;
-    hopRecords[index].ibu = value;
+    hopRecords[hopRecordIndex].ibu = value;
     this.setState({ hopRecords });
+    this.calculateSubstitutionValuesFromHopAddition(hopRecordIndex);
   }
 
-  onSubstituteHopChanged(index, recipeIndex, e) {
+  onSubstituteHopChanged(index, hopRecordIndex, e) {
     const value = e.target.value;
     var { hopRecords } = this.state;
-    var hopRecord = hopRecords[recipeIndex];
+    var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.variety = value;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, recipeIndex);
+    this.calculateSubstitutionValues(index, hopRecordIndex);
   }
 
-  onSubstituteMaxAmountChanged(index, recipeIndex, e) {
+  onSubstituteMaxAmountChanged(index, hopRecordIndex, e) {
     const value = parseFloat(e.target.value);
     if (isNaN(value)) {
       return;
     }
     var { hopRecords } = this.state;
-    var hopRecord = hopRecords[recipeIndex];
+    var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.maxAmount = value;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, recipeIndex);
+    this.calculateSubstitutionValues(index, hopRecordIndex);
   }
 
-  onSubstituteRatingAAChanged(index, recipeIndex, e) {
+  onSubstituteRatingAAChanged(index, hopRecordIndex, e) {
     const value = parseFloat(e.target.value);
     if (isNaN(value)) {
       return;
     }
     var { hopRecords } = this.state;
-    var hopRecord = hopRecords[recipeIndex];
+    var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.ratedAlphaAcid = value;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, recipeIndex);
+    this.calculateSubstitutionValues(index, hopRecordIndex);
   }
 
-  onSubstituteStorageTemperatureChanged(index, recipeIndex, e) {
+  onSubstituteStorageTemperatureChanged(index, hopRecordIndex, e) {
     const value = parseFloat(e.target.value);
     if (isNaN(value)) {
       return;
     }
     var { hopRecords } = this.state;
-    var hopRecord = hopRecords[recipeIndex];
+    var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.storageTemperature = value;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, recipeIndex);
+    this.calculateSubstitutionValues(index, hopRecordIndex);
   }
 
-  onSubstituteRatingDateChanged(index, recipeIndex, e) {
+  onSubstituteRatingDateChanged(index, hopRecordIndex, e) {
     const value = e;
     var { hopRecords } = this.state;
-    var hopRecord = hopRecords[recipeIndex];
+    var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.ratingDate = value;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, recipeIndex);
+    this.calculateSubstitutionValues(index, hopRecordIndex);
   }
 
-  onSubstituteStorageFactorChanged(index, recipeIndex, e) {
+  onSubstituteStorageFactorChanged(index, hopRecordIndex, e) {
     const value = e.target.value;
     var { hopRecords } = this.state;
-    var hopRecord = hopRecords[recipeIndex];
+    var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.storageFactor = value;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, recipeIndex);
+    this.calculateSubstitutionValues(index, hopRecordIndex);
   }
 
-  calculateSubstitutionValues(index, recipeIndex) {
+  calculateSubstitutionValues(index, hopRecordIndex) {
     var { hopRecords } = this.state;
-    var hopRecord = hopRecords[recipeIndex];
+    var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
     const brewDate = this.state.brewDate;
     const {
@@ -357,7 +373,7 @@ class App extends Component {
         ibuRequirementSatisfied,
       } = hopRecord;
 
-      var calcIBURequirementSatisifed = ibuRequirementSatisfied;
+      var calcIBURequirementSatisifed = false;
       // clip wanted ibu to total of this hop addition
       const existingIBUs = hopRecord.substitutions.reduce((acc, cur, idx) => {
         if (idx === index) {
