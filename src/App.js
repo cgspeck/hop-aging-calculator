@@ -153,7 +153,7 @@ class App extends Component {
   recipeControls() {
     return (
       <Grid container spacing={3}>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           {" "}
           <DatePicker
             id="brew-date"
@@ -164,7 +164,7 @@ class App extends Component {
             disablePast
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <TextField
             label="Boil Time"
             value={this.state.boilTime}
@@ -177,7 +177,7 @@ class App extends Component {
             type="number"
           ></TextField>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <TextField
             label="Boil Start Gravity"
             value={this.state.boilStartGravity.toFixed(3)}
@@ -188,7 +188,7 @@ class App extends Component {
             type="number"
           ></TextField>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <TextField
             label="Boil Volume"
             value={this.state.boilVolume}
@@ -201,7 +201,7 @@ class App extends Component {
             type="number"
           ></TextField>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <TextField
             label="Boil Off Rate"
             value={this.state.boilOffRate}
@@ -214,7 +214,7 @@ class App extends Component {
             type="number"
           ></TextField>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <TextField
             label="Boil End Gravity"
             value={this.state.boilEndGravity.toFixed(3)}
@@ -486,8 +486,8 @@ class App extends Component {
         className="SubstituteCard"
         key={`${recipeIndex}_${index}`}
       >
-        <Grid container spacing={3}>
-          <Grid item xs={1}>
+        <Grid container spacing={1}>
+          <Grid item xs={1} md={1}>
             <CancelIcon
               onClick={this.onDeleteSubstituteRecord.bind(
                 this,
@@ -498,7 +498,7 @@ class App extends Component {
               color="secondary"
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={11} md={1}>
             <TextField
               label="Up to"
               value={substituteRecord.maxAmount}
@@ -515,7 +515,7 @@ class App extends Component {
               type="number"
             ></TextField>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <FormControl>
               <InputLabel>Substitute Variety</InputLabel>
               <Select
@@ -532,7 +532,7 @@ class App extends Component {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={12} md={2}>
             <TextField
               label="Rated"
               value={substituteRecord.ratedAlphaAcid}
@@ -549,7 +549,7 @@ class App extends Component {
               type="number"
             ></TextField>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <DatePicker
               label="Rating Date"
               format="dd/MM/yyyy"
@@ -562,7 +562,7 @@ class App extends Component {
               disableFuture
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Select
               value={substituteRecord.storageFactor}
               label="Storage conditions"
@@ -583,7 +583,7 @@ class App extends Component {
               </MenuItem>
             </Select>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <TextField
               label="Storage Temperature"
               value={substituteRecord.storageTemperature}
@@ -600,7 +600,7 @@ class App extends Component {
               type="number"
             ></TextField>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <TextField
               label="Required Amount"
               value={substituteRecord.calculatedRequiredAmount.toFixed(1)}
@@ -611,7 +611,7 @@ class App extends Component {
               }}
             ></TextField>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <TextField
               label="Age at Brew date"
               value={substituteRecord.calculatedAge}
@@ -622,7 +622,7 @@ class App extends Component {
               }}
             ></TextField>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <TextField
               label="Estimated Alpha Acid"
               InputProps={{
@@ -631,7 +631,7 @@ class App extends Component {
               value={substituteRecord.calculatedEstimatedAA.toFixed(1)}
             ></TextField>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <TextField
               label="Estimated IBU"
               value={substituteRecord.calculatedIBU.toFixed(1)}
@@ -833,8 +833,8 @@ class App extends Component {
         <Card variant="outlined">
           <h2>Hop addition {index + 1}</h2>
           <CardContent>
-            <Grid container spacing={3}>
-              <Grid item xs={3}>
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={3}>
                 <TextField
                   InputProps={{
                     endAdornment: (
@@ -848,7 +848,7 @@ class App extends Component {
                 ></TextField>
                 {this.hopAdditionIBUStatusTag(ibuRequirementSatisfied)}
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={12} md={3}>
                 <FormControl>
                   <InputLabel>of hop</InputLabel>
                   <Select
@@ -861,7 +861,7 @@ class App extends Component {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={12} md={3}>
                 <TextField
                   label="at"
                   value={hopRecord.additionTime}
@@ -874,7 +874,7 @@ class App extends Component {
                   onChange={this.onAdditionTimeChange.bind(this, index)}
                 ></TextField>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={12} md={3}>
                 <TextField
                   label="Intermediate Gravity"
                   value={hopRecord.intermediateGravity.toFixed(3)}
@@ -885,7 +885,7 @@ class App extends Component {
                   }}
                 ></TextField>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} md={4}>
                 <Button
                   onClick={this.onAddHopSubstitution.bind(this, index)}
                   color="primary"
@@ -894,7 +894,7 @@ class App extends Component {
                   Add Substitution
                 </Button>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} md={4}>
                 I will substitute:
               </Grid>
               {hopRecord.substitutions.map((r, i) =>
@@ -957,9 +957,9 @@ class App extends Component {
             </a>
 
             <p>
-              Want instructions or to know how this works?{" "}
+              Want instructions or more information? <br />
               <a href="https://github.com/cgspeck/hop-aging-calculator#how-to-use">
-                click here.
+                Click here.
               </a>
             </p>
 

@@ -48,6 +48,8 @@ If you have any feedback or questions about this tool you may open an Issue or P
 
 [Glenn's Hop Utilization Numbers](https://www.realbeer.com/hops/research.html).
 
+Hop Cone Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [Flaticon](https://www.flaticon.com/) and converted using [Favicon.io](https://favicon.io/favicon-converter/).
+
 ## License
 
 Licensed under the The GNU Affero General Public License, full text [here](./LICENSE).
