@@ -923,7 +923,13 @@ class App extends Component {
         <div className="App">
           <Container>
             <h1>Hop Aging Calculator</h1>
-            <p>By Chris Speck</p>
+            <p>
+              &copy; Chris Speck and licensed under the{" "}
+              <a href="https://spdx.org/licenses/AGPL-3.0-or-later.html">
+                AGPL-3.0-or-later license
+              </a>
+              , use at your own risk.
+            </p>
 
             <a href="https://www.chrisspeck.com" className="IconLink">
               <IconButton>
