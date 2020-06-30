@@ -14,11 +14,11 @@ jobs:
       -
         name: Install dependencies
         run: yarn install
-
+      -
         name: Build the App
         if: success()
         run: yarn build
-        
+      - 
         name: Deploy to GitHub Pages
         if: success()
         uses: crazy-max/ghaction-github-pages@v2
