@@ -57,11 +57,12 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-// import DialogContentText from "@material-ui/core/DialogContentText";
+
 import DialogTitle from "@material-ui/core/DialogTitle";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import linkState from "linkstate";
-import cloneDeep from "lodash.clonedeep";
+
+import clone from "lodash.clone";
 
 import { DEFAULT_VARIETIES } from "./data";
 import {
@@ -247,7 +248,7 @@ class App extends Component {
 
   onCloneHopAddition(index) {
     var { hopRecords } = this.state;
-    var newAdditionRecord = cloneDeep(hopRecords[index]);
+    var newAdditionRecord = clone(hopRecords[index]);
     hopRecords.push(newAdditionRecord);
     this.setState({
       hopRecords,
