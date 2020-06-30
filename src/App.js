@@ -480,8 +480,12 @@ class App extends Component {
 
   substituteTag(substituteRecord, index, recipeIndex) {
     return (
-      <Card variant="outlined" className="SubstituteCard">
-        <Grid container spacing={3} key={`${recipeIndex}_${index}`}>
+      <Card
+        variant="outlined"
+        className="SubstituteCard"
+        key={`${recipeIndex}_${index}`}
+      >
+        <Grid container spacing={3}>
           <Grid item xs={1}>
             <CancelIcon
               onClick={this.onDeleteSubstituteRecord.bind(
