@@ -27,3 +27,27 @@
 .App-link {
   color: #61dafb;
 }
+
+.SubstutionCancelIcon {
+  margin-top: 1em;
+}
+
+.SubstituteCard {
+  margin-bottom: 1em;
+}
+
+.IconLink {
+  margin: 1em 1em 0 0;
+}
+
+.IBUSatisifed {
+  color: green;
+}
+
+.IBUUnsatisifed {
+  color: red;
+}
+
+.LowAAAlert {
+  color: red;
+}
