@@ -660,9 +660,11 @@ class App extends Component {
   }
 
   onNewCustomHopDialogSave() {
+    const hsi = this.state.newHopHSI / 100;
+    const percentLost = Math.log(hsi / 0.25) * 110;
     const newCustomHop = {
       name: this.state.newHopName,
-      percentLost: this.state.newHopHSI / 100,
+      percentLost,
     };
     this.customVarieties.push(newCustomHop);
     const { newHopRecipeIndex, newHopSubstitutionIndex } = this.state;
@@ -947,6 +949,7 @@ class App extends Component {
                 <GitHubIcon />
               </IconButton>
             </a>
+
             <a href="https://www.linkedin.com/in/cgspeck/" className="IconLink">
               <IconButton>
                 <LinkedInIcon />
