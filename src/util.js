@@ -71,10 +71,15 @@ function calculateIBU(
   );
 }
 
+function compareFloats(f1, f2, error = 0.01) {
+  return f1 - error <= f2 && f1 + error >= f2;
+}
+
 export {
   calculatePostBoilVolume,
   calculateDilutedGravity,
   calculateHopUtilisationFactor,
   calculateRequiredGrams,
   calculateIBU,
+  compareFloats,
 };

@@ -40,6 +40,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import linkState from "linkstate";
+import cloneDeep from "lodash.clonedeep";
 
 import { DEFAULT_VARIETIES } from "./data";
 import {
@@ -48,6 +49,7 @@ import {
   calculateHopUtilisationFactor,
   calculateRequiredGrams,
   calculateIBU,
+  compareFloats,
 } from "./util";
 
 class App extends Component {
@@ -209,9 +211,18 @@ class App extends Component {
     );
   }
 
-  onDeleteHop(index) {
+  onDeleteHopAddition(index) {
     var { hopRecords } = this.state;
     hopRecords.splice(index, 1);
+    this.setState({
+      hopRecords,
+    });
+  }
+
+  onCloneHopAddition(index) {
+    var { hopRecords } = this.state;
+    var newAdditionRecord = cloneDeep(hopRecords[index]);
+    hopRecords.push(newAdditionRecord);
     this.setState({
       hopRecords,
     });
@@ -370,7 +381,6 @@ class App extends Component {
         intermediateGravity,
         utilisationFactor,
         ibu,
-        ibuRequirementSatisfied,
       } = hopRecord;
 
       var calcIBURequirementSatisifed = false;
@@ -382,7 +392,7 @@ class App extends Component {
           return acc + cur.calculatedIBU;
         }
       }, 0);
-      const wantedIBU = ibu - existingIBUs;
+      var wantedIBU = ibu - existingIBUs;
 
       if (wantedIBU < 0) {
         wantedIBU = 0;
@@ -408,7 +418,7 @@ class App extends Component {
         intermediateGravity
       );
 
-      if (calculatedIBU === wantedIBU) {
+      if (compareFloats(calculatedIBU, wantedIBU)) {
         calcIBURequirementSatisifed = true;
       }
     }
@@ -764,6 +774,7 @@ class App extends Component {
     return (
       <Grid item xs={12} key={index}>
         <Card variant="outlined">
+          <h2>Hop addition {index + 1}</h2>
           <CardContent>
             <Grid container spacing={3}>
               <Grid item xs={3}>
@@ -829,10 +840,13 @@ class App extends Component {
             </Grid>
           </CardContent>
           <CardActions>
-            <FileCopyIcon color="primary" />
+            <FileCopyIcon
+              color="primary"
+              onClick={this.onCloneHopAddition.bind(this, index)}
+            />
             <DeleteIcon
               color="secondary"
-              onClick={this.onDeleteHop.bind(this, index)}
+              onClick={this.onDeleteHopAddition.bind(this, index)}
             />
           </CardActions>
         </Card>
