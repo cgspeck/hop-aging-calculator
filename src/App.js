@@ -46,6 +46,7 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import LuxonUtils from "@date-io/luxon";
 import { DatePicker } from "@material-ui/pickers";
 import Interval from "luxon/src/interval.js";
+import Duration from "luxon/src/duration.js";
 
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -72,6 +73,7 @@ import {
   calculateIBU,
   compareFloats,
 } from "./util";
+import DateTime from "luxon/src/datetime";
 
 class App extends Component {
   constructor() {
@@ -79,11 +81,11 @@ class App extends Component {
     this.varieties = DEFAULT_VARIETIES;
     this.state = {
       boilTime: 60,
-      brewDate: new Date(),
+      brewDate: DateTime.local(),
       boilVolume: 60,
       boilOffRate: 11,
       boilStartGravity: 1.041,
-      boilEndGravity: 1.05,
+      boilEndGravity: 1.052,
       hopRecords: [],
       newHopShouldOpen: false,
       newHopName: "",
@@ -99,8 +101,7 @@ class App extends Component {
   newSubstitution(baseVariety) {
     const { brewDate } = this.state;
 
-    var ratingDate = new Date();
-    ratingDate.setDate(brewDate.getDate() - 1);
+    const ratingDate = brewDate.minus(Duration.fromObject({ days: 1 }));
     return {
       maxAmount: 0.0,
       variety: baseVariety,
@@ -146,6 +147,12 @@ class App extends Component {
     this.setState({ hopRecords: hopRecords });
   }
 
+  onBrewDateChanged(brewDate) {
+    console.log(brewDate);
+    this.setState({ brewDate });
+    this.calculateSubstitutionValuesForRecipe();
+  }
+
   recipeControls() {
     return (
       <Grid container spacing={3}>
@@ -155,8 +162,8 @@ class App extends Component {
             id="brew-date"
             label="Brew Date"
             format="dd/MM/yyyy"
-            value={this.state.brewDate}
-            onChange={linkState(this, "brewDate")}
+            value={this.state.brewDate.toJSDate()}
+            onChange={this.onBrewDateChanged.bind(this)}
             disablePast
           />
         </Grid>
@@ -164,7 +171,7 @@ class App extends Component {
           <TextField
             label="Boil Time"
             value={this.state.boilTime}
-            onInput={linkState(this, "boilTime")}
+            onChange={linkState(this, "boilTime")}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">minutes</InputAdornment>
@@ -176,8 +183,8 @@ class App extends Component {
         <Grid item xs={12} md={4}>
           <TextField
             label="Boil Start Gravity"
-            value={this.state.boilStartGravity.toFixed(3)}
-            onInput={linkState(this, "boilStartGravity")}
+            value={this.state.boilStartGravity}
+            onChange={linkState(this, "boilStartGravity")}
             InputProps={{
               endAdornment: <InputAdornment position="end">SG</InputAdornment>,
             }}
@@ -188,7 +195,7 @@ class App extends Component {
           <TextField
             label="Boil Volume"
             value={this.state.boilVolume}
-            onInput={linkState(this, "boilVolume")}
+            onChange={linkState(this, "boilVolume")}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">liters</InputAdornment>
@@ -213,8 +220,8 @@ class App extends Component {
         <Grid item xs={12} md={4}>
           <TextField
             label="Boil End Gravity"
-            value={this.state.boilEndGravity.toFixed(3)}
-            onInput={linkState(this, "boilEndGravity")}
+            value={this.state.boilEndGravity}
+            onChange={linkState(this, "boilEndGravity")}
             InputProps={{
               endAdornment: <InputAdornment position="end">SG</InputAdornment>,
             }}
@@ -262,12 +269,22 @@ class App extends Component {
     });
   }
 
+  calculateSubstitutionValuesForRecipe() {
+    const { hopRecords } = this.state;
+    if (hopRecords.length > 0) {
+      hopRecords.map((_, i) => this.calculateSubstitutionValuesForHopRecord(i));
+    }
+  }
+
   calculateSubstitutionValuesForHopRecord(hopRecordIndex) {
     var { hopRecords } = this.state;
     const hopRecord = hopRecords[hopRecordIndex];
     if (hopRecord.substitutions.length > 0) {
       hopRecord.substitutions.map((_, i) =>
-        this.calculateSubstitutionValues(i, hopRecordIndex)
+        this.calculateSubstitutionValuesForHopRecordAndSubstitution(
+          i,
+          hopRecordIndex
+        )
       );
     } else {
       const ibu = hopRecord.ibu;
@@ -301,7 +318,10 @@ class App extends Component {
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.variety = value;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, hopRecordIndex);
+    this.calculateSubstitutionValuesForHopRecordAndSubstitution(
+      index,
+      hopRecordIndex
+    );
   }
 
   onSubstituteMaxAmountChanged(index, hopRecordIndex, e) {
@@ -316,7 +336,10 @@ class App extends Component {
     substituteRecord.maxAmount = isNaN(fV) ? "" : fV;
     this.setState({ hopRecords });
     if (!isNaN(fV)) {
-      this.calculateSubstitutionValues(index, hopRecordIndex);
+      this.calculateSubstitutionValuesForHopRecordAndSubstitution(
+        index,
+        hopRecordIndex
+      );
     }
   }
 
@@ -332,7 +355,10 @@ class App extends Component {
     substituteRecord.ratedAlphaAcid = isNaN(fV) ? "" : fV;
     this.setState({ hopRecords });
     if (!isNaN(fV)) {
-      this.calculateSubstitutionValues(index, hopRecordIndex);
+      this.calculateSubstitutionValuesForHopRecordAndSubstitution(
+        index,
+        hopRecordIndex
+      );
     }
   }
 
@@ -348,7 +374,10 @@ class App extends Component {
     substituteRecord.storageTemperature = isNaN(fV) ? "" : fV;
     this.setState({ hopRecords });
     if (!isNaN(fV)) {
-      this.calculateSubstitutionValues(index, hopRecordIndex);
+      this.calculateSubstitutionValuesForHopRecordAndSubstitution(
+        index,
+        hopRecordIndex
+      );
     }
   }
 
@@ -359,7 +388,10 @@ class App extends Component {
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.ratingDate = value;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, hopRecordIndex);
+    this.calculateSubstitutionValuesForHopRecordAndSubstitution(
+      index,
+      hopRecordIndex
+    );
   }
 
   onSubstituteStorageFactorChanged(index, hopRecordIndex, e) {
@@ -369,10 +401,16 @@ class App extends Component {
     var substituteRecord = hopRecord.substitutions[index];
     substituteRecord.storageFactor = value;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, hopRecordIndex);
+    this.calculateSubstitutionValuesForHopRecordAndSubstitution(
+      index,
+      hopRecordIndex
+    );
   }
 
-  calculateSubstitutionValues(index, hopRecordIndex) {
+  calculateSubstitutionValuesForHopRecordAndSubstitution(
+    index,
+    hopRecordIndex
+  ) {
     var { hopRecords } = this.state;
     var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
@@ -562,7 +600,7 @@ class App extends Component {
             <DatePicker
               label="Rating Date"
               format="dd/MM/yyyy"
-              value={substituteRecord.ratingDate}
+              value={substituteRecord.ratingDate.toJSDate()}
               onChange={this.onSubstituteRatingDateChanged.bind(
                 this,
                 index,
