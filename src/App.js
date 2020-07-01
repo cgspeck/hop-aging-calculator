@@ -62,7 +62,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import linkState from "linkstate";
 
-import clone from "lodash.clone";
+import cloneDeep from "lodash.clonedeep";
 
 import { DEFAULT_VARIETIES } from "./data";
 import {
@@ -251,7 +251,16 @@ class App extends Component {
 
   onCloneHopAddition(index) {
     var { hopRecords } = this.state;
-    var newAdditionRecord = clone(hopRecords[index]);
+    const sourceRecord = hopRecords[index];
+    var newAdditionRecord = cloneDeep(sourceRecord);
+    // don't want to create a new set of hop varieties because it will break select boxes
+    newAdditionRecord.variety = sourceRecord.variety;
+
+    // eslint-disable-next-line array-callback-return
+    newAdditionRecord.substitutions.map((substitutionRecord, i) => {
+      substitutionRecord.variety = sourceRecord.substitutions[i].variety;
+    });
+
     hopRecords.push(newAdditionRecord);
     this.setState({
       hopRecords,
