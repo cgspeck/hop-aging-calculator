@@ -34,7 +34,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import CancelIcon from "@material-ui/icons/Cancel";
 import Check from "@material-ui/icons/Check";
-import Warning from "@material-ui/icons/Warning";
 
 import IconButton from "@material-ui/core/IconButton";
 import LanguageIcon from "@material-ui/icons/Language";
@@ -839,7 +838,15 @@ class App extends Component {
     if (ibuRequirementSatisfied === true) {
       return <Check className="IBUSatisifed"></Check>;
     } else {
-      return <Warning className="IBUUnsatisifed"></Warning>;
+      return <p className="IBUUnsatisifed">Insufficient substitute hops!</p>;
+    }
+  }
+
+  aromaUseWarningTag(additionTime) {
+    if (additionTime <= 0) {
+      return (
+        <p className="IBUUnsatisifed">Calculations not for aroma additions</p>
+      );
     }
   }
 
@@ -891,6 +898,7 @@ class App extends Component {
                   type="number"
                   onChange={this.onAdditionTimeChange.bind(this, index)}
                 ></TextField>
+                {this.aromaUseWarningTag(hopRecord.additionTime)}
               </Grid>
               <Grid item xs={12} md={3}>
                 <TextField
