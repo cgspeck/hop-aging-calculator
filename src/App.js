@@ -85,7 +85,7 @@ class App extends Component {
       boilVolume: 60,
       boilOffRate: 11,
       boilStartGravity: 1.041,
-      boilEndGravity: 1.052,
+      boilEndGravity: 1.05,
       hopRecords: [],
       newHopShouldOpen: false,
       newHopName: "",
@@ -656,6 +656,7 @@ class App extends Component {
                   <InputAdornment position="end">gms</InputAdornment>
                 ),
               }}
+              disabled={true}
             ></TextField>
           </Grid>
           <Grid item xs={12} md={3}>
@@ -667,6 +668,7 @@ class App extends Component {
                   <InputAdornment position="end">days</InputAdornment>
                 ),
               }}
+              disabled={true}
             ></TextField>
           </Grid>
           <Grid item xs={12} md={3}>
@@ -676,12 +678,14 @@ class App extends Component {
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
               value={substituteRecord.calculatedEstimatedAA.toFixed(1)}
+              disabled={true}
             ></TextField>
           </Grid>
           <Grid item xs={12} md={3}>
             <TextField
               label="Estimated IBU"
               value={substituteRecord.calculatedIBU.toFixed(1)}
+              disabled={true}
             ></TextField>
           </Grid>
           <Grid item xs={12}>
@@ -944,6 +948,7 @@ class App extends Component {
                       <InputAdornment position="end">SG</InputAdornment>
                     ),
                   }}
+                  disabled={true}
                 ></TextField>
               </Grid>
               <Grid item xs={12} md={4}>
