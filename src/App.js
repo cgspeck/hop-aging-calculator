@@ -951,17 +951,17 @@ class App extends Component {
                   disabled={true}
                 ></TextField>
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12}>
+                <h4>I will use the following for this addition:</h4>
+              </Grid>
+              <Grid item xs={12}>
                 <Button
                   onClick={this.onAddHopSubstitution.bind(this, index)}
                   color="primary"
                   startIcon={<AddBox />}
                 >
-                  Add Substitution
+                  New Row
                 </Button>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                I will substitute:
               </Grid>
               {hopRecord.substitutions.map((r, i) =>
                 this.substituteTag(r, i, index)
