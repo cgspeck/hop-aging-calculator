@@ -284,14 +284,18 @@ class App extends Component {
   }
 
   onIBUChange(hopRecordIndex, e) {
-    const value = parseFloat(e.target.value);
-    if (isNaN(value)) {
+    const value = e.target.value;
+    const fV = parseFloat(value);
+    if (isNaN(fV) && value !== "") {
       return;
     }
     var { hopRecords } = this.state;
-    hopRecords[hopRecordIndex].ibu = value;
+    hopRecords[hopRecordIndex].ibu = isNaN(fV) ? "" : fV;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValuesForHopRecord(hopRecordIndex);
+
+    if (!isNaN(fV)) {
+      this.calculateSubstitutionValuesForHopRecord(hopRecordIndex);
+    }
   }
 
   onSubstituteHopChanged(index, hopRecordIndex, e) {
@@ -305,42 +309,51 @@ class App extends Component {
   }
 
   onSubstituteMaxAmountChanged(index, hopRecordIndex, e) {
-    const value = parseFloat(e.target.value);
-    if (isNaN(value)) {
+    const value = e.target.value;
+    const fV = parseFloat(value);
+    if (isNaN(fV) && value !== "") {
       return;
     }
     var { hopRecords } = this.state;
     var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
-    substituteRecord.maxAmount = value;
+    substituteRecord.maxAmount = isNaN(fV) ? "" : fV;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, hopRecordIndex);
+    if (!isNaN(fV)) {
+      this.calculateSubstitutionValues(index, hopRecordIndex);
+    }
   }
 
   onSubstituteRatingAAChanged(index, hopRecordIndex, e) {
-    const value = parseFloat(e.target.value);
-    if (isNaN(value)) {
+    const value = e.target.value;
+    const fV = parseFloat(value);
+    if (isNaN(fV) && value !== "") {
       return;
     }
     var { hopRecords } = this.state;
     var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
-    substituteRecord.ratedAlphaAcid = value;
+    substituteRecord.ratedAlphaAcid = isNaN(fV) ? "" : fV;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, hopRecordIndex);
+    if (!isNaN(fV)) {
+      this.calculateSubstitutionValues(index, hopRecordIndex);
+    }
   }
 
   onSubstituteStorageTemperatureChanged(index, hopRecordIndex, e) {
-    const value = parseFloat(e.target.value);
-    if (isNaN(value)) {
+    const value = e.target.value;
+    const fV = parseFloat(value);
+    if (isNaN(fV) && value !== "") {
       return;
     }
     var { hopRecords } = this.state;
     var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
-    substituteRecord.storageTemperature = value;
+    substituteRecord.storageTemperature = isNaN(fV) ? "" : fV;
     this.setState({ hopRecords });
-    this.calculateSubstitutionValues(index, hopRecordIndex);
+    if (!isNaN(fV)) {
+      this.calculateSubstitutionValues(index, hopRecordIndex);
+    }
   }
 
   onSubstituteRatingDateChanged(index, hopRecordIndex, e) {
@@ -767,8 +780,9 @@ class App extends Component {
   }
 
   onAdditionTimeChange(index, e) {
-    const value = parseInt(e.target.value, 10);
-    if (isNaN(value)) {
+    const value = e.target.value;
+    const iValue = parseInt(value, 10);
+    if (isNaN(iValue) && value !== "") {
       return;
     }
 
@@ -779,16 +793,20 @@ class App extends Component {
       boilEndGravity,
       boilOffRate,
     } = this.state;
-    if (value > boilTime) {
+    if (iValue > boilTime) {
       return;
     }
 
-    if (value < 0) {
+    if (iValue < 0) {
       return;
     }
     const { hopRecords } = this.state;
     var additionRecord = hopRecords[index];
-    additionRecord.additionTime = value;
+    additionRecord.additionTime = isNaN(iValue) ? "" : iValue;
+
+    if (isNaN(iValue)) {
+      return;
+    }
 
     const { additionTime } = additionRecord;
 
