@@ -352,7 +352,7 @@ class App extends Component {
     }
   }
 
-  onSubstituteRatingAAChanged(index, hopRecordIndex, e) {
+  onSubstituteRatedAlphaAcidChanged(index, hopRecordIndex, e) {
     const value = e.target.value;
     const fV = parseFloat(value);
     if (isNaN(fV) && value !== "") {
@@ -592,7 +592,7 @@ class App extends Component {
             <TextField
               label="Rated"
               value={substituteRecord.ratedAlphaAcid}
-              onChange={this.onSubstituteRatingAAChanged.bind(
+              onChange={this.onSubstituteRatedAlphaAcidChanged.bind(
                 this,
                 index,
                 recipeIndex
@@ -844,16 +844,20 @@ class App extends Component {
       return;
     }
 
+    const { hopRecords } = this.state;
+    var additionRecord = hopRecords[index];
+
+    if (isNaN(iValue)) {
+      additionRecord.additionTime = "";
+      this.setState({ hopRecords });
+      return;
+    }
+
     if (iValue < 0) {
       return;
     }
-    const { hopRecords } = this.state;
-    var additionRecord = hopRecords[index];
-    additionRecord.additionTime = isNaN(iValue) ? "" : iValue;
 
-    if (isNaN(iValue)) {
-      return;
-    }
+    additionRecord.additionTime = iValue;
 
     const { additionTime } = additionRecord;
 
