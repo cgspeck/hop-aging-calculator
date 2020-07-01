@@ -91,10 +91,7 @@ class App extends Component {
       newHopRecipeIndex: null,
       newHopSubstitutionIndex: null,
     };
-    const hopRecord = this.newHopRecord();
-    var substitution = this.newSubstitution(DEFAULT_VARIETIES[0]);
-    hopRecord.substitutions = [substitution];
-    this.state.hopRecords = [hopRecord];
+    this.state.hopRecords = [this.newHopRecord()];
 
     this.customVarieties = [];
   }
