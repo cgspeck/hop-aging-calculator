@@ -20,7 +20,6 @@ function calculatePostBoilVolume(
   boilOffRatePerHour,
   minutes
 ) {
-  console.log(startVolumeLiters, boilOffRatePerHour, minutes);
   return startVolumeLiters - boilOffRatePerHour * (minutes / 60);
 }
 
