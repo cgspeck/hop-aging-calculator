@@ -124,6 +124,9 @@ class App extends Component {
       boilEndGravity,
       boilTime
     );
+
+    const currentCount = this.state.hopRecords.length;
+
     return {
       ibu: 0.0,
       variety: this.varieties[0],
@@ -133,6 +136,7 @@ class App extends Component {
       utilisationFactor,
       substitutions: [],
       ibuRequirementSatisfied: true,
+      name: `Hop addition ${currentCount + 1}`,
     };
   }
 
@@ -251,7 +255,7 @@ class App extends Component {
     var newAdditionRecord = cloneDeep(sourceRecord);
     // don't want to create a new set of hop varieties because it will break select boxes
     newAdditionRecord.variety = sourceRecord.variety;
-
+    newAdditionRecord.name = `Clone of ${sourceRecord.name}`;
     // eslint-disable-next-line array-callback-return
     newAdditionRecord.substitutions.map((substitutionRecord, i) => {
       substitutionRecord.variety = sourceRecord.substitutions[i].variety;
@@ -898,6 +902,13 @@ class App extends Component {
     }
   }
 
+  onHopRecordNameChange(hopRecordIndex, e) {
+    const value = e.target.value;
+    var { hopRecords } = this.state;
+    hopRecords[hopRecordIndex].name = value;
+    this.setState({ hopRecords });
+  }
+
   hopRecordTag(hopRecord, index) {
     const { ibuRequirementSatisfied } = hopRecord;
 
@@ -906,7 +917,11 @@ class App extends Component {
         <Card variant="outlined">
           <Grid container spacing={1}>
             <Grid item xs={12} md={6}>
-              <h2>Hop addition {index + 1}</h2>
+              <TextField
+                value={hopRecord.name}
+                onChange={this.onHopRecordNameChange.bind(this, index)}
+                className="HopNameTextField"
+              ></TextField>
             </Grid>
             <Grid item xs={6} md={3}>
               <Button
@@ -914,7 +929,7 @@ class App extends Component {
                 className="HopAdditionActionButtons"
                 onClick={this.onCloneHopAddition.bind(this, index)}
               >
-                Clone
+                Copy
               </Button>
             </Grid>
             <Grid item xs={6} md={3}>

@@ -34,3 +34,9 @@
 .NewHopAdditionButton.MuiButtonBase-root {
   margin-bottom: 1em;
 }
+
+
+.HopNameTextField.MuiFormControl-root {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
