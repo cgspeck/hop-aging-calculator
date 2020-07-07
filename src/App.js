@@ -140,7 +140,7 @@ class App extends Component {
     };
   }
 
-  onAddHopRecord(e) {
+  onNewHopAddition(e) {
     var hopRecords = this.state.hopRecords;
     hopRecords.push(this.newHopRecord());
     this.setState({ hopRecords: hopRecords });
@@ -228,7 +228,7 @@ class App extends Component {
         </Grid>
         <Grid item xs={12}>
           <Button
-            onClick={this.onAddHopRecord.bind(this)}
+            onClick={this.onNewHopAddition.bind(this)}
             color="primary"
             startIcon={<AddBox />}
             variant="contained"
