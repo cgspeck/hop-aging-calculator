@@ -15,6 +15,7 @@
     "@types/lodash.clonedeep": "^4.5.6",
     "@types/luxon": "^1.24.1",
     "fontsource-roboto": "^2.1.4",
+    "immutability-helper": "^3.1.1",
     "linkstate": "^1.1.1",
     "lodash.clonedeep": "^4.5.0",
     "luxon": "^1.24.1",
