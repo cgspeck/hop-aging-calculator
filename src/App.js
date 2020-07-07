@@ -25,13 +25,10 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 
 // https://material-ui.com/components/material-icons/
 import AddBox from "@material-ui/icons/AddBox";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
 import CancelIcon from "@material-ui/icons/Cancel";
 import Check from "@material-ui/icons/Check";
 
@@ -905,7 +902,31 @@ class App extends Component {
     return (
       <Grid item xs={12} key={index}>
         <Card variant="outlined">
-          <h2>Hop addition {index + 1}</h2>
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={6}>
+              <h2>Hop addition {index + 1}</h2>
+            </Grid>
+            <Grid item xs={6} md={3}>
+              <Button
+                variant="contained"
+                className="HopAdditionActionButtons"
+                onClick={this.onCloneHopAddition.bind(this, index)}
+              >
+                Clone
+              </Button>
+            </Grid>
+            <Grid item xs={6} md={3}>
+              {" "}
+              <Button
+                variant="contained"
+                className="HopAdditionActionButtons"
+                onClick={this.onDeleteHopAddition.bind(this, index)}
+                color="secondary"
+              >
+                Delete
+              </Button>
+            </Grid>
+          </Grid>
           <CardContent>
             <Grid container spacing={1}>
               <Grid item xs={12} md={3}>
@@ -978,16 +999,6 @@ class App extends Component {
               )}
             </Grid>
           </CardContent>
-          <CardActions>
-            <FileCopyIcon
-              color="primary"
-              onClick={this.onCloneHopAddition.bind(this, index)}
-            />
-            <DeleteIcon
-              color="secondary"
-              onClick={this.onDeleteHopAddition.bind(this, index)}
-            />
-          </CardActions>
         </Card>
       </Grid>
     );

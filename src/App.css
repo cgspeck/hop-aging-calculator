@@ -25,3 +25,8 @@
 .LowAAAlert {
   color: red;
 }
+
+.HopAdditionActionButtons.MuiButtonBase-root {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
