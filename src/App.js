@@ -45,8 +45,7 @@ import TextField from "@material-ui/core/TextField";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import LuxonUtils from "@date-io/luxon";
 import { DatePicker } from "@material-ui/pickers";
-import Interval from "luxon/src/interval.js";
-import Duration from "luxon/src/duration.js";
+import { DateTime, Duration, Interval } from "luxon";
 
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -73,7 +72,6 @@ import {
   calculateIBU,
   compareFloats,
 } from "./util";
-import DateTime from "luxon/src/datetime";
 
 class App extends Component {
   constructor() {
@@ -148,7 +146,6 @@ class App extends Component {
   }
 
   onBrewDateChanged(brewDate) {
-    console.log(brewDate);
     this.setState({ brewDate });
     this.calculateSubstitutionValuesForRecipe();
   }
