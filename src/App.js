@@ -227,6 +227,8 @@ class App extends Component {
             onClick={this.onAddHopRecord.bind(this)}
             color="primary"
             startIcon={<AddBox />}
+            variant="contained"
+            className="NewHopAdditionButton"
           >
             New Hop Addition
           </Button>
@@ -990,6 +992,7 @@ class App extends Component {
                   onClick={this.onAddHopSubstitution.bind(this, index)}
                   color="primary"
                   startIcon={<AddBox />}
+                  variant="contained"
                 >
                   New Row
                 </Button>
