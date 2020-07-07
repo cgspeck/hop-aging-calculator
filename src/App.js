@@ -72,6 +72,8 @@ import {
   createId,
 } from "./util";
 
+import ResultField from "./ResultFieldComponent";
+
 class App extends Component {
   constructor() {
     super();
@@ -91,7 +93,10 @@ class App extends Component {
       newHopSubstitutionIndex: null,
     };
 
-    this.state.hopRecords[createId()] = this.newHopRecord();
+    var newRecord = this.newHopRecord();
+    newRecord.substitutions = [this.newSubstitution(newRecord.variety)];
+
+    this.state.hopRecords[createId()] = newRecord;
 
     this.customVarieties = [];
   }
@@ -673,49 +678,45 @@ class App extends Component {
               type="number"
             ></TextField>
           </Grid>
-          <Grid item xs={12} md={3}>
-            <TextField
-              label="Required Amount"
-              value={substituteRecord.calculatedRequiredAmount.toFixed(1)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">gms</InputAdornment>
-                ),
-              }}
-              disabled={true}
-            ></TextField>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <TextField
-              label="Age at Brew date"
-              value={substituteRecord.calculatedAge}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">days</InputAdornment>
-                ),
-              }}
-              disabled={true}
-            ></TextField>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <TextField
-              label="Estimated Alpha Acid"
-              InputProps={{
-                endAdornment: <InputAdornment position="end">%</InputAdornment>,
-              }}
-              value={substituteRecord.calculatedEstimatedAA.toFixed(1)}
-              disabled={true}
-            ></TextField>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <TextField
-              label="Estimated IBU"
-              value={substituteRecord.calculatedIBU.toFixed(1)}
-              disabled={true}
-            ></TextField>
-          </Grid>
           <Grid item xs={12}>
-            {this.lowAAWarningMessage(substituteRecord)}
+            <Card variant="outlined">
+              <CardContent>
+                <Grid container spacing={1}>
+                  <Grid item xs={12} md={3}>
+                    <ResultField
+                      label="Required Amount"
+                      value={substituteRecord.calculatedRequiredAmount.toFixed(
+                        1
+                      )}
+                      postValue="gms"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <ResultField
+                      label="Age at Brew date"
+                      value={substituteRecord.calculatedAge}
+                      postValue="days"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <ResultField
+                      label="Estimated Alpha Acid"
+                      postValue="%"
+                      value={substituteRecord.calculatedEstimatedAA.toFixed(1)}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <ResultField
+                      label="Estimated IBU"
+                      value={substituteRecord.calculatedIBU.toFixed(1)}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    {this.lowAAWarningMessage(substituteRecord)}
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
           </Grid>
         </Grid>
       </Card>
@@ -1013,16 +1014,11 @@ class App extends Component {
                 {this.aromaUseWarningTag(hopRecord.additionTime)}
               </Grid>
               <Grid item xs={12} md={3}>
-                <TextField
+                <ResultField
                   label="Intermediate Gravity"
                   value={hopRecord.intermediateGravity.toFixed(3)}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">SG</InputAdornment>
-                    ),
-                  }}
-                  disabled={true}
-                ></TextField>
+                  postValue="SG"
+                />
               </Grid>
               <Grid item xs={12}>
                 <h4>I will use the following for this addition:</h4>
