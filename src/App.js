@@ -16,6 +16,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import React, { Component } from "react";
+import update from "immutability-helper";
 
 import "fontsource-roboto";
 
@@ -68,6 +69,7 @@ import {
   calculateRequiredGrams,
   calculateIBU,
   compareFloats,
+  createId,
 } from "./util";
 
 class App extends Component {
@@ -81,14 +83,15 @@ class App extends Component {
       boilOffRate: 11,
       boilStartGravity: 1.041,
       boilEndGravity: 1.05,
-      hopRecords: [],
+      hopRecords: {},
       newHopShouldOpen: false,
       newHopName: "",
       newHopHSI: 60.0,
       newHopRecipeIndex: null,
       newHopSubstitutionIndex: null,
     };
-    this.state.hopRecords = [this.newHopRecord()];
+
+    this.state.hopRecords[createId()] = this.newHopRecord();
 
     this.customVarieties = [];
   }
@@ -125,7 +128,7 @@ class App extends Component {
       boilTime
     );
 
-    const currentCount = this.state.hopRecords.length;
+    const currentCount = Object.keys(this.state.hopRecords).length;
 
     return {
       ibu: 0.0,
@@ -140,10 +143,16 @@ class App extends Component {
     };
   }
 
-  onAddHopRecord(e) {
-    var hopRecords = this.state.hopRecords;
-    hopRecords.push(this.newHopRecord());
-    this.setState({ hopRecords: hopRecords });
+  onNewHopAddition(e) {
+    const hopRecords = this.state.hopRecords;
+    const newId = createId();
+
+    this.setState({
+      hopRecords: {
+        ...hopRecords,
+        [newId]: this.newHopRecord(),
+      },
+    });
   }
 
   onBrewDateChanged(brewDate) {
@@ -228,7 +237,7 @@ class App extends Component {
         </Grid>
         <Grid item xs={12}>
           <Button
-            onClick={this.onAddHopRecord.bind(this)}
+            onClick={this.onNewHopAddition.bind(this)}
             color="primary"
             startIcon={<AddBox />}
             variant="contained"
@@ -243,15 +252,16 @@ class App extends Component {
 
   onDeleteHopAddition(index) {
     var { hopRecords } = this.state;
-    hopRecords.splice(index, 1);
+    delete hopRecords[index];
     this.setState({
       hopRecords,
     });
   }
 
   onCloneHopAddition(index) {
-    var { hopRecords } = this.state;
+    const { hopRecords } = this.state;
     const sourceRecord = hopRecords[index];
+    const newId = createId();
     var newAdditionRecord = cloneDeep(sourceRecord);
     // don't want to create a new set of hop varieties because it will break select boxes
     newAdditionRecord.variety = sourceRecord.variety;
@@ -261,9 +271,11 @@ class App extends Component {
       substitutionRecord.variety = sourceRecord.substitutions[i].variety;
     });
 
-    hopRecords.push(newAdditionRecord);
     this.setState({
-      hopRecords,
+      hopRecords: {
+        ...hopRecords,
+        [newId]: newAdditionRecord,
+      },
     });
   }
 
@@ -280,9 +292,10 @@ class App extends Component {
 
   calculateSubstitutionValuesForRecipe() {
     const { hopRecords } = this.state;
-    if (hopRecords.length > 0) {
-      hopRecords.map((_, i) => this.calculateSubstitutionValuesForHopRecord(i));
-    }
+
+    Object.entries(hopRecords).map(([key, _]) =>
+      this.calculateSubstitutionValuesForHopRecord(key)
+    );
   }
 
   calculateSubstitutionValuesForHopRecord(hopRecordIndex) {
@@ -311,9 +324,13 @@ class App extends Component {
     if (isNaN(fV) && value !== "") {
       return;
     }
-    var { hopRecords } = this.state;
-    hopRecords[hopRecordIndex].ibu = isNaN(fV) ? "" : fV;
-    this.setState({ hopRecords });
+    const { hopRecords } = this.state;
+    var record = hopRecords[hopRecordIndex];
+    record.ibu = isNaN(fV) ? "" : fV;
+
+    this.setState({
+      hopRecords: update(hopRecords, { [hopRecordIndex]: { $set: record } }),
+    });
 
     if (!isNaN(fV)) {
       this.calculateSubstitutionValuesForHopRecord(hopRecordIndex);
@@ -819,14 +836,21 @@ class App extends Component {
     ));
   }
 
-  onRecipeHopChanged(index, e) {
+  onAdditionHopChanged(hopRecordIndex, e) {
     const value = e.target.value;
-    var { hopRecords } = this.state;
-    hopRecords[index].variety = value;
-    this.setState({ hopRecords });
+    const { hopRecords } = this.state;
+
+    var record = hopRecords[hopRecordIndex];
+    record.variety = value;
+
+    this.setState({
+      hopRecords: update(hopRecords, {
+        [hopRecordIndex]: { $set: record },
+      }),
+    });
   }
 
-  onAdditionTimeChange(index, e) {
+  onAdditionTimeChange(hopRecordIndex, e) {
     const value = e.target.value;
     const iValue = parseInt(value, 10);
     if (isNaN(iValue) && value !== "") {
@@ -845,11 +869,15 @@ class App extends Component {
     }
 
     const { hopRecords } = this.state;
-    var additionRecord = hopRecords[index];
+    var record = hopRecords[hopRecordIndex];
 
     if (isNaN(iValue)) {
-      additionRecord.additionTime = "";
-      this.setState({ hopRecords });
+      record.additionTime = "";
+      this.setState({
+        hopRecords: update(hopRecords, {
+          [hopRecordIndex]: { $set: record },
+        }),
+      });
       return;
     }
 
@@ -857,23 +885,23 @@ class App extends Component {
       return;
     }
 
-    additionRecord.additionTime = iValue;
+    record.additionTime = iValue;
 
-    const { additionTime } = additionRecord;
+    const { additionTime } = record;
 
     const intermediateVolume = calculatePostBoilVolume(
       boilVolume,
       boilOffRate,
       boilTime - additionTime
     );
-    additionRecord.intermediateVolume = intermediateVolume;
+    record.intermediateVolume = intermediateVolume;
 
     const intermediateGravity = calculateDilutedGravity(
       boilVolume,
       boilStartGravity,
       intermediateVolume
     );
-    additionRecord.intermediateGravity = intermediateGravity;
+    record.intermediateGravity = intermediateGravity;
 
     const utilisationFactor = calculateHopUtilisationFactor(
       boilStartGravity,
@@ -881,9 +909,13 @@ class App extends Component {
       boilTime
     );
 
-    additionRecord.utilisationFactor = utilisationFactor;
+    record.utilisationFactor = utilisationFactor;
 
-    this.setState({ hopRecords });
+    this.setState({
+      hopRecords: update(hopRecords, {
+        [hopRecordIndex]: { $set: record },
+      }),
+    });
   }
 
   hopAdditionIBUStatusTag(ibuRequirementSatisfied) {
@@ -902,13 +934,6 @@ class App extends Component {
     }
   }
 
-  onHopRecordNameChange(hopRecordIndex, e) {
-    const value = e.target.value;
-    var { hopRecords } = this.state;
-    hopRecords[hopRecordIndex].name = value;
-    this.setState({ hopRecords });
-  }
-
   hopRecordTag(hopRecord, index) {
     const { ibuRequirementSatisfied } = hopRecord;
 
@@ -919,7 +944,7 @@ class App extends Component {
             <Grid item xs={12} md={6}>
               <TextField
                 value={hopRecord.name}
-                onChange={this.onHopRecordNameChange.bind(this, index)}
+                onChange={linkState(this, `hopRecords.${index}.name`)}
                 className="HopNameTextField"
               ></TextField>
             </Grid>
@@ -965,7 +990,7 @@ class App extends Component {
                   <InputLabel>of hop</InputLabel>
                   <Select
                     value={hopRecord.variety}
-                    onChange={this.onRecipeHopChanged.bind(this, index)}
+                    onChange={this.onAdditionHopChanged.bind(this, index)}
                   >
                     {this.hopVarietySelectCustomItems()}
                     {this.hopVarietySelectCreateNewItem(index, null)}
@@ -1025,7 +1050,11 @@ class App extends Component {
   hopRecordsTags() {
     const hopRecords = this.state.hopRecords;
     return (
-      <Container>{hopRecords.map((r, i) => this.hopRecordTag(r, i))}</Container>
+      <Container>
+        {Object.entries(hopRecords).map(([key, value]) =>
+          this.hopRecordTag(value, key)
+        )}
+      </Container>
     );
   }
 
