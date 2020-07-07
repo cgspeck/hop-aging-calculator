@@ -68,6 +68,7 @@ import {
   calculateRequiredGrams,
   calculateIBU,
   compareFloats,
+  createId,
 } from "./util";
 
 class App extends Component {
@@ -81,14 +82,15 @@ class App extends Component {
       boilOffRate: 11,
       boilStartGravity: 1.041,
       boilEndGravity: 1.05,
-      hopRecords: [],
+      hopRecords: {},
       newHopShouldOpen: false,
       newHopName: "",
       newHopHSI: 60.0,
       newHopRecipeIndex: null,
       newHopSubstitutionIndex: null,
     };
-    this.state.hopRecords = [this.newHopRecord()];
+
+    this.state.hopRecords[createId()] = this.newHopRecord();
 
     this.customVarieties = [];
   }
@@ -125,7 +127,7 @@ class App extends Component {
       boilTime
     );
 
-    const currentCount = this.state.hopRecords.length;
+    const currentCount = Object.keys(this.state.hopRecords).length;
 
     return {
       ibu: 0.0,
@@ -141,9 +143,15 @@ class App extends Component {
   }
 
   onNewHopAddition(e) {
-    var hopRecords = this.state.hopRecords;
-    hopRecords.push(this.newHopRecord());
-    this.setState({ hopRecords: hopRecords });
+    const hopRecords = this.state.hopRecords;
+    const newId = createId();
+
+    this.setState({
+      hopRecords: {
+        ...hopRecords,
+        [newId]: this.newHopRecord(),
+      },
+    });
   }
 
   onBrewDateChanged(brewDate) {
@@ -243,15 +251,16 @@ class App extends Component {
 
   onDeleteHopAddition(index) {
     var { hopRecords } = this.state;
-    hopRecords.splice(index, 1);
+    delete hopRecords[index];
     this.setState({
       hopRecords,
     });
   }
 
   onCloneHopAddition(index) {
-    var { hopRecords } = this.state;
+    const { hopRecords } = this.state;
     const sourceRecord = hopRecords[index];
+    const newId = createId();
     var newAdditionRecord = cloneDeep(sourceRecord);
     // don't want to create a new set of hop varieties because it will break select boxes
     newAdditionRecord.variety = sourceRecord.variety;
@@ -261,9 +270,11 @@ class App extends Component {
       substitutionRecord.variety = sourceRecord.substitutions[i].variety;
     });
 
-    hopRecords.push(newAdditionRecord);
     this.setState({
-      hopRecords,
+      hopRecords: {
+        ...hopRecords,
+        [newId]: newAdditionRecord,
+      },
     });
   }
 
@@ -280,9 +291,10 @@ class App extends Component {
 
   calculateSubstitutionValuesForRecipe() {
     const { hopRecords } = this.state;
-    if (hopRecords.length > 0) {
-      hopRecords.map((_, i) => this.calculateSubstitutionValuesForHopRecord(i));
-    }
+
+    Object.entries(hopRecords).map(([key, _]) =>
+      this.calculateSubstitutionValuesForHopRecord(key)
+    );
   }
 
   calculateSubstitutionValuesForHopRecord(hopRecordIndex) {
@@ -1025,7 +1037,11 @@ class App extends Component {
   hopRecordsTags() {
     const hopRecords = this.state.hopRecords;
     return (
-      <Container>{hopRecords.map((r, i) => this.hopRecordTag(r, i))}</Container>
+      <Container>
+        {Object.entries(hopRecords).map(([key, value]) =>
+          this.hopRecordTag(value, key)
+        )}
+      </Container>
     );
   }
 

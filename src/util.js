@@ -15,6 +15,11 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
+function createId() {
+  return new Date().getTime();
+}
+
 function calculatePostBoilVolume(
   startVolumeLiters,
   boilOffRatePerHour,
@@ -98,4 +103,5 @@ export {
   calculateRequiredGrams,
   calculateIBU,
   compareFloats,
+  createId,
 };
