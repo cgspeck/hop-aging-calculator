@@ -265,7 +265,7 @@ class App extends Component {
     var newAdditionRecord = cloneDeep(sourceRecord);
     // don't want to create a new set of hop varieties because it will break select boxes
     newAdditionRecord.variety = sourceRecord.variety;
-    newAdditionRecord.name = `Clone of ${sourceRecord.name}`;
+    newAdditionRecord.name = `Copy of ${sourceRecord.name}`;
     // eslint-disable-next-line array-callback-return
     newAdditionRecord.substitutions.map((substitutionRecord, i) => {
       substitutionRecord.variety = sourceRecord.substitutions[i].variety;

@@ -2774,7 +2774,7 @@ Object {
                             aria-invalid="false"
                             class="MuiInputBase-input MuiInput-input"
                             type="text"
-                            value="Clone of Hop addition 1"
+                            value="Copy of Hop addition 1"
                           />
                         </div>
                       </div>
@@ -3663,7 +3663,7 @@ Object {
                           aria-invalid="false"
                           class="MuiInputBase-input MuiInput-input"
                           type="text"
-                          value="Clone of Hop addition 1"
+                          value="Copy of Hop addition 1"
                         />
                       </div>
                     </div>
