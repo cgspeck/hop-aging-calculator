@@ -18,6 +18,7 @@
     "immutability-helper": "^3.1.1",
     "linkstate": "^1.1.1",
     "lodash.clonedeep": "^4.5.0",
+    "lodash.debounce": "^4.0.8",
     "luxon": "^1.24.1",
     "prop-types": "^15.6.0",
     "react": "^16.13.1",

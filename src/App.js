@@ -73,18 +73,39 @@ import {
 } from "./util";
 
 import ResultField from "./ResultFieldComponent";
+import { debouncedInput } from "./debouncedInput";
+
+const DebouncedTextField = debouncedInput(TextField, { timeout: 500 });
 
 class App extends Component {
   constructor() {
     super();
     this.varieties = DEFAULT_VARIETIES;
+
+    const boilStartGravity = 1.041;
+    const boilVolume = 60.0;
+    const boilOffRate = 11;
+    const boilTime = 60;
+    const boilEndVolume = calculatePostBoilVolume(
+      boilVolume,
+      boilOffRate,
+      boilTime
+    );
+
+    const boilEndGravity = calculateDilutedGravity(
+      boilVolume,
+      boilStartGravity,
+      boilEndVolume
+    );
+
     this.state = {
-      boilTime: 60,
       brewDate: DateTime.local(),
-      boilVolume: 60,
-      boilOffRate: 11,
-      boilStartGravity: 1.041,
-      boilEndGravity: 1.05,
+      boilTime,
+      boilVolume,
+      boilOffRate,
+      boilEndVolume,
+      boilStartGravity,
+      boilEndGravity,
       hopRecords: {},
       newHopShouldOpen: false,
       newHopName: "",
@@ -92,13 +113,40 @@ class App extends Component {
       newHopRecipeIndex: null,
       newHopSubstitutionIndex: null,
     };
-
     var newRecord = this.newHopRecord();
     newRecord.substitutions = [this.newSubstitution(newRecord.variety)];
 
     this.state.hopRecords[createId()] = newRecord;
 
     this.customVarieties = [];
+  }
+
+  calculateBoilEndVolume() {
+    const { boilVolume, boilOffRate, boilTime } = this.state;
+
+    const boilEndVolume = calculatePostBoilVolume(
+      boilVolume,
+      boilOffRate,
+      boilTime
+    );
+    this.setState({
+      boilEndVolume,
+    });
+    this.calculateBoilEndGravity();
+  }
+
+  calculateBoilEndGravity() {
+    const { boilVolume, boilStartGravity, boilEndVolume } = this.state;
+
+    const boilEndGravity = calculateDilutedGravity(
+      boilVolume,
+      boilStartGravity,
+      boilEndVolume
+    );
+
+    this.setState({
+      boilEndGravity,
+    });
   }
 
   newSubstitution(baseVariety) {
@@ -165,7 +213,32 @@ class App extends Component {
     this.calculateSubstitutionValuesForRecipe();
   }
 
+  onBoilVolumeChanged(e) {
+    const value = e.target.value;
+    const fV = parseFloat(value);
+
+    this.setState({ boilVolume: isNaN(fV) ? "" : fV });
+
+    if (!isNaN(fV)) {
+      this.calculateBoilEndVolume();
+    }
+  }
+
+  onBoilOffRateChanged(e) {
+    const value = e.target.value;
+    const fV = parseFloat(value);
+
+    console.log(value, fV);
+    this.setState({ boilOffRate: isNaN(fV) ? value : fV });
+
+    if (!isNaN(fV)) {
+      this.calculateBoilEndVolume();
+    }
+  }
+
   recipeControls() {
+    const { boilVolume, boilEndVolume, boilOffRate } = this.state;
+
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
@@ -189,6 +262,7 @@ class App extends Component {
                 <InputAdornment position="end">minutes</InputAdornment>
               ),
             }}
+            inputProps={{ step: 1, min: 0 }}
             type="number"
           ></TextField>
         </Grid>
@@ -200,45 +274,52 @@ class App extends Component {
             InputProps={{
               endAdornment: <InputAdornment position="end">SG</InputAdornment>,
             }}
+            inputProps={{ step: 0.001, min: 0 }}
             type="number"
           ></TextField>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <TextField
+        <Grid item xs={12} md={3}>
+          <DebouncedTextField
             label="Boil Volume"
-            value={this.state.boilVolume}
-            onChange={linkState(this, "boilVolume")}
+            value={boilVolume}
+            onChange={this.onBoilVolumeChanged.bind(this)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">liters</InputAdornment>
               ),
             }}
+            inputProps={{ step: "any", min: 0 }}
             type="number"
-          ></TextField>
+          ></DebouncedTextField>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <TextField
+        <Grid item xs={12} md={3}>
+          <DebouncedTextField
             label="Boil Off Rate"
-            value={this.state.boilOffRate}
-            onInput={linkState(this, "boilOffRate")}
+            value={boilOffRate}
+            onChange={this.onBoilOffRateChanged.bind(this)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">liters/hour</InputAdornment>
               ),
             }}
             type="number"
-          ></TextField>
+            step="0.1"
+            min="0"
+          ></DebouncedTextField>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <TextField
+        <Grid item xs={12} md={3}>
+          <ResultField
+            label="End volume"
+            postValue="liters"
+            value={boilEndVolume}
+          />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <ResultField
             label="Boil End Gravity"
-            value={this.state.boilEndGravity}
-            onChange={linkState(this, "boilEndGravity")}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">SG</InputAdornment>,
-            }}
-            type="number"
-          ></TextField>
+            value={this.state.boilEndGravity.toFixed(3)}
+            postValue="SG"
+          />
         </Grid>
         <Grid item xs={12}>
           <Button

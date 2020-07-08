@@ -172,6 +172,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="1"
                       type="number"
                       value="60"
                     />
@@ -205,6 +207,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="0.001"
                       type="number"
                       value="1.041"
                     />
@@ -221,7 +225,7 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -238,6 +242,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="any"
                       type="number"
                       value="60"
                     />
@@ -254,10 +260,12 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
+                  min="0"
+                  step="0.1"
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -287,35 +295,34 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
-                <div
-                  class="MuiFormControl-root MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                    data-shrink="true"
-                  >
-                    Boil End Gravity
-                  </label>
+                <div>
+                  End volume
+                  : 
+                  <br />
                   <div
-                    class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd"
+                    style="color: rgb(51, 102, 204);"
                   >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
-                      type="number"
-                      value="1.05"
-                    />
-                    <div
-                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary"
-                      >
-                        SG
-                      </p>
-                    </div>
+                    49
+                     
+                    liters
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+              >
+                <div>
+                  Boil End Gravity
+                  : 
+                  <br />
+                  <div
+                    style="color: rgb(51, 102, 204);"
+                  >
+                    1.050
+                     
+                    SG
                   </div>
                 </div>
               </div>
@@ -528,6 +535,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="1"
                     type="number"
                     value="60"
                   />
@@ -561,6 +570,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="0.001"
                     type="number"
                     value="1.041"
                   />
@@ -577,7 +588,7 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
@@ -594,6 +605,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="any"
                     type="number"
                     value="60"
                   />
@@ -610,10 +623,12 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
+                min="0"
+                step="0.1"
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -643,35 +658,34 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
-              <div
-                class="MuiFormControl-root MuiTextField-root"
-              >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                  data-shrink="true"
-                >
-                  Boil End Gravity
-                </label>
+              <div>
+                End volume
+                : 
+                <br />
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd"
+                  style="color: rgb(51, 102, 204);"
                 >
-                  <input
-                    aria-invalid="false"
-                    class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
-                    type="number"
-                    value="1.05"
-                  />
-                  <div
-                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary"
-                    >
-                      SG
-                    </p>
-                  </div>
+                  49
+                   
+                  liters
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+            >
+              <div>
+                Boil End Gravity
+                : 
+                <br />
+                <div
+                  style="color: rgb(51, 102, 204);"
+                >
+                  1.050
+                   
+                  SG
                 </div>
               </div>
             </div>
@@ -1000,6 +1014,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="1"
                       type="number"
                       value="60"
                     />
@@ -1033,6 +1049,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="0.001"
                       type="number"
                       value="1.041"
                     />
@@ -1049,7 +1067,7 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -1066,6 +1084,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="any"
                       type="number"
                       value="60"
                     />
@@ -1082,10 +1102,12 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
+                  min="0"
+                  step="0.1"
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -1115,35 +1137,34 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
-                <div
-                  class="MuiFormControl-root MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                    data-shrink="true"
-                  >
-                    Boil End Gravity
-                  </label>
+                <div>
+                  End volume
+                  : 
+                  <br />
                   <div
-                    class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd"
+                    style="color: rgb(51, 102, 204);"
                   >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
-                      type="number"
-                      value="1.05"
-                    />
-                    <div
-                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary"
-                      >
-                        SG
-                      </p>
-                    </div>
+                    49
+                     
+                    liters
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+              >
+                <div>
+                  Boil End Gravity
+                  : 
+                  <br />
+                  <div
+                    style="color: rgb(51, 102, 204);"
+                  >
+                    1.050
+                     
+                    SG
                   </div>
                 </div>
               </div>
@@ -1909,6 +1930,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="1"
                     type="number"
                     value="60"
                   />
@@ -1942,6 +1965,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="0.001"
                     type="number"
                     value="1.041"
                   />
@@ -1958,7 +1983,7 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
@@ -1975,6 +2000,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="any"
                     type="number"
                     value="60"
                   />
@@ -1991,10 +2018,12 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
+                min="0"
+                step="0.1"
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -2024,35 +2053,34 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
-              <div
-                class="MuiFormControl-root MuiTextField-root"
-              >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                  data-shrink="true"
-                >
-                  Boil End Gravity
-                </label>
+              <div>
+                End volume
+                : 
+                <br />
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd"
+                  style="color: rgb(51, 102, 204);"
                 >
-                  <input
-                    aria-invalid="false"
-                    class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
-                    type="number"
-                    value="1.05"
-                  />
-                  <div
-                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary"
-                    >
-                      SG
-                    </p>
-                  </div>
+                  49
+                   
+                  liters
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+            >
+              <div>
+                Boil End Gravity
+                : 
+                <br />
+                <div
+                  style="color: rgb(51, 102, 204);"
+                >
+                  1.050
+                   
+                  SG
                 </div>
               </div>
             </div>
@@ -2875,6 +2903,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="1"
                       type="number"
                       value="60"
                     />
@@ -2908,6 +2938,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="0.001"
                       type="number"
                       value="1.041"
                     />
@@ -2924,7 +2956,7 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -2941,6 +2973,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="any"
                       type="number"
                       value="60"
                     />
@@ -2957,10 +2991,12 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
+                  min="0"
+                  step="0.1"
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -2990,35 +3026,34 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
-                <div
-                  class="MuiFormControl-root MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                    data-shrink="true"
-                  >
-                    Boil End Gravity
-                  </label>
+                <div>
+                  End volume
+                  : 
+                  <br />
                   <div
-                    class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd"
+                    style="color: rgb(51, 102, 204);"
                   >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
-                      type="number"
-                      value="1.05"
-                    />
-                    <div
-                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary"
-                      >
-                        SG
-                      </p>
-                    </div>
+                    49
+                     
+                    liters
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+              >
+                <div>
+                  Boil End Gravity
+                  : 
+                  <br />
+                  <div
+                    style="color: rgb(51, 102, 204);"
+                  >
+                    1.050
+                     
+                    SG
                   </div>
                 </div>
               </div>
@@ -4336,6 +4371,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="1"
                     type="number"
                     value="60"
                   />
@@ -4369,6 +4406,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="0.001"
                     type="number"
                     value="1.041"
                   />
@@ -4385,7 +4424,7 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
@@ -4402,6 +4441,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="any"
                     type="number"
                     value="60"
                   />
@@ -4418,10 +4459,12 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
+                min="0"
+                step="0.1"
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -4451,35 +4494,34 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
-              <div
-                class="MuiFormControl-root MuiTextField-root"
-              >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                  data-shrink="true"
-                >
-                  Boil End Gravity
-                </label>
+              <div>
+                End volume
+                : 
+                <br />
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd"
+                  style="color: rgb(51, 102, 204);"
                 >
-                  <input
-                    aria-invalid="false"
-                    class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
-                    type="number"
-                    value="1.05"
-                  />
-                  <div
-                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary"
-                    >
-                      SG
-                    </p>
-                  </div>
+                  49
+                   
+                  liters
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+            >
+              <div>
+                Boil End Gravity
+                : 
+                <br />
+                <div
+                  style="color: rgb(51, 102, 204);"
+                >
+                  1.050
+                   
+                  SG
                 </div>
               </div>
             </div>
@@ -5854,6 +5896,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="1"
                       type="number"
                       value="60"
                     />
@@ -5887,6 +5931,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="0.001"
                       type="number"
                       value="1.041"
                     />
@@ -5903,7 +5949,7 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -5920,6 +5966,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="any"
                       type="number"
                       value="60"
                     />
@@ -5936,10 +5984,12 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
+                  min="0"
+                  step="0.1"
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -5969,35 +6019,34 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
-                <div
-                  class="MuiFormControl-root MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                    data-shrink="true"
-                  >
-                    Boil End Gravity
-                  </label>
+                <div>
+                  End volume
+                  : 
+                  <br />
                   <div
-                    class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd"
+                    style="color: rgb(51, 102, 204);"
                   >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
-                      type="number"
-                      value="1.05"
-                    />
-                    <div
-                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary"
-                      >
-                        SG
-                      </p>
-                    </div>
+                    49
+                     
+                    liters
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+              >
+                <div>
+                  Boil End Gravity
+                  : 
+                  <br />
+                  <div
+                    style="color: rgb(51, 102, 204);"
+                  >
+                    1.050
+                     
+                    SG
                   </div>
                 </div>
               </div>
@@ -7011,6 +7060,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="1"
                     type="number"
                     value="60"
                   />
@@ -7044,6 +7095,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="0.001"
                     type="number"
                     value="1.041"
                   />
@@ -7060,7 +7113,7 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
@@ -7077,6 +7130,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="any"
                     type="number"
                     value="60"
                   />
@@ -7093,10 +7148,12 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
+                min="0"
+                step="0.1"
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -7126,35 +7183,34 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
-              <div
-                class="MuiFormControl-root MuiTextField-root"
-              >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                  data-shrink="true"
-                >
-                  Boil End Gravity
-                </label>
+              <div>
+                End volume
+                : 
+                <br />
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd"
+                  style="color: rgb(51, 102, 204);"
                 >
-                  <input
-                    aria-invalid="false"
-                    class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
-                    type="number"
-                    value="1.05"
-                  />
-                  <div
-                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary"
-                    >
-                      SG
-                    </p>
-                  </div>
+                  49
+                   
+                  liters
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+            >
+              <div>
+                Boil End Gravity
+                : 
+                <br />
+                <div
+                  style="color: rgb(51, 102, 204);"
+                >
+                  1.050
+                   
+                  SG
                 </div>
               </div>
             </div>
