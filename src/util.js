@@ -56,27 +56,16 @@ function calculateHopUtilisationFactor(gravity, minutes) {
   return _calculateBignessFactor(gravity) * _calculateBoilTimeFactor(minutes);
 }
 
-function calculateGravityCorrectionFactor(gravity) {
-  if (gravity > 1.05) {
-    return 1 + (gravity - 1.05) / 2;
-  } else {
-    return 1;
-  }
-}
-
 function calculateRequiredGrams(
-  volumeLiters,
-  gravity,
-  IBU,
+  boilEndVolumeLiters,
+  IBUs,
   alphaAcids,
   utilisationFactor
 ) {
-  const gravityCorrectionFactor = calculateGravityCorrectionFactor(gravity);
-
-  return (
-    (volumeLiters * gravityCorrectionFactor * IBU) /
-    (utilisationFactor * (alphaAcids / 100) * 1000)
-  );
+  const mgLofAlphaAcids = IBUs / utilisationFactor;
+  const decimalByWeightBy1000 = mgLofAlphaAcids * boilEndVolumeLiters;
+  const decimalAlphaAcids = alphaAcids / 100;
+  return decimalByWeightBy1000 / (decimalAlphaAcids * 1000);
 }
 
 function calculateIBU(
@@ -89,8 +78,7 @@ function calculateIBU(
   const mgLofAlphaAcids =
     (decimalAlphaAcids * weightGrams * 1000) / boilEndVolumeLiters;
 
-  const IBUs = utilisationFactor * mgLofAlphaAcids;
-  return IBUs;
+  return utilisationFactor * mgLofAlphaAcids;
 }
 
 function compareFloats(f1, f2, error = 0.01) {

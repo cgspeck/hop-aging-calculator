@@ -5,6 +5,7 @@ import {
   _calculateBoilTimeFactor,
   calculateHopUtilisationFactor,
   calculateIBU,
+  calculateRequiredGrams,
 } from "./util.js";
 
 test("calculates calculatePostBoilVolume", () => {
@@ -100,6 +101,23 @@ test("calculateIBU", () => {
     utilisationFactor,
     alphaAcids,
     boilEndVolumeLiters
+  );
+  expect(actual).toBeCloseTo(expected);
+});
+
+test("calculateRequiredGrams", () => {
+  const boilEndVolumeLiters = 44;
+  const IBUs = 21.56;
+  const alphaAcids = 4.5;
+  // matching BrewTarget
+  const gravity = 1.06;
+  const utilisationFactor = calculateHopUtilisationFactor(gravity, 60);
+  const expected = 99.986;
+  const actual = calculateRequiredGrams(
+    boilEndVolumeLiters,
+    IBUs,
+    alphaAcids,
+    utilisationFactor
   );
   expect(actual).toBeCloseTo(expected);
 });
