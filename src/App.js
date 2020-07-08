@@ -57,7 +57,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 
 import DialogTitle from "@material-ui/core/DialogTitle";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import linkState from "linkstate";
 
 import cloneDeep from "lodash.clonedeep";
 
@@ -828,7 +827,7 @@ class App extends Component {
 
   onNewCustomHopClick(recipeIndex, substitutionIndex) {
     this.setState({
-      newHopName: "",
+      newHopName: "New hop",
       newHopHSI: 50,
       newHopShouldOpen: true,
       newHopRecipeIndex: recipeIndex,
@@ -837,7 +836,18 @@ class App extends Component {
   }
 
   onNewCustomHopDialogCancel() {
-    this.setState({ newHopShouldOpen: false });
+    const { newHopRecipeIndex } = this.state;
+
+    const hopRecords = this.state.hopRecords;
+    var record = hopRecords[newHopRecipeIndex];
+    record.variety = this.varieties[0];
+
+    this.setState({
+      newHopShouldOpen: false,
+      hopRecords: update(hopRecords, {
+        [newHopRecipeIndex]: { $set: record },
+      }),
+    });
   }
 
   onNewCustomHopDialogSave() {
@@ -850,16 +860,32 @@ class App extends Component {
     this.customVarieties.push(newCustomHop);
     const { newHopRecipeIndex, newHopSubstitutionIndex } = this.state;
 
-    var hopRecords = this.state.hopRecords;
+    const hopRecords = this.state.hopRecords;
+    var record = hopRecords[newHopRecipeIndex];
+    record.variety = this.varieties[0];
 
     if (newHopSubstitutionIndex === null) {
-      hopRecords[newHopRecipeIndex].variety = newCustomHop;
+      record.variety = newCustomHop;
     } else {
-      hopRecords[newHopRecipeIndex].substitutions[
-        newHopSubstitutionIndex
-      ].variety = newCustomHop;
+      record.substitutions[newHopSubstitutionIndex].variety = newCustomHop;
     }
-    this.setState({ newHopShouldOpen: false, hopRecords });
+
+    this.setState({
+      newHopShouldOpen: false,
+      hopRecords: update(hopRecords, {
+        [newHopRecipeIndex]: { $set: record },
+      }),
+    });
+  }
+
+  onCustomHopNameChange(e) {
+    const newHopName = e.target.value;
+    this.setState({ newHopName });
+  }
+
+  onCustomHopHSIChange(e) {
+    const newHopHSI = e.target.value;
+    this.setState({ newHopHSI });
   }
 
   newCustomHopDialogTags() {
@@ -867,20 +893,20 @@ class App extends Component {
       <Dialog open={this.state.newHopShouldOpen}>
         <DialogTitle>New Custom Hop</DialogTitle>
         <DialogContent>
-          <TextField
+          <DebouncedTextField
             autoFocus
             margin="dense"
             label="Name"
             value={this.state.newHopName}
-            onInput={linkState(this, "newHopName")}
+            onChange={this.onCustomHopNameChange.bind(this)}
             fullWidth
           />
-          <TextField
+          <DebouncedTextField
             autoFocus
             margin="dense"
             label="Hop Storage Index Percentage"
             value={this.state.newHopHSI}
-            onInput={linkState(this, "newHopHSI")}
+            onChange={this.onCustomHopHSIChange.bind(this)}
             InputProps={{
               endAdornment: <InputAdornment position="end">%</InputAdornment>,
             }}
