@@ -73,6 +73,9 @@ import {
 } from "./util";
 
 import ResultField from "./ResultFieldComponent";
+import { debouncedInput } from "./debouncedInput";
+
+const DebouncedTextField = debouncedInput(TextField, { timeout: 500 });
 
 class App extends Component {
   constructor() {
@@ -188,11 +191,20 @@ class App extends Component {
   onBoilVolumeChanged(e) {
     const value = e.target.value;
     const fV = parseFloat(value);
-    if (isNaN(fV) && value !== "") {
-      return;
-    }
 
     this.setState({ boilVolume: isNaN(fV) ? "" : fV });
+
+    if (!isNaN(fV)) {
+      this.calculateBoilEndVolume();
+    }
+  }
+
+  onBoilOffRateChanged(e) {
+    const value = e.target.value;
+    const fV = parseFloat(value);
+
+    console.log(value, fV);
+    this.setState({ boilOffRate: isNaN(fV) ? value : fV });
 
     if (!isNaN(fV)) {
       this.calculateBoilEndVolume();
@@ -225,6 +237,7 @@ class App extends Component {
                 <InputAdornment position="end">minutes</InputAdornment>
               ),
             }}
+            inputProps={{ step: 1, min: 0 }}
             type="number"
           ></TextField>
         </Grid>
@@ -236,11 +249,12 @@ class App extends Component {
             InputProps={{
               endAdornment: <InputAdornment position="end">SG</InputAdornment>,
             }}
+            inputProps={{ step: 0.001, min: 0 }}
             type="number"
           ></TextField>
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField
+          <DebouncedTextField
             label="Boil Volume"
             value={boilVolume}
             onChange={this.onBoilVolumeChanged.bind(this)}
@@ -249,21 +263,24 @@ class App extends Component {
                 <InputAdornment position="end">liters</InputAdornment>
               ),
             }}
+            inputProps={{ step: "any", min: 0 }}
             type="number"
-          ></TextField>
+          ></DebouncedTextField>
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField
+          <DebouncedTextField
             label="Boil Off Rate"
             value={boilOffRate}
-            onInput={linkState(this, "boilOffRate")}
+            onChange={this.onBoilOffRateChanged.bind(this)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">liters/hour</InputAdornment>
               ),
             }}
             type="number"
-          ></TextField>
+            step="0.1"
+            min="0"
+          ></DebouncedTextField>
         </Grid>
         <Grid item xs={12} md={3}>
           <ResultField

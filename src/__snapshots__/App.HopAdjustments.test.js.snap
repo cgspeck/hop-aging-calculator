@@ -172,6 +172,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="1"
                       type="number"
                       value="60"
                     />
@@ -205,6 +207,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="0.001"
                       type="number"
                       value="1.041"
                     />
@@ -221,7 +225,7 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -238,6 +242,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="any"
                       type="number"
                       value="60"
                     />
@@ -254,10 +260,12 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
+                  min="0"
+                  step="0.1"
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -287,7 +295,23 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+              >
+                <div>
+                  End volume
+                  : 
+                  <br />
+                  <div
+                    style="color: rgb(51, 102, 204);"
+                  >
+                    49
+                     
+                    liters
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -528,6 +552,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="1"
                     type="number"
                     value="60"
                   />
@@ -561,6 +587,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="0.001"
                     type="number"
                     value="1.041"
                   />
@@ -577,7 +605,7 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
@@ -594,6 +622,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="any"
                     type="number"
                     value="60"
                   />
@@ -610,10 +640,12 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
+                min="0"
+                step="0.1"
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -643,7 +675,23 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+            >
+              <div>
+                End volume
+                : 
+                <br />
+                <div
+                  style="color: rgb(51, 102, 204);"
+                >
+                  49
+                   
+                  liters
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
@@ -1000,6 +1048,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="1"
                       type="number"
                       value="60"
                     />
@@ -1033,6 +1083,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="0.001"
                       type="number"
                       value="1.041"
                     />
@@ -1049,7 +1101,7 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -1066,6 +1118,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="any"
                       type="number"
                       value="60"
                     />
@@ -1082,10 +1136,12 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
+                  min="0"
+                  step="0.1"
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -1115,7 +1171,23 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+              >
+                <div>
+                  End volume
+                  : 
+                  <br />
+                  <div
+                    style="color: rgb(51, 102, 204);"
+                  >
+                    49
+                     
+                    liters
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -1909,6 +1981,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="1"
                     type="number"
                     value="60"
                   />
@@ -1942,6 +2016,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="0.001"
                     type="number"
                     value="1.041"
                   />
@@ -1958,7 +2034,7 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
@@ -1975,6 +2051,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="any"
                     type="number"
                     value="60"
                   />
@@ -1991,10 +2069,12 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
+                min="0"
+                step="0.1"
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -2024,7 +2104,23 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+            >
+              <div>
+                End volume
+                : 
+                <br />
+                <div
+                  style="color: rgb(51, 102, 204);"
+                >
+                  49
+                   
+                  liters
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
@@ -2875,6 +2971,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="1"
                       type="number"
                       value="60"
                     />
@@ -2908,6 +3006,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="0.001"
                       type="number"
                       value="1.041"
                     />
@@ -2924,7 +3024,7 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -2941,6 +3041,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="any"
                       type="number"
                       value="60"
                     />
@@ -2957,10 +3059,12 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
+                  min="0"
+                  step="0.1"
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -2990,7 +3094,23 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+              >
+                <div>
+                  End volume
+                  : 
+                  <br />
+                  <div
+                    style="color: rgb(51, 102, 204);"
+                  >
+                    49
+                     
+                    liters
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -4336,6 +4456,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="1"
                     type="number"
                     value="60"
                   />
@@ -4369,6 +4491,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="0.001"
                     type="number"
                     value="1.041"
                   />
@@ -4385,7 +4509,7 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
@@ -4402,6 +4526,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="any"
                     type="number"
                     value="60"
                   />
@@ -4418,10 +4544,12 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
+                min="0"
+                step="0.1"
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -4451,7 +4579,23 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+            >
+              <div>
+                End volume
+                : 
+                <br />
+                <div
+                  style="color: rgb(51, 102, 204);"
+                >
+                  49
+                   
+                  liters
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
@@ -5854,6 +5998,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="1"
                       type="number"
                       value="60"
                     />
@@ -5887,6 +6033,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="0.001"
                       type="number"
                       value="1.041"
                     />
@@ -5903,7 +6051,7 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -5920,6 +6068,8 @@ Object {
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                      min="0"
+                      step="any"
                       type="number"
                       value="60"
                     />
@@ -5936,10 +6086,12 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
+                  min="0"
+                  step="0.1"
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -5969,7 +6121,23 @@ Object {
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+              >
+                <div>
+                  End volume
+                  : 
+                  <br />
+                  <div
+                    style="color: rgb(51, 102, 204);"
+                  >
+                    49
+                     
+                    liters
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
               >
                 <div
                   class="MuiFormControl-root MuiTextField-root"
@@ -7011,6 +7179,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="1"
                     type="number"
                     value="60"
                   />
@@ -7044,6 +7214,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="0.001"
                     type="number"
                     value="1.041"
                   />
@@ -7060,7 +7232,7 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
@@ -7077,6 +7249,8 @@ Object {
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                    min="0"
+                    step="any"
                     type="number"
                     value="60"
                   />
@@ -7093,10 +7267,12 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
+                min="0"
+                step="0.1"
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
@@ -7126,7 +7302,23 @@ Object {
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+            >
+              <div>
+                End volume
+                : 
+                <br />
+                <div
+                  style="color: rgb(51, 102, 204);"
+                >
+                  49
+                   
+                  liters
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root"
