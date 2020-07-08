@@ -63,7 +63,7 @@ import cloneDeep from "lodash.clonedeep";
 import { DEFAULT_VARIETIES } from "./data";
 import {
   calculatePostBoilVolume,
-  calculateDilutedGravity,
+  calculateNewGravity,
   calculateHopUtilisationFactor,
   calculateRequiredGrams,
   calculateIBU,
@@ -91,7 +91,7 @@ class App extends Component {
       boilTime
     );
 
-    const boilEndGravity = calculateDilutedGravity(
+    const boilEndGravity = calculateNewGravity(
       boilVolume,
       boilStartGravity,
       boilEndVolume
@@ -135,7 +135,7 @@ class App extends Component {
   calculateBoilEndGravity() {
     const { boilVolume, boilStartGravity, boilEndVolume } = this.state;
 
-    const boilEndGravity = calculateDilutedGravity(
+    const boilEndGravity = calculateNewGravity(
       boilVolume,
       boilStartGravity,
       boilEndVolume
@@ -166,15 +166,9 @@ class App extends Component {
   }
 
   newHopRecord() {
-    const {
-      boilVolume,
-      boilStartGravity,
-      boilEndGravity,
-      boilTime,
-    } = this.state;
+    const { boilVolume, boilStartGravity, boilTime } = this.state;
     const utilisationFactor = calculateHopUtilisationFactor(
       boilStartGravity,
-      boilEndGravity,
       boilTime
     );
 
@@ -987,13 +981,7 @@ class App extends Component {
       return;
     }
 
-    const {
-      boilTime,
-      boilVolume,
-      boilStartGravity,
-      boilEndGravity,
-      boilOffRate,
-    } = this.state;
+    const { boilTime, boilVolume, boilStartGravity, boilOffRate } = this.state;
     if (iValue > boilTime) {
       return;
     }
@@ -1026,7 +1014,7 @@ class App extends Component {
     );
     record.intermediateVolume = intermediateVolume;
 
-    const intermediateGravity = calculateDilutedGravity(
+    const intermediateGravity = calculateNewGravity(
       boilVolume,
       boilStartGravity,
       intermediateVolume
@@ -1034,8 +1022,7 @@ class App extends Component {
     record.intermediateGravity = intermediateGravity;
 
     const utilisationFactor = calculateHopUtilisationFactor(
-      boilStartGravity,
-      boilEndGravity,
+      intermediateGravity,
       boilTime
     );
 
