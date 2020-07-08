@@ -81,9 +81,10 @@ class App extends Component {
     super();
     this.varieties = DEFAULT_VARIETIES;
 
-    const boilStartGravity = 1.041;
+    const ibuCalcMode = "end-gravity";
+    const boilStartGravity = 1.048;
     const boilVolume = 60.0;
-    const boilOffRate = 11;
+    const boilOffRate = 16;
     const boilTime = 60;
     const boilEndVolume = calculatePostBoilVolume(
       boilVolume,
@@ -99,6 +100,7 @@ class App extends Component {
 
     this.state = {
       brewDate: DateTime.local(),
+      ibuCalcMode,
       boilTime,
       boilVolume,
       boilOffRate,
@@ -166,25 +168,40 @@ class App extends Component {
   }
 
   newHopRecord() {
-    const { boilVolume, boilStartGravity, boilTime } = this.state;
-    const utilisationFactor = calculateHopUtilisationFactor(
+    const {
+      ibuCalcMode,
+      boilVolume,
       boilStartGravity,
+      boilEndGravity,
+      boilTime,
+    } = this.state;
+
+    const gravityForIBUCalc =
+      ibuCalcMode === "minute-by-minute-gravity"
+        ? boilEndGravity
+        : boilStartGravity;
+
+    const utilisationFactor = calculateHopUtilisationFactor(
+      gravityForIBUCalc,
       boilTime
     );
 
     const currentCount = Object.keys(this.state.hopRecords).length;
 
-    return {
+    const memo = {
       ibu: 0.0,
       variety: this.varieties[0],
       additionTime: boilTime,
       intermediateVolume: boilVolume,
       intermediateGravity: boilStartGravity,
+      gravityForIBUCalc,
       utilisationFactor,
       substitutions: [],
       ibuRequirementSatisfied: true,
       name: `Hop addition ${currentCount + 1}`,
     };
+
+    return memo;
   }
 
   onNewHopAddition(e) {
@@ -248,12 +265,18 @@ class App extends Component {
     }
   }
 
+  onIBUCalcModeChanged(e) {
+    const ibuCalcMode = e.target.value;
+    this.setState({ ibuCalcMode });
+    this.calculateSubstitutionValuesForRecipe();
+  }
+
   recipeControls() {
-    const { boilVolume, boilEndVolume, boilOffRate } = this.state;
+    const { boilVolume, boilEndVolume, boilOffRate, ibuCalcMode } = this.state;
 
     return (
       <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           {" "}
           <DatePicker
             id="brew-date"
@@ -264,7 +287,7 @@ class App extends Component {
             disablePast
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <DebouncedTextField
             label="Boil Time"
             value={this.state.boilTime}
@@ -278,7 +301,7 @@ class App extends Component {
             type="number"
           ></DebouncedTextField>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <DebouncedTextField
             label="Boil Start Gravity"
             value={this.state.boilStartGravity}
@@ -304,7 +327,7 @@ class App extends Component {
             type="number"
           ></DebouncedTextField>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           <DebouncedTextField
             label="Boil Off Rate"
             value={boilOffRate}
@@ -319,19 +342,33 @@ class App extends Component {
             min="0"
           ></DebouncedTextField>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           <ResultField
             label="End volume"
             postValue="liters"
             value={boilEndVolume}
           />
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           <ResultField
             label="Boil End Gravity"
             value={this.state.boilEndGravity.toFixed(3)}
             postValue="SG"
           />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <InputLabel>IBU Calculation Mode</InputLabel>
+          <Select
+            value={ibuCalcMode}
+            onChange={this.onIBUCalcModeChanged.bind(this)}
+          >
+            <MenuItem value="minute-by-minute-gravity" key="0">
+              Tinseth, minute-by-minute gravity
+            </MenuItem>
+            <MenuItem value="end-gravity" key="1">
+              Tinseth, end boil gravity (e.g. BrewTarget)
+            </MenuItem>
+          </Select>
         </Grid>
         <Grid item xs={12}>
           <Button
@@ -391,9 +428,11 @@ class App extends Component {
   calculateSubstitutionValuesForRecipe() {
     const { hopRecords } = this.state;
 
-    Object.entries(hopRecords).map(([key, _]) =>
-      this.calculateSubstitutionValuesForHopRecord(key)
-    );
+    // eslint-disable-next-line array-callback-return
+    Object.entries(hopRecords).map(([key, _]) => {
+      this.calculateIntermediateVolumeAndGravity(key);
+      this.calculateSubstitutionValuesForHopRecord(key);
+    });
   }
 
   calculateSubstitutionValuesForHopRecord(hopRecordIndex) {
@@ -535,7 +574,7 @@ class App extends Component {
     index,
     hopRecordIndex
   ) {
-    var { hopRecords } = this.state;
+    var { boilEndVolume, hopRecords } = this.state;
     var hopRecord = hopRecords[hopRecordIndex];
     var substituteRecord = hopRecord.substitutions[index];
     const brewDate = this.state.brewDate;
@@ -576,12 +615,7 @@ class App extends Component {
       calculatedRequiredAmount = 0;
       calculatedIBU = 0;
     } else {
-      const {
-        intermediateVolume,
-        intermediateGravity,
-        utilisationFactor,
-        ibu,
-      } = hopRecord;
+      const { utilisationFactor, ibu } = hopRecord;
 
       var calcIBURequirementSatisifed = false;
       // clip wanted ibu to total of this hop addition
@@ -599,8 +633,7 @@ class App extends Component {
       }
 
       calculatedRequiredAmount = calculateRequiredGrams(
-        intermediateVolume,
-        intermediateGravity,
+        boilEndVolume,
         wantedIBU,
         calculatedEstimatedAA,
         utilisationFactor
@@ -614,8 +647,7 @@ class App extends Component {
         calculatedRequiredAmount,
         utilisationFactor,
         calculatedEstimatedAA,
-        intermediateVolume,
-        intermediateGravity
+        boilEndVolume
       );
 
       if (compareFloats(calculatedIBU, wantedIBU)) {
@@ -974,37 +1006,18 @@ class App extends Component {
     });
   }
 
-  onAdditionTimeChange(hopRecordIndex, e) {
-    const value = e.target.value;
-    const iValue = parseInt(value, 10);
-    if (isNaN(iValue) && value !== "") {
-      return;
-    }
-
-    const { boilTime, boilVolume, boilStartGravity, boilOffRate } = this.state;
-    if (iValue > boilTime) {
-      return;
-    }
+  calculateIntermediateVolumeAndGravity(hopRecordIndex) {
+    const {
+      boilTime,
+      boilVolume,
+      boilStartGravity,
+      boilEndGravity,
+      boilOffRate,
+      ibuCalcMode,
+    } = this.state;
 
     const { hopRecords } = this.state;
     var record = hopRecords[hopRecordIndex];
-
-    if (isNaN(iValue)) {
-      record.additionTime = "";
-      this.setState({
-        hopRecords: update(hopRecords, {
-          [hopRecordIndex]: { $set: record },
-        }),
-      });
-      return;
-    }
-
-    if (iValue < 0) {
-      return;
-    }
-
-    record.additionTime = iValue;
-
     const { additionTime } = record;
 
     const intermediateVolume = calculatePostBoilVolume(
@@ -1019,13 +1032,22 @@ class App extends Component {
       boilStartGravity,
       intermediateVolume
     );
+
     record.intermediateGravity = intermediateGravity;
 
+    var gravityForIBUCalc;
+    if (ibuCalcMode === "minute-by-minute-gravity") {
+      gravityForIBUCalc = intermediateGravity;
+    } else {
+      gravityForIBUCalc = boilEndGravity;
+    }
+
     const utilisationFactor = calculateHopUtilisationFactor(
-      intermediateGravity,
+      gravityForIBUCalc,
       boilTime
     );
 
+    record.gravityForIBUCalc = gravityForIBUCalc;
     record.utilisationFactor = utilisationFactor;
 
     this.setState({
@@ -1033,6 +1055,41 @@ class App extends Component {
         [hopRecordIndex]: { $set: record },
       }),
     });
+  }
+
+  onAdditionTimeChange(hopRecordIndex, e) {
+    const value = e.target.value;
+    const iValue = parseInt(value, 10);
+    if (isNaN(iValue) && value !== "") {
+      return;
+    }
+
+    const { boilTime } = this.state;
+    if (iValue > boilTime) {
+      return;
+    }
+
+    const { hopRecords } = this.state;
+    var record = hopRecords[hopRecordIndex];
+
+    if (isNaN(iValue)) {
+      record.additionTime = "";
+
+      return;
+    }
+
+    if (iValue < 0) {
+      return;
+    }
+
+    record.additionTime = iValue;
+    this.setState({
+      hopRecords: update(hopRecords, {
+        [hopRecordIndex]: { $set: record },
+      }),
+    });
+
+    this.calculateIntermediateVolumeAndGravity(hopRecordIndex);
   }
 
   hopAdditionIBUStatusTag(ibuRequirementSatisfied) {
