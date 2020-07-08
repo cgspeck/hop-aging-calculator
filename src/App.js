@@ -84,7 +84,7 @@ class App extends Component {
     const ibuCalcMode = "end-gravity";
     const boilStartGravity = 1.044;
     const boilVolume = 60.0;
-    const boilOffRate = 16;
+    const boilOffRate = 11;
     const boilTime = 60;
     const boilEndVolume = calculatePostBoilVolume(
       boilVolume,
@@ -146,6 +146,7 @@ class App extends Component {
     this.setState({
       boilEndGravity,
     });
+    this.calculateSubstitutionValuesForRecipe();
   }
 
   newSubstitution(baseVariety) {
@@ -346,7 +347,7 @@ class App extends Component {
           <ResultField
             label="End volume"
             postValue="liters"
-            value={boilEndVolume}
+            value={boilEndVolume.toFixed(1)}
           />
         </Grid>
         <Grid item xs={12} md={4}>
@@ -1123,7 +1124,7 @@ class App extends Component {
   }
 
   hopRecordTag(hopRecord, index) {
-    const { ibuRequirementSatisfied } = hopRecord;
+    const { additionTime, ibuRequirementSatisfied } = hopRecord;
 
     return (
       <Grid item xs={12} key={index}>
@@ -1190,7 +1191,7 @@ class App extends Component {
               <Grid item xs={12} md={3}>
                 <DebouncedTextField
                   label="at"
-                  value={hopRecord.additionTime}
+                  value={additionTime}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">minutes</InputAdornment>

@@ -53,7 +53,6 @@ function _calculateBoilTimeFactor(boilTime) {
 }
 
 function calculateHopUtilisationFactor(gravity, minutes) {
-  console.log("calculateHopUtilisationFactor", gravity, minutes);
   return _calculateBignessFactor(gravity) * _calculateBoilTimeFactor(minutes);
 }
 
@@ -63,13 +62,6 @@ function calculateRequiredGrams(
   alphaAcids,
   utilisationFactor
 ) {
-  console.log(
-    "calculateRequiredGrams",
-    boilEndVolumeLiters,
-    IBUs,
-    alphaAcids,
-    utilisationFactor
-  );
   const mgLofAlphaAcids = IBUs / utilisationFactor;
   const decimalByWeightBy1000 = mgLofAlphaAcids * boilEndVolumeLiters;
   const decimalAlphaAcids = alphaAcids / 100;
@@ -82,13 +74,6 @@ function calculateIBU(
   alphaAcids,
   boilEndVolumeLiters
 ) {
-  console.log(
-    "calculateIBU",
-    weightGrams,
-    utilisationFactor,
-    alphaAcids,
-    boilEndVolumeLiters
-  );
   const decimalAlphaAcids = alphaAcids / 100;
   const mgLofAlphaAcids =
     (decimalAlphaAcids * weightGrams * 1000) / boilEndVolumeLiters;

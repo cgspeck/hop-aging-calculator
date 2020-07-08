@@ -280,7 +280,7 @@ Object {
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
                       type="number"
-                      value="16"
+                      value="11"
                     />
                     <div
                       class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -304,7 +304,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    44
+                    49.0
                      
                     liters
                   </div>
@@ -320,7 +320,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    1.060
+                    1.054
                      
                     SG
                   </div>
@@ -680,7 +680,7 @@ Object {
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
                     type="number"
-                    value="16"
+                    value="11"
                   />
                   <div
                     class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -704,7 +704,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  44
+                  49.0
                    
                   liters
                 </div>
@@ -720,7 +720,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  1.060
+                  1.054
                    
                   SG
                 </div>
@@ -1196,7 +1196,7 @@ Object {
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
                       type="number"
-                      value="16"
+                      value="11"
                     />
                     <div
                       class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -1220,7 +1220,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    44
+                    49.0
                      
                     liters
                   </div>
@@ -1236,7 +1236,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    1.060
+                    1.054
                      
                     SG
                   </div>
@@ -1849,7 +1849,7 @@ Object {
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
                     type="number"
-                    value="16"
+                    value="11"
                   />
                   <div
                     class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -1873,7 +1873,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  44
+                  49.0
                    
                   liters
                 </div>
@@ -1889,7 +1889,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  1.060
+                  1.054
                    
                   SG
                 </div>
@@ -2559,7 +2559,7 @@ Object {
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
                       type="number"
-                      value="16"
+                      value="11"
                     />
                     <div
                       class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -2583,7 +2583,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    44
+                    49.0
                      
                     liters
                   </div>
@@ -2599,7 +2599,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    1.060
+                    1.054
                      
                     SG
                   </div>
@@ -3464,7 +3464,7 @@ Object {
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
                     type="number"
-                    value="16"
+                    value="11"
                   />
                   <div
                     class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -3488,7 +3488,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  44
+                  49.0
                    
                   liters
                 </div>
@@ -3504,7 +3504,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  1.060
+                  1.054
                    
                   SG
                 </div>
@@ -4426,7 +4426,7 @@ Object {
                       aria-invalid="false"
                       class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
                       type="number"
-                      value="16"
+                      value="11"
                     />
                     <div
                       class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -4450,7 +4450,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    44
+                    49.0
                      
                     liters
                   </div>
@@ -4466,7 +4466,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    1.060
+                    1.054
                      
                     SG
                   </div>
@@ -5331,7 +5331,7 @@ Object {
                     aria-invalid="false"
                     class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
                     type="number"
-                    value="16"
+                    value="11"
                   />
                   <div
                     class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -5355,7 +5355,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  44
+                  49.0
                    
                   liters
                 </div>
@@ -5371,7 +5371,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  1.060
+                  1.054
                    
                   SG
                 </div>
