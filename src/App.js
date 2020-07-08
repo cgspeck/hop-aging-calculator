@@ -669,7 +669,7 @@ class App extends Component {
               color="secondary"
             />
           </Grid>
-          <Grid item xs={11} md={1}>
+          <Grid item xs={11} md={3}>
             <DebouncedTextField
               label="Up to"
               value={substituteRecord.maxAmount}
@@ -704,7 +704,7 @@ class App extends Component {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} md={2}>
+          <Grid item xs={12} md={3}>
             <DebouncedTextField
               label="Rated"
               value={substituteRecord.ratedAlphaAcid}
@@ -736,9 +736,9 @@ class App extends Component {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <InputLabel>Storage Conditions</InputLabel>
             <Select
               value={substituteRecord.storageFactor}
-              label="Storage conditions"
               onChange={this.onSubstituteStorageFactorChanged.bind(
                 this,
                 index,
@@ -756,7 +756,7 @@ class App extends Component {
               </MenuItem>
             </Select>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={3}>
             <DebouncedTextField
               label="Storage Temperature"
               value={substituteRecord.storageTemperature}
