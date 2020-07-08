@@ -78,11 +78,17 @@ class App extends Component {
   constructor() {
     super();
     this.varieties = DEFAULT_VARIETIES;
+
+    const boilVolume = 60.0;
+    const boilOffRate = 11;
+    const boilTime = 60;
+
     this.state = {
-      boilTime: 60,
       brewDate: DateTime.local(),
-      boilVolume: 60,
-      boilOffRate: 11,
+      boilTime,
+      boilVolume,
+      boilOffRate,
+      boilEndVolume: calculatePostBoilVolume(boilVolume, boilOffRate, boilTime),
       boilStartGravity: 1.041,
       boilEndGravity: 1.05,
       hopRecords: {},
@@ -92,13 +98,27 @@ class App extends Component {
       newHopRecipeIndex: null,
       newHopSubstitutionIndex: null,
     };
-
     var newRecord = this.newHopRecord();
     newRecord.substitutions = [this.newSubstitution(newRecord.variety)];
 
     this.state.hopRecords[createId()] = newRecord;
 
     this.customVarieties = [];
+  }
+
+  calculateBoilEndVolume() {
+    const { boilVolume, boilOffRate, boilTime } = this.state;
+    console.log("hi");
+
+    const boilEndVolume = calculatePostBoilVolume(
+      boilVolume,
+      boilOffRate,
+      boilTime
+    );
+    console.log(boilVolume, boilOffRate, boilTime, boilEndVolume);
+    this.setState({
+      boilEndVolume,
+    });
   }
 
   newSubstitution(baseVariety) {
@@ -165,7 +185,23 @@ class App extends Component {
     this.calculateSubstitutionValuesForRecipe();
   }
 
+  onBoilVolumeChanged(e) {
+    const value = e.target.value;
+    const fV = parseFloat(value);
+    if (isNaN(fV) && value !== "") {
+      return;
+    }
+
+    this.setState({ boilVolume: isNaN(fV) ? "" : fV });
+
+    if (!isNaN(fV)) {
+      this.calculateBoilEndVolume();
+    }
+  }
+
   recipeControls() {
+    const { boilVolume, boilEndVolume, boilOffRate } = this.state;
+
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
@@ -203,11 +239,11 @@ class App extends Component {
             type="number"
           ></TextField>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <TextField
             label="Boil Volume"
-            value={this.state.boilVolume}
-            onChange={linkState(this, "boilVolume")}
+            value={boilVolume}
+            onChange={this.onBoilVolumeChanged.bind(this)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">liters</InputAdornment>
@@ -216,10 +252,10 @@ class App extends Component {
             type="number"
           ></TextField>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <TextField
             label="Boil Off Rate"
-            value={this.state.boilOffRate}
+            value={boilOffRate}
             onInput={linkState(this, "boilOffRate")}
             InputProps={{
               endAdornment: (
@@ -229,7 +265,14 @@ class App extends Component {
             type="number"
           ></TextField>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
+          <ResultField
+            label="End volume"
+            postValue="liters"
+            value={boilEndVolume}
+          />
+        </Grid>
+        <Grid item xs={12} md={3}>
           <TextField
             label="Boil End Gravity"
             value={this.state.boilEndGravity}
