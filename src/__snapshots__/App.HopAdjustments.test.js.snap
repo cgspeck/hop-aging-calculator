@@ -210,7 +210,7 @@ Object {
                       min="0"
                       step="0.001"
                       type="number"
-                      value="1.048"
+                      value="1.044"
                     />
                     <div
                       class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -320,7 +320,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    1.065
+                    1.060
                      
                     SG
                   </div>
@@ -610,7 +610,7 @@ Object {
                     min="0"
                     step="0.001"
                     type="number"
-                    value="1.048"
+                    value="1.044"
                   />
                   <div
                     class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -720,7 +720,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  1.065
+                  1.060
                    
                   SG
                 </div>
@@ -1126,7 +1126,7 @@ Object {
                       min="0"
                       step="0.001"
                       type="number"
-                      value="1.048"
+                      value="1.044"
                     />
                     <div
                       class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -1236,7 +1236,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    1.065
+                    1.060
                      
                     SG
                   </div>
@@ -1518,7 +1518,7 @@ Object {
                           <div
                             style="color: rgb(51, 102, 204);"
                           >
-                            1.048
+                            1.044
                              
                             SG
                           </div>
@@ -1779,7 +1779,7 @@ Object {
                     min="0"
                     step="0.001"
                     type="number"
-                    value="1.048"
+                    value="1.044"
                   />
                   <div
                     class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -1889,7 +1889,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  1.065
+                  1.060
                    
                   SG
                 </div>
@@ -2171,7 +2171,7 @@ Object {
                         <div
                           style="color: rgb(51, 102, 204);"
                         >
-                          1.048
+                          1.044
                            
                           SG
                         </div>
@@ -2489,7 +2489,7 @@ Object {
                       min="0"
                       step="0.001"
                       type="number"
-                      value="1.048"
+                      value="1.044"
                     />
                     <div
                       class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -2599,7 +2599,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    1.065
+                    1.060
                      
                     SG
                   </div>
@@ -2881,7 +2881,7 @@ Object {
                           <div
                             style="color: rgb(51, 102, 204);"
                           >
-                            1.048
+                            1.044
                              
                             SG
                           </div>
@@ -3133,7 +3133,7 @@ Object {
                           <div
                             style="color: rgb(51, 102, 204);"
                           >
-                            1.048
+                            1.044
                              
                             SG
                           </div>
@@ -3394,7 +3394,7 @@ Object {
                     min="0"
                     step="0.001"
                     type="number"
-                    value="1.048"
+                    value="1.044"
                   />
                   <div
                     class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -3504,7 +3504,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  1.065
+                  1.060
                    
                   SG
                 </div>
@@ -3786,7 +3786,7 @@ Object {
                         <div
                           style="color: rgb(51, 102, 204);"
                         >
-                          1.048
+                          1.044
                            
                           SG
                         </div>
@@ -4038,7 +4038,7 @@ Object {
                         <div
                           style="color: rgb(51, 102, 204);"
                         >
-                          1.048
+                          1.044
                            
                           SG
                         </div>
@@ -4356,7 +4356,7 @@ Object {
                       min="0"
                       step="0.001"
                       type="number"
-                      value="1.048"
+                      value="1.044"
                     />
                     <div
                       class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -4466,7 +4466,7 @@ Object {
                   <div
                     style="color: rgb(51, 102, 204);"
                   >
-                    1.065
+                    1.060
                      
                     SG
                   </div>
@@ -4748,7 +4748,7 @@ Object {
                           <div
                             style="color: rgb(51, 102, 204);"
                           >
-                            1.048
+                            1.044
                              
                             SG
                           </div>
@@ -5000,7 +5000,7 @@ Object {
                           <div
                             style="color: rgb(51, 102, 204);"
                           >
-                            1.048
+                            1.044
                              
                             SG
                           </div>
@@ -5261,7 +5261,7 @@ Object {
                     min="0"
                     step="0.001"
                     type="number"
-                    value="1.048"
+                    value="1.044"
                   />
                   <div
                     class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -5371,7 +5371,7 @@ Object {
                 <div
                   style="color: rgb(51, 102, 204);"
                 >
-                  1.065
+                  1.060
                    
                   SG
                 </div>
@@ -5653,7 +5653,7 @@ Object {
                         <div
                           style="color: rgb(51, 102, 204);"
                         >
-                          1.048
+                          1.044
                            
                           SG
                         </div>
@@ -5905,7 +5905,7 @@ Object {
                         <div
                           style="color: rgb(51, 102, 204);"
                         >
-                          1.048
+                          1.044
                            
                           SG
                         </div>
