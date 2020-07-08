@@ -82,18 +82,30 @@ class App extends Component {
     super();
     this.varieties = DEFAULT_VARIETIES;
 
+    const boilStartGravity = 1.041;
     const boilVolume = 60.0;
     const boilOffRate = 11;
     const boilTime = 60;
+    const boilEndVolume = calculatePostBoilVolume(
+      boilVolume,
+      boilOffRate,
+      boilTime
+    );
+
+    const boilEndGravity = calculateDilutedGravity(
+      boilVolume,
+      boilStartGravity,
+      boilEndVolume
+    );
 
     this.state = {
       brewDate: DateTime.local(),
       boilTime,
       boilVolume,
       boilOffRate,
-      boilEndVolume: calculatePostBoilVolume(boilVolume, boilOffRate, boilTime),
-      boilStartGravity: 1.041,
-      boilEndGravity: 1.05,
+      boilEndVolume,
+      boilStartGravity,
+      boilEndGravity,
       hopRecords: {},
       newHopShouldOpen: false,
       newHopName: "",
@@ -111,16 +123,29 @@ class App extends Component {
 
   calculateBoilEndVolume() {
     const { boilVolume, boilOffRate, boilTime } = this.state;
-    console.log("hi");
 
     const boilEndVolume = calculatePostBoilVolume(
       boilVolume,
       boilOffRate,
       boilTime
     );
-    console.log(boilVolume, boilOffRate, boilTime, boilEndVolume);
     this.setState({
       boilEndVolume,
+    });
+    this.calculateBoilEndGravity();
+  }
+
+  calculateBoilEndGravity() {
+    const { boilVolume, boilStartGravity, boilEndVolume } = this.state;
+
+    const boilEndGravity = calculateDilutedGravity(
+      boilVolume,
+      boilStartGravity,
+      boilEndVolume
+    );
+
+    this.setState({
+      boilEndGravity,
     });
   }
 
@@ -290,15 +315,11 @@ class App extends Component {
           />
         </Grid>
         <Grid item xs={12} md={3}>
-          <TextField
+          <ResultField
             label="Boil End Gravity"
-            value={this.state.boilEndGravity}
-            onChange={linkState(this, "boilEndGravity")}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">SG</InputAdornment>,
-            }}
-            type="number"
-          ></TextField>
+            value={this.state.boilEndGravity.toFixed(3)}
+            postValue="SG"
+          />
         </Grid>
         <Grid item xs={12}>
           <Button
