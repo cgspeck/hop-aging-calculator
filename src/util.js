@@ -28,80 +28,71 @@ function calculatePostBoilVolume(
   return startVolumeLiters - boilOffRatePerHour * (minutes / 60);
 }
 
-function calculateDilutedGravity(startVolume, startGravity, endVolume) {
+function calculateNewGravity(startVolume, startGravity, endVolume) {
   // turn a number like 1.056 => 56
   const startGravityPoints = startGravity * 1000 - 1000;
   const endGravityPoints = (startVolume * startGravityPoints) / endVolume;
   return endGravityPoints / 1000 + 1;
 }
 
-function calculateBignessFactor(startGravity, endGravity) {
+function _calculateBignessFactor(gravity) {
+  /*
+   https://realbeer.com/hops/research.html
+
   // Bigness factor = 1.65 * 0.000125^(wort gravity - 1)
-  const averageGravity = (startGravity + endGravity) / 2;
-  return 1.65 * Math.pow(0.000125, averageGravity - 1);
+  */
+
+  return 1.65 * Math.pow(0.000125, gravity - 1);
 }
 
-function calculateBoilTimeFactor(boilTime) {
+function _calculateBoilTimeFactor(boilTime) {
   // Boil Time factor = 1 - e^(-0.04 * time in mins)
   //                  --------------------------
   //                            4.15
   return (1 - Math.pow(Math.E, -0.04 * boilTime)) / 4.15;
 }
 
-function calculateHopUtilisationFactor(startGravity, endGravity, minutes) {
-  return (
-    calculateBignessFactor(startGravity, endGravity) *
-    calculateBoilTimeFactor(minutes)
-  );
-}
-
-function calculateGravityCorrectionFactor(gravity) {
-  if (gravity > 1.05) {
-    return 1 + (gravity - 1.05) / 2;
-  } else {
-    return 1;
-  }
+function calculateHopUtilisationFactor(gravity, minutes) {
+  return _calculateBignessFactor(gravity) * _calculateBoilTimeFactor(minutes);
 }
 
 function calculateRequiredGrams(
-  volumeLiters,
-  gravity,
-  IBU,
+  boilEndVolumeLiters,
+  IBUs,
   alphaAcids,
   utilisationFactor
 ) {
-  const gravityCorrectionFactor = calculateGravityCorrectionFactor(gravity);
-
-  return (
-    (volumeLiters * gravityCorrectionFactor * IBU) /
-    (utilisationFactor * (alphaAcids / 100) * 1000)
-  );
+  const mgLofAlphaAcids = IBUs / utilisationFactor;
+  const decimalByWeightBy1000 = mgLofAlphaAcids * boilEndVolumeLiters;
+  const decimalAlphaAcids = alphaAcids / 100;
+  return decimalByWeightBy1000 / (decimalAlphaAcids * 1000);
 }
 
 function calculateIBU(
   weightGrams,
   utilisationFactor,
   alphaAcids,
-  volumeLiters,
-  gravity
+  boilEndVolumeLiters
 ) {
-  const gravityCorrectionFactor = calculateGravityCorrectionFactor(gravity);
-  return (
-    (weightGrams * utilisationFactor * (alphaAcids / 100) * 1000) /
-    (volumeLiters * gravityCorrectionFactor)
-  );
+  const decimalAlphaAcids = alphaAcids / 100;
+  const mgLofAlphaAcids =
+    (decimalAlphaAcids * weightGrams * 1000) / boilEndVolumeLiters;
+
+  return utilisationFactor * mgLofAlphaAcids;
 }
 
-function compareFloats(f1, f2, error = 0.01) {
+function compareFloats(f1, f2, error = 0.05) {
   return f1 - error <= f2 && f1 + error >= f2;
 }
 
 export {
   calculatePostBoilVolume,
-  calculateDilutedGravity,
+  calculateNewGravity,
   calculateHopUtilisationFactor,
   calculateRequiredGrams,
   calculateIBU,
   compareFloats,
   createId,
+  _calculateBignessFactor,
+  _calculateBoilTimeFactor,
 };
