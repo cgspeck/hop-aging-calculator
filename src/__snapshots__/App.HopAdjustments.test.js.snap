@@ -1293,6 +1293,8 @@ Object {
                             <input
                               aria-invalid="false"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                              min="0"
+                              step="any"
                               type="number"
                               value="0"
                             />
@@ -1378,6 +1380,8 @@ Object {
                             <input
                               aria-invalid="false"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                              min="0"
+                              step="1"
                               type="number"
                               value="60"
                             />
@@ -1486,6 +1490,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  min="0"
+                                  step="any"
                                   type="number"
                                   value="0"
                                 />
@@ -1561,6 +1567,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  min="0"
+                                  step="0.1"
                                   type="number"
                                   value="4.5"
                                 />
@@ -1653,6 +1661,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  max="20"
+                                  min="-30"
                                   type="number"
                                   value="-8"
                                 />
@@ -2209,6 +2219,8 @@ Object {
                           <input
                             aria-invalid="false"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                            min="0"
+                            step="any"
                             type="number"
                             value="0"
                           />
@@ -2294,6 +2306,8 @@ Object {
                           <input
                             aria-invalid="false"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                            min="0"
+                            step="1"
                             type="number"
                             value="60"
                           />
@@ -2402,6 +2416,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                min="0"
+                                step="any"
                                 type="number"
                                 value="0"
                               />
@@ -2477,6 +2493,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                min="0"
+                                step="0.1"
                                 type="number"
                                 value="4.5"
                               />
@@ -2569,6 +2587,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                max="20"
+                                min="-30"
                                 type="number"
                                 value="-8"
                               />
@@ -3182,6 +3202,8 @@ Object {
                             <input
                               aria-invalid="false"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                              min="0"
+                              step="any"
                               type="number"
                               value="0"
                             />
@@ -3267,6 +3289,8 @@ Object {
                             <input
                               aria-invalid="false"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                              min="0"
+                              step="1"
                               type="number"
                               value="60"
                             />
@@ -3375,6 +3399,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  min="0"
+                                  step="any"
                                   type="number"
                                   value="0"
                                 />
@@ -3450,6 +3476,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  min="0"
+                                  step="0.1"
                                   type="number"
                                   value="4.5"
                                 />
@@ -3542,6 +3570,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  max="20"
+                                  min="-30"
                                   type="number"
                                   value="-8"
                                 />
@@ -3734,6 +3764,8 @@ Object {
                             <input
                               aria-invalid="false"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                              min="0"
+                              step="any"
                               type="number"
                               value="0"
                             />
@@ -3819,6 +3851,8 @@ Object {
                             <input
                               aria-invalid="false"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                              min="0"
+                              step="1"
                               type="number"
                               value="60"
                             />
@@ -3927,6 +3961,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  min="0"
+                                  step="any"
                                   type="number"
                                   value="0"
                                 />
@@ -4002,6 +4038,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  min="0"
+                                  step="0.1"
                                   type="number"
                                   value="4.5"
                                 />
@@ -4094,6 +4132,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  max="20"
+                                  min="-30"
                                   type="number"
                                   value="-8"
                                 />
@@ -4650,6 +4690,8 @@ Object {
                           <input
                             aria-invalid="false"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                            min="0"
+                            step="any"
                             type="number"
                             value="0"
                           />
@@ -4735,6 +4777,8 @@ Object {
                           <input
                             aria-invalid="false"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                            min="0"
+                            step="1"
                             type="number"
                             value="60"
                           />
@@ -4843,6 +4887,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                min="0"
+                                step="any"
                                 type="number"
                                 value="0"
                               />
@@ -4918,6 +4964,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                min="0"
+                                step="0.1"
                                 type="number"
                                 value="4.5"
                               />
@@ -5010,6 +5058,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                max="20"
+                                min="-30"
                                 type="number"
                                 value="-8"
                               />
@@ -5202,6 +5252,8 @@ Object {
                           <input
                             aria-invalid="false"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                            min="0"
+                            step="any"
                             type="number"
                             value="0"
                           />
@@ -5287,6 +5339,8 @@ Object {
                           <input
                             aria-invalid="false"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                            min="0"
+                            step="1"
                             type="number"
                             value="60"
                           />
@@ -5395,6 +5449,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                min="0"
+                                step="any"
                                 type="number"
                                 value="0"
                               />
@@ -5470,6 +5526,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                min="0"
+                                step="0.1"
                                 type="number"
                                 value="4.5"
                               />
@@ -5562,6 +5620,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                max="20"
+                                min="-30"
                                 type="number"
                                 value="-8"
                               />
@@ -6175,6 +6235,8 @@ Object {
                             <input
                               aria-invalid="false"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                              min="0"
+                              step="any"
                               type="number"
                               value="0"
                             />
@@ -6260,6 +6322,8 @@ Object {
                             <input
                               aria-invalid="false"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                              min="0"
+                              step="1"
                               type="number"
                               value="60"
                             />
@@ -6368,6 +6432,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  min="0"
+                                  step="any"
                                   type="number"
                                   value="0"
                                 />
@@ -6443,6 +6509,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  min="0"
+                                  step="0.1"
                                   type="number"
                                   value="4.5"
                                 />
@@ -6535,6 +6603,8 @@ Object {
                                 <input
                                   aria-invalid="false"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                  max="20"
+                                  min="-30"
                                   type="number"
                                   value="-8"
                                 />
@@ -6727,6 +6797,8 @@ Object {
                             <input
                               aria-invalid="false"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                              min="0"
+                              step="any"
                               type="number"
                               value="0"
                             />
@@ -6812,6 +6884,8 @@ Object {
                             <input
                               aria-invalid="false"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                              min="0"
+                              step="1"
                               type="number"
                               value="60"
                             />
@@ -7339,6 +7413,8 @@ Object {
                           <input
                             aria-invalid="false"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                            min="0"
+                            step="any"
                             type="number"
                             value="0"
                           />
@@ -7424,6 +7500,8 @@ Object {
                           <input
                             aria-invalid="false"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                            min="0"
+                            step="1"
                             type="number"
                             value="60"
                           />
@@ -7532,6 +7610,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                min="0"
+                                step="any"
                                 type="number"
                                 value="0"
                               />
@@ -7607,6 +7687,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                min="0"
+                                step="0.1"
                                 type="number"
                                 value="4.5"
                               />
@@ -7699,6 +7781,8 @@ Object {
                               <input
                                 aria-invalid="false"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                                max="20"
+                                min="-30"
                                 type="number"
                                 value="-8"
                               />
@@ -7891,6 +7975,8 @@ Object {
                           <input
                             aria-invalid="false"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                            min="0"
+                            step="any"
                             type="number"
                             value="0"
                           />
@@ -7976,6 +8062,8 @@ Object {
                           <input
                             aria-invalid="false"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd"
+                            min="0"
+                            step="1"
                             type="number"
                             value="60"
                           />

@@ -228,8 +228,29 @@ class App extends Component {
     const value = e.target.value;
     const fV = parseFloat(value);
 
-    console.log(value, fV);
     this.setState({ boilOffRate: isNaN(fV) ? value : fV });
+
+    if (!isNaN(fV)) {
+      this.calculateBoilEndVolume();
+    }
+  }
+
+  onBoilTimeChanged(e) {
+    const value = e.target.value;
+    const fV = parseFloat(value);
+
+    this.setState({ boilTime: isNaN(fV) ? value : fV });
+
+    if (!isNaN(fV)) {
+      this.calculateBoilEndVolume();
+    }
+  }
+
+  onBoilStartGravityChanged(e) {
+    const value = e.target.value;
+    const fV = parseFloat(value);
+
+    this.setState({ boilStartGravity: isNaN(fV) ? value : fV });
 
     if (!isNaN(fV)) {
       this.calculateBoilEndVolume();
@@ -253,10 +274,10 @@ class App extends Component {
           />
         </Grid>
         <Grid item xs={12} md={4}>
-          <TextField
+          <DebouncedTextField
             label="Boil Time"
             value={this.state.boilTime}
-            onChange={linkState(this, "boilTime")}
+            onChange={this.onBoilTimeChanged.bind(this)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">minutes</InputAdornment>
@@ -264,19 +285,19 @@ class App extends Component {
             }}
             inputProps={{ step: 1, min: 0 }}
             type="number"
-          ></TextField>
+          ></DebouncedTextField>
         </Grid>
         <Grid item xs={12} md={4}>
-          <TextField
+          <DebouncedTextField
             label="Boil Start Gravity"
             value={this.state.boilStartGravity}
-            onChange={linkState(this, "boilStartGravity")}
+            onChange={this.onBoilStartGravityChanged.bind(this)}
             InputProps={{
               endAdornment: <InputAdornment position="end">SG</InputAdornment>,
             }}
             inputProps={{ step: 0.001, min: 0 }}
             type="number"
-          ></TextField>
+          ></DebouncedTextField>
         </Grid>
         <Grid item xs={12} md={3}>
           <DebouncedTextField
@@ -658,7 +679,7 @@ class App extends Component {
             />
           </Grid>
           <Grid item xs={11} md={1}>
-            <TextField
+            <DebouncedTextField
               label="Up to"
               value={substituteRecord.maxAmount}
               onChange={this.onSubstituteMaxAmountChanged.bind(
@@ -671,8 +692,9 @@ class App extends Component {
                   <InputAdornment position="end">gms</InputAdornment>
                 ),
               }}
+              inputProps={{ step: "any", min: 0 }}
               type="number"
-            ></TextField>
+            ></DebouncedTextField>
           </Grid>
           <Grid item xs={12} md={4}>
             <FormControl>
@@ -692,7 +714,7 @@ class App extends Component {
             </FormControl>
           </Grid>
           <Grid item xs={12} md={2}>
-            <TextField
+            <DebouncedTextField
               label="Rated"
               value={substituteRecord.ratedAlphaAcid}
               onChange={this.onSubstituteRatedAlphaAcidChanged.bind(
@@ -705,8 +727,9 @@ class App extends Component {
                   <InputAdornment position="end">% alpha acids</InputAdornment>
                 ),
               }}
+              inputProps={{ step: 0.1, min: 0 }}
               type="number"
-            ></TextField>
+            ></DebouncedTextField>
           </Grid>
           <Grid item xs={12} md={3}>
             <DatePicker
@@ -743,7 +766,7 @@ class App extends Component {
             </Select>
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField
+            <DebouncedTextField
               label="Storage Temperature"
               value={substituteRecord.storageTemperature}
               onChange={this.onSubstituteStorageTemperatureChanged.bind(
@@ -756,8 +779,9 @@ class App extends Component {
                   <InputAdornment position="end">&deg;c</InputAdornment>
                 ),
               }}
+              inputProps={{ max: 20, min: -30 }}
               type="number"
-            ></TextField>
+            ></DebouncedTextField>
           </Grid>
           <Grid item xs={12}>
             <Card variant="outlined">
@@ -1016,6 +1040,20 @@ class App extends Component {
     }
   }
 
+  onHopAdditionNameChange(hopRecordIndex, e) {
+    const value = e.target.value;
+
+    const { hopRecords } = this.state;
+    var record = hopRecords[hopRecordIndex];
+    record.name = value;
+
+    this.setState({
+      hopRecords: update(hopRecords, {
+        [hopRecordIndex]: { $set: record },
+      }),
+    });
+  }
+
   hopRecordTag(hopRecord, index) {
     const { ibuRequirementSatisfied } = hopRecord;
 
@@ -1024,11 +1062,11 @@ class App extends Component {
         <Card variant="outlined">
           <Grid container spacing={1}>
             <Grid item xs={12} md={6}>
-              <TextField
+              <DebouncedTextField
                 value={hopRecord.name}
-                onChange={linkState(this, `hopRecords.${index}.name`)}
+                onChange={this.onHopAdditionNameChange.bind(this, index)}
                 className="HopNameTextField"
-              ></TextField>
+              ></DebouncedTextField>
             </Grid>
             <Grid item xs={6} md={3}>
               <Button
@@ -1054,7 +1092,7 @@ class App extends Component {
           <CardContent>
             <Grid container spacing={1}>
               <Grid item xs={12} md={3}>
-                <TextField
+                <DebouncedTextField
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">IBUs</InputAdornment>
@@ -1062,9 +1100,10 @@ class App extends Component {
                   }}
                   label="Recipe calls for"
                   type="number"
+                  inputProps={{ step: "any", min: 0 }}
                   value={hopRecord.ibu}
                   onChange={this.onIBUChange.bind(this, index)}
-                ></TextField>
+                ></DebouncedTextField>
                 {this.hopAdditionIBUStatusTag(ibuRequirementSatisfied)}
               </Grid>
               <Grid item xs={12} md={3}>
@@ -1081,7 +1120,7 @@ class App extends Component {
                 </FormControl>
               </Grid>
               <Grid item xs={12} md={3}>
-                <TextField
+                <DebouncedTextField
                   label="at"
                   value={hopRecord.additionTime}
                   InputProps={{
@@ -1090,8 +1129,9 @@ class App extends Component {
                     ),
                   }}
                   type="number"
+                  inputProps={{ step: 1, min: 0 }}
                   onChange={this.onAdditionTimeChange.bind(this, index)}
-                ></TextField>
+                ></DebouncedTextField>
                 {this.aromaUseWarningTag(hopRecord.additionTime)}
               </Grid>
               <Grid item xs={12} md={3}>
