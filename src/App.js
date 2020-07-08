@@ -863,11 +863,16 @@ class App extends Component {
   }
 
   onNewCustomHopDialogCancel() {
-    const { newHopRecipeIndex } = this.state;
+    const { newHopRecipeIndex, newHopSubstitutionIndex } = this.state;
 
     const hopRecords = this.state.hopRecords;
     var record = hopRecords[newHopRecipeIndex];
-    record.variety = this.varieties[0];
+
+    if (newHopSubstitutionIndex === null) {
+      record.variety = this.varieties[0];
+    } else {
+      record.substitutions[newHopSubstitutionIndex].variety = this.varieties[0];
+    }
 
     this.setState({
       newHopShouldOpen: false,
