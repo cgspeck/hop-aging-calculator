@@ -81,7 +81,7 @@ function calculateIBU(
   return utilisationFactor * mgLofAlphaAcids;
 }
 
-function compareFloats(f1, f2, error = 0.01) {
+function compareFloats(f1, f2, error = 0.05) {
   return f1 - error <= f2 && f1 + error >= f2;
 }
 

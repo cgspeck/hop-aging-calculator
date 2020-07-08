@@ -82,7 +82,7 @@ class App extends Component {
     this.varieties = DEFAULT_VARIETIES;
 
     const ibuCalcMode = "end-gravity";
-    const boilStartGravity = 1.048;
+    const boilStartGravity = 1.044;
     const boilVolume = 60.0;
     const boilOffRate = 16;
     const boilTime = 60;
@@ -178,8 +178,8 @@ class App extends Component {
 
     const gravityForIBUCalc =
       ibuCalcMode === "minute-by-minute-gravity"
-        ? boilEndGravity
-        : boilStartGravity;
+        ? boilStartGravity
+        : boilEndGravity;
 
     const utilisationFactor = calculateHopUtilisationFactor(
       gravityForIBUCalc,
@@ -588,7 +588,7 @@ class App extends Component {
     const interval = Interval.fromDateTimes(ratingDate, brewDate);
 
     var calculatedRequiredAmount = 0;
-    var calculatedAge, calculatedIBU, calculatedEstimatedAA;
+    var calculatedAge, calculatedIBU, estimatedAA;
     calculatedAge = interval.count("days") - 1;
     // https://mathbitsnotebook.com/Algebra1/FunctionGraphs/FNGTypeExponential.html
     // Math.pow(1 - 0.045, 20 - storageTemperature);
@@ -601,13 +601,13 @@ class App extends Component {
     const A0 = (An * 100) / (100 * invPercentLost);
     const rateConstant = (Math.log(A0) - Math.log(An)) / 180;
     // future alpha = A*1/e(k*TF*SF*Days)
-    calculatedEstimatedAA =
+    estimatedAA =
       (ratedAlphaAcid * 1) /
       Math.exp(
         rateConstant * temperatureFactor * storageFactor * calculatedAge
       );
 
-    if (calculatedEstimatedAA < ratedAlphaAcid / 2) {
+    if (estimatedAA < ratedAlphaAcid / 2) {
       substituteRecord.lowAAWarn = true;
     }
 
@@ -635,7 +635,7 @@ class App extends Component {
       calculatedRequiredAmount = calculateRequiredGrams(
         boilEndVolume,
         wantedIBU,
-        calculatedEstimatedAA,
+        estimatedAA,
         utilisationFactor
       );
 
@@ -646,7 +646,7 @@ class App extends Component {
       calculatedIBU = calculateIBU(
         calculatedRequiredAmount,
         utilisationFactor,
-        calculatedEstimatedAA,
+        estimatedAA,
         boilEndVolume
       );
 
@@ -658,7 +658,7 @@ class App extends Component {
     substituteRecord.calculatedRequiredAmount = calculatedRequiredAmount;
     substituteRecord.calculatedAge = calculatedAge;
     substituteRecord.calculatedIBU = calculatedIBU;
-    substituteRecord.calculatedEstimatedAA = calculatedEstimatedAA;
+    substituteRecord.calculatedEstimatedAA = estimatedAA;
     hopRecord.ibuRequirementSatisfied = calcIBURequirementSatisifed;
 
     this.setState({ hopRecords });
@@ -1044,7 +1044,7 @@ class App extends Component {
 
     const utilisationFactor = calculateHopUtilisationFactor(
       gravityForIBUCalc,
-      boilTime
+      additionTime
     );
 
     record.gravityForIBUCalc = gravityForIBUCalc;
