@@ -39,3 +39,7 @@
   margin-top: 1em;
   margin-bottom: 1em;
 }
+
+@page {
+  size: 400mm 500mm;
+}
