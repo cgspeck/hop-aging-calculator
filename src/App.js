@@ -43,7 +43,7 @@ import TextField from "@material-ui/core/TextField";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import LuxonUtils from "@date-io/luxon";
 import { DatePicker } from "@material-ui/pickers";
-import { DateTime, Duration, Interval } from "luxon";
+import { DateTime, Interval } from "luxon";
 
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -150,9 +150,7 @@ class App extends Component {
   }
 
   newSubstitution(baseVariety) {
-    const { brewDate } = this.state;
-
-    const ratingDate = brewDate.minus(Duration.fromObject({ days: 1 }));
+    const ratingDate = DateTime.local();
     return {
       maxAmount: 0.0,
       variety: baseVariety,
