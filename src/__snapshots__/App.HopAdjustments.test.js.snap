@@ -1393,7 +1393,7 @@ Object {
                           class="MuiFormControl-root MuiTextField-root"
                         >
                           <label
-                            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled Mui-focused Mui-focused"
+                            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"
                             data-shrink="true"
                           >
                             Recipe calls for
@@ -1407,7 +1407,7 @@ Object {
                               min="0"
                               step="any"
                               type="number"
-                              value="0"
+                              value=""
                             />
                             <div
                               class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -2046,7 +2046,7 @@ Object {
                         class="MuiFormControl-root MuiTextField-root"
                       >
                         <label
-                          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled Mui-focused Mui-focused"
+                          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"
                           data-shrink="true"
                         >
                           Recipe calls for
@@ -2060,7 +2060,7 @@ Object {
                             min="0"
                             step="any"
                             type="number"
-                            value="0"
+                            value=""
                           />
                           <div
                             class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -2756,8 +2756,8 @@ Object {
                           class="MuiFormControl-root MuiTextField-root"
                         >
                           <label
-                            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                            data-shrink="true"
+                            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+                            data-shrink="false"
                           >
                             Recipe calls for
                           </label>
@@ -2770,7 +2770,7 @@ Object {
                               min="0"
                               step="any"
                               type="number"
-                              value="0"
+                              value=""
                             />
                             <div
                               class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -3008,7 +3008,7 @@ Object {
                           class="MuiFormControl-root MuiTextField-root"
                         >
                           <label
-                            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled Mui-focused Mui-focused"
+                            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"
                             data-shrink="true"
                           >
                             Recipe calls for
@@ -3022,7 +3022,7 @@ Object {
                               min="0"
                               step="any"
                               type="number"
-                              value="0"
+                              value=""
                             />
                             <div
                               class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -3661,8 +3661,8 @@ Object {
                         class="MuiFormControl-root MuiTextField-root"
                       >
                         <label
-                          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                          data-shrink="true"
+                          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+                          data-shrink="false"
                         >
                           Recipe calls for
                         </label>
@@ -3675,7 +3675,7 @@ Object {
                             min="0"
                             step="any"
                             type="number"
-                            value="0"
+                            value=""
                           />
                           <div
                             class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -3913,7 +3913,7 @@ Object {
                         class="MuiFormControl-root MuiTextField-root"
                       >
                         <label
-                          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled Mui-focused Mui-focused"
+                          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"
                           data-shrink="true"
                         >
                           Recipe calls for
@@ -3927,7 +3927,7 @@ Object {
                             min="0"
                             step="any"
                             type="number"
-                            value="0"
+                            value=""
                           />
                           <div
                             class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -4623,8 +4623,8 @@ Object {
                           class="MuiFormControl-root MuiTextField-root"
                         >
                           <label
-                            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                            data-shrink="true"
+                            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+                            data-shrink="false"
                           >
                             Recipe calls for
                           </label>
@@ -4637,7 +4637,7 @@ Object {
                               min="0"
                               step="any"
                               type="number"
-                              value="0"
+                              value=""
                             />
                             <div
                               class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -4875,7 +4875,7 @@ Object {
                           class="MuiFormControl-root MuiTextField-root"
                         >
                           <label
-                            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled Mui-focused Mui-focused"
+                            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"
                             data-shrink="true"
                           >
                             Recipe calls for
@@ -4889,7 +4889,7 @@ Object {
                               min="0"
                               step="any"
                               type="number"
-                              value="0"
+                              value=""
                             />
                             <div
                               class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -5528,8 +5528,8 @@ Object {
                         class="MuiFormControl-root MuiTextField-root"
                       >
                         <label
-                          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-                          data-shrink="true"
+                          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+                          data-shrink="false"
                         >
                           Recipe calls for
                         </label>
@@ -5542,7 +5542,7 @@ Object {
                             min="0"
                             step="any"
                             type="number"
-                            value="0"
+                            value=""
                           />
                           <div
                             class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
@@ -5780,7 +5780,7 @@ Object {
                         class="MuiFormControl-root MuiTextField-root"
                       >
                         <label
-                          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled Mui-focused Mui-focused"
+                          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"
                           data-shrink="true"
                         >
                           Recipe calls for
@@ -5794,7 +5794,7 @@ Object {
                             min="0"
                             step="any"
                             type="number"
-                            value="0"
+                            value=""
                           />
                           <div
                             class="MuiInputAdornment-root MuiInputAdornment-positionEnd"

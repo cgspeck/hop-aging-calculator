@@ -153,9 +153,9 @@ class App extends Component {
   }
 
   newSubstitution(baseVariety) {
-    const ratingDate = DateTime.local();
+    const ratingDate = DateTime.local().minus({ days: 1 });
     return {
-      maxAmount: 0.0,
+      maxAmount: "",
       variety: baseVariety,
       ratedAlphaAcid: 4.5,
       ratingDate: ratingDate,
@@ -191,7 +191,7 @@ class App extends Component {
     const currentCount = Object.keys(this.state.hopRecords).length;
 
     const memo = {
-      ibu: 0.0,
+      ibu: "",
       variety: this.varieties[0],
       additionTime: boilTime,
       intermediateVolume: boilVolume,
