@@ -98,6 +98,8 @@ class App extends Component {
       boilEndVolume
     );
 
+    const newHopHSI = 0.6;
+
     this.state = {
       brewDate: DateTime.local(),
       ibuCalcMode,
@@ -110,7 +112,8 @@ class App extends Component {
       hopRecords: {},
       newHopShouldOpen: false,
       newHopName: "",
-      newHopHSI: 60.0,
+      newHopHSI,
+      newHopPercentLost: (Math.log(newHopHSI / 0.25) * 110) / 100,
       newHopRecipeIndex: null,
       newHopSubstitutionIndex: null,
     };
@@ -854,7 +857,8 @@ class App extends Component {
   onNewCustomHopClick(recipeIndex, substitutionIndex) {
     this.setState({
       newHopName: "New hop",
-      newHopHSI: 50,
+      newHopHSI: 0.5,
+      newHopPercentLost: (Math.log(0.5 / 0.25) * 110) / 100,
       newHopShouldOpen: true,
       newHopRecipeIndex: recipeIndex,
       newHopSubstitutionIndex: substitutionIndex,
@@ -882,11 +886,10 @@ class App extends Component {
   }
 
   onNewCustomHopDialogSave() {
-    const hsi = this.state.newHopHSI / 100;
-    const percentLost = Math.log(hsi / 0.25) * 110;
+    const { newHopName, newHopPercentLost } = this.state;
     const newCustomHop = {
-      name: this.state.newHopName,
-      percentLost,
+      name: newHopName,
+      percentLost: newHopPercentLost,
     };
     this.customVarieties.push(newCustomHop);
     const { newHopRecipeIndex, newHopSubstitutionIndex } = this.state;
@@ -916,7 +919,8 @@ class App extends Component {
 
   onCustomHopHSIChange(e) {
     const newHopHSI = e.target.value;
-    this.setState({ newHopHSI });
+    const newHopPercentLost = (Math.log(newHopHSI / 0.25) * 110) / 100;
+    this.setState({ newHopHSI, newHopPercentLost });
   }
 
   newCustomHopDialogTags() {
@@ -943,6 +947,10 @@ class App extends Component {
             }}
             type="number"
             fullWidth
+          />
+          <ResultField
+            label="Percent Lost"
+            value={this.state.newHopPercentLost.toFixed(2)}
           />
         </DialogContent>
         <DialogActions>
