@@ -716,6 +716,7 @@ class App extends Component {
               }}
               inputProps={{ step: "any", min: 0 }}
               type="number"
+              autoFocus
             ></DebouncedTextField>
           </Grid>
           <Grid item xs={12} md={4}>
@@ -1175,6 +1176,7 @@ class App extends Component {
                   inputProps={{ step: "any", min: 0 }}
                   value={hopRecord.ibu}
                   onChange={this.onIBUChange.bind(this, index)}
+                  autoFocus
                 ></DebouncedTextField>
                 {this.hopAdditionIBUStatusTag(ibuRequirementSatisfied)}
               </Grid>
