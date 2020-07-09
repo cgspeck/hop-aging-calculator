@@ -1265,25 +1265,40 @@ class App extends Component {
             <h1>Hop Aging Calculator</h1>
             <p>
               &copy; Chris Speck and licensed under the{" "}
-              <a href="https://spdx.org/licenses/AGPL-3.0-or-later.html">
+              <a
+                href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+                target="_blank"
+              >
                 AGPL-3.0-or-later license
               </a>
               , use at your own risk.
             </p>
 
-            <a href="https://www.chrisspeck.com" className="IconLink">
+            <a
+              href="https://www.chrisspeck.com"
+              className="IconLink"
+              target="_blank"
+            >
               <IconButton>
                 <LanguageIcon />
               </IconButton>
             </a>
 
-            <a href="https://github.com/cgspeck" className="IconLink">
+            <a
+              href="https://github.com/cgspeck"
+              className="IconLink"
+              target="_blank"
+            >
               <IconButton>
                 <GitHubIcon />
               </IconButton>
             </a>
 
-            <a href="https://www.linkedin.com/in/cgspeck/" className="IconLink">
+            <a
+              href="https://www.linkedin.com/in/cgspeck/"
+              className="IconLink"
+              target="_blank"
+            >
               <IconButton>
                 <LinkedInIcon />
               </IconButton>
@@ -1291,7 +1306,10 @@ class App extends Component {
 
             <p>
               Want instructions or more information? <br />
-              <a href="https://github.com/cgspeck/hop-aging-calculator#how-to-use">
+              <a
+                href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+                target="_blank"
+              >
                 Click here.
               </a>
             </p>

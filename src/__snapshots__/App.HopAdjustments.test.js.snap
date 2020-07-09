@@ -19,6 +19,7 @@ Object {
              
             <a
               href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+              target="_blank"
             >
               AGPL-3.0-or-later license
             </a>
@@ -27,6 +28,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.chrisspeck.com"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -55,6 +57,7 @@ Object {
           <a
             class="IconLink"
             href="https://github.com/cgspeck"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -83,6 +86,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.linkedin.com/in/cgspeck/"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -113,6 +117,7 @@ Object {
             <br />
             <a
               href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+              target="_blank"
             >
               Click here.
             </a>
@@ -419,6 +424,7 @@ Object {
            
           <a
             href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+            target="_blank"
           >
             AGPL-3.0-or-later license
           </a>
@@ -427,6 +433,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.chrisspeck.com"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -455,6 +462,7 @@ Object {
         <a
           class="IconLink"
           href="https://github.com/cgspeck"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -483,6 +491,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.linkedin.com/in/cgspeck/"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -513,6 +522,7 @@ Object {
           <br />
           <a
             href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+            target="_blank"
           >
             Click here.
           </a>
@@ -935,6 +945,7 @@ Object {
              
             <a
               href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+              target="_blank"
             >
               AGPL-3.0-or-later license
             </a>
@@ -943,6 +954,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.chrisspeck.com"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -971,6 +983,7 @@ Object {
           <a
             class="IconLink"
             href="https://github.com/cgspeck"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -999,6 +1012,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.linkedin.com/in/cgspeck/"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -1029,6 +1043,7 @@ Object {
             <br />
             <a
               href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+              target="_blank"
             >
               Click here.
             </a>
@@ -1588,6 +1603,7 @@ Object {
            
           <a
             href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+            target="_blank"
           >
             AGPL-3.0-or-later license
           </a>
@@ -1596,6 +1612,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.chrisspeck.com"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -1624,6 +1641,7 @@ Object {
         <a
           class="IconLink"
           href="https://github.com/cgspeck"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -1652,6 +1670,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.linkedin.com/in/cgspeck/"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -1682,6 +1701,7 @@ Object {
           <br />
           <a
             href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+            target="_blank"
           >
             Click here.
           </a>
@@ -2298,6 +2318,7 @@ Object {
              
             <a
               href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+              target="_blank"
             >
               AGPL-3.0-or-later license
             </a>
@@ -2306,6 +2327,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.chrisspeck.com"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -2334,6 +2356,7 @@ Object {
           <a
             class="IconLink"
             href="https://github.com/cgspeck"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -2362,6 +2385,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.linkedin.com/in/cgspeck/"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -2392,6 +2416,7 @@ Object {
             <br />
             <a
               href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+              target="_blank"
             >
               Click here.
             </a>
@@ -3203,6 +3228,7 @@ Object {
            
           <a
             href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+            target="_blank"
           >
             AGPL-3.0-or-later license
           </a>
@@ -3211,6 +3237,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.chrisspeck.com"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -3239,6 +3266,7 @@ Object {
         <a
           class="IconLink"
           href="https://github.com/cgspeck"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -3267,6 +3295,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.linkedin.com/in/cgspeck/"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -3297,6 +3326,7 @@ Object {
           <br />
           <a
             href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+            target="_blank"
           >
             Click here.
           </a>
@@ -4165,6 +4195,7 @@ Object {
              
             <a
               href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+              target="_blank"
             >
               AGPL-3.0-or-later license
             </a>
@@ -4173,6 +4204,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.chrisspeck.com"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -4201,6 +4233,7 @@ Object {
           <a
             class="IconLink"
             href="https://github.com/cgspeck"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -4229,6 +4262,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.linkedin.com/in/cgspeck/"
+            target="_blank"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root"
@@ -4259,6 +4293,7 @@ Object {
             <br />
             <a
               href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+              target="_blank"
             >
               Click here.
             </a>
@@ -5070,6 +5105,7 @@ Object {
            
           <a
             href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+            target="_blank"
           >
             AGPL-3.0-or-later license
           </a>
@@ -5078,6 +5114,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.chrisspeck.com"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -5106,6 +5143,7 @@ Object {
         <a
           class="IconLink"
           href="https://github.com/cgspeck"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -5134,6 +5172,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.linkedin.com/in/cgspeck/"
+          target="_blank"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root"
@@ -5164,6 +5203,7 @@ Object {
           <br />
           <a
             href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+            target="_blank"
           >
             Click here.
           </a>
