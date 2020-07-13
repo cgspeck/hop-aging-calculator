@@ -1268,6 +1268,7 @@ class App extends Component {
               <a
                 href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 AGPL-3.0-or-later license
               </a>
@@ -1278,6 +1279,7 @@ class App extends Component {
               href="https://www.chrisspeck.com"
               className="IconLink"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <IconButton>
                 <LanguageIcon />
@@ -1288,6 +1290,7 @@ class App extends Component {
               href="https://github.com/cgspeck"
               className="IconLink"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <IconButton>
                 <GitHubIcon />
@@ -1298,6 +1301,7 @@ class App extends Component {
               href="https://www.linkedin.com/in/cgspeck/"
               className="IconLink"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <IconButton>
                 <LinkedInIcon />
@@ -1309,6 +1313,7 @@ class App extends Component {
               <a
                 href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 Click here.
               </a>

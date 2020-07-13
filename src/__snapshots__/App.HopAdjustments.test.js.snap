@@ -19,6 +19,7 @@ Object {
              
             <a
               href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+              rel="noopener noreferrer"
               target="_blank"
             >
               AGPL-3.0-or-later license
@@ -28,6 +29,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.chrisspeck.com"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -57,6 +59,7 @@ Object {
           <a
             class="IconLink"
             href="https://github.com/cgspeck"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -86,6 +89,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.linkedin.com/in/cgspeck/"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -117,6 +121,7 @@ Object {
             <br />
             <a
               href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+              rel="noopener noreferrer"
               target="_blank"
             >
               Click here.
@@ -424,6 +429,7 @@ Object {
            
           <a
             href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+            rel="noopener noreferrer"
             target="_blank"
           >
             AGPL-3.0-or-later license
@@ -433,6 +439,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.chrisspeck.com"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -462,6 +469,7 @@ Object {
         <a
           class="IconLink"
           href="https://github.com/cgspeck"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -491,6 +499,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.linkedin.com/in/cgspeck/"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -522,6 +531,7 @@ Object {
           <br />
           <a
             href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+            rel="noopener noreferrer"
             target="_blank"
           >
             Click here.
@@ -945,6 +955,7 @@ Object {
              
             <a
               href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+              rel="noopener noreferrer"
               target="_blank"
             >
               AGPL-3.0-or-later license
@@ -954,6 +965,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.chrisspeck.com"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -983,6 +995,7 @@ Object {
           <a
             class="IconLink"
             href="https://github.com/cgspeck"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -1012,6 +1025,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.linkedin.com/in/cgspeck/"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -1043,6 +1057,7 @@ Object {
             <br />
             <a
               href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+              rel="noopener noreferrer"
               target="_blank"
             >
               Click here.
@@ -1603,6 +1618,7 @@ Object {
            
           <a
             href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+            rel="noopener noreferrer"
             target="_blank"
           >
             AGPL-3.0-or-later license
@@ -1612,6 +1628,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.chrisspeck.com"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -1641,6 +1658,7 @@ Object {
         <a
           class="IconLink"
           href="https://github.com/cgspeck"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -1670,6 +1688,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.linkedin.com/in/cgspeck/"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -1701,6 +1720,7 @@ Object {
           <br />
           <a
             href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+            rel="noopener noreferrer"
             target="_blank"
           >
             Click here.
@@ -2318,6 +2338,7 @@ Object {
              
             <a
               href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+              rel="noopener noreferrer"
               target="_blank"
             >
               AGPL-3.0-or-later license
@@ -2327,6 +2348,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.chrisspeck.com"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -2356,6 +2378,7 @@ Object {
           <a
             class="IconLink"
             href="https://github.com/cgspeck"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -2385,6 +2408,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.linkedin.com/in/cgspeck/"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -2416,6 +2440,7 @@ Object {
             <br />
             <a
               href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+              rel="noopener noreferrer"
               target="_blank"
             >
               Click here.
@@ -3228,6 +3253,7 @@ Object {
            
           <a
             href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+            rel="noopener noreferrer"
             target="_blank"
           >
             AGPL-3.0-or-later license
@@ -3237,6 +3263,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.chrisspeck.com"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -3266,6 +3293,7 @@ Object {
         <a
           class="IconLink"
           href="https://github.com/cgspeck"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -3295,6 +3323,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.linkedin.com/in/cgspeck/"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -3326,6 +3355,7 @@ Object {
           <br />
           <a
             href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+            rel="noopener noreferrer"
             target="_blank"
           >
             Click here.
@@ -4195,6 +4225,7 @@ Object {
              
             <a
               href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+              rel="noopener noreferrer"
               target="_blank"
             >
               AGPL-3.0-or-later license
@@ -4204,6 +4235,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.chrisspeck.com"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -4233,6 +4265,7 @@ Object {
           <a
             class="IconLink"
             href="https://github.com/cgspeck"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -4262,6 +4295,7 @@ Object {
           <a
             class="IconLink"
             href="https://www.linkedin.com/in/cgspeck/"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <button
@@ -4293,6 +4327,7 @@ Object {
             <br />
             <a
               href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+              rel="noopener noreferrer"
               target="_blank"
             >
               Click here.
@@ -5105,6 +5140,7 @@ Object {
            
           <a
             href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
+            rel="noopener noreferrer"
             target="_blank"
           >
             AGPL-3.0-or-later license
@@ -5114,6 +5150,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.chrisspeck.com"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -5143,6 +5180,7 @@ Object {
         <a
           class="IconLink"
           href="https://github.com/cgspeck"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -5172,6 +5210,7 @@ Object {
         <a
           class="IconLink"
           href="https://www.linkedin.com/in/cgspeck/"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <button
@@ -5203,6 +5242,7 @@ Object {
           <br />
           <a
             href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
+            rel="noopener noreferrer"
             target="_blank"
           >
             Click here.
