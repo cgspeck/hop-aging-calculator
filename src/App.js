@@ -146,10 +146,12 @@ class App extends Component {
       boilEndVolume
     );
 
-    this.setState({
-      boilEndGravity,
-    });
-    this.calculateSubstitutionValuesForRecipe();
+    this.setState(
+      {
+        boilEndGravity,
+      },
+      this.calculateSubstitutionValuesForRecipe
+    );
   }
 
   newSubstitution(baseVariety) {
@@ -219,8 +221,7 @@ class App extends Component {
   }
 
   onBrewDateChanged(brewDate) {
-    this.setState({ brewDate });
-    this.calculateSubstitutionValuesForRecipe();
+    this.setState({ brewDate }, this.calculateSubstitutionValuesForRecipe);
   }
 
   onBoilVolumeChanged(e) {
@@ -269,8 +270,7 @@ class App extends Component {
 
   onIBUCalcModeChanged(e) {
     const ibuCalcMode = e.target.value;
-    this.setState({ ibuCalcMode });
-    this.calculateSubstitutionValuesForRecipe();
+    this.setState({ ibuCalcMode }, this.calculateSubstitutionValuesForRecipe);
   }
 
   recipeControls() {
