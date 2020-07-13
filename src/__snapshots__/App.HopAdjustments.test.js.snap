@@ -359,7 +359,7 @@ Object {
                     aria-hidden="true"
                     class="MuiSelect-nativeInput"
                     tabindex="-1"
-                    value="end-gravity"
+                    value="final-gravity"
                   />
                   <svg
                     aria-hidden="true"
@@ -769,7 +769,7 @@ Object {
                   aria-hidden="true"
                   class="MuiSelect-nativeInput"
                   tabindex="-1"
-                  value="end-gravity"
+                  value="final-gravity"
                 />
                 <svg
                   aria-hidden="true"
@@ -1295,7 +1295,7 @@ Object {
                     aria-hidden="true"
                     class="MuiSelect-nativeInput"
                     tabindex="-1"
-                    value="end-gravity"
+                    value="final-gravity"
                   />
                   <svg
                     aria-hidden="true"
@@ -1958,7 +1958,7 @@ Object {
                   aria-hidden="true"
                   class="MuiSelect-nativeInput"
                   tabindex="-1"
-                  value="end-gravity"
+                  value="final-gravity"
                 />
                 <svg
                   aria-hidden="true"
@@ -2678,7 +2678,7 @@ Object {
                     aria-hidden="true"
                     class="MuiSelect-nativeInput"
                     tabindex="-1"
-                    value="end-gravity"
+                    value="final-gravity"
                   />
                   <svg
                     aria-hidden="true"
@@ -3593,7 +3593,7 @@ Object {
                   aria-hidden="true"
                   class="MuiSelect-nativeInput"
                   tabindex="-1"
-                  value="end-gravity"
+                  value="final-gravity"
                 />
                 <svg
                   aria-hidden="true"
@@ -4565,7 +4565,7 @@ Object {
                     aria-hidden="true"
                     class="MuiSelect-nativeInput"
                     tabindex="-1"
-                    value="end-gravity"
+                    value="final-gravity"
                   />
                   <svg
                     aria-hidden="true"
@@ -5480,7 +5480,7 @@ Object {
                   aria-hidden="true"
                   class="MuiSelect-nativeInput"
                   tabindex="-1"
-                  value="end-gravity"
+                  value="final-gravity"
                 />
                 <svg
                   aria-hidden="true"

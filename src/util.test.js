@@ -49,6 +49,8 @@ const calculateHopUtilisationFactorCases = [
   [1.08, 12, 0.074],
   [1.06, 33, 0.17],
   [1.05, 120, 0.252],
+  [1.06, 60, 0.21],
+  [1.044, 60, 0.243],
 ];
 
 test.each(calculateHopUtilisationFactorCases)(

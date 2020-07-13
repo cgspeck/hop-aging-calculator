@@ -76,12 +76,15 @@ import { debouncedInput } from "./debouncedInput";
 
 const DebouncedTextField = debouncedInput(TextField, { timeout: 500 });
 
+const IBU_INTERMEDIATE_GRAVITY = "intermediate-gravity";
+const IBU_FINAL_GRAVITY = "final-gravity";
+
 class App extends Component {
   constructor() {
     super();
     this.varieties = DEFAULT_VARIETIES;
 
-    const ibuCalcMode = "end-gravity";
+    const ibuCalcMode = IBU_FINAL_GRAVITY;
     const boilStartGravity = 1.044;
     const boilVolume = 60.0;
     const boilOffRate = 11;
@@ -181,7 +184,7 @@ class App extends Component {
     } = this.state;
 
     const gravityForIBUCalc =
-      ibuCalcMode === "minute-by-minute-gravity"
+      ibuCalcMode === IBU_INTERMEDIATE_GRAVITY
         ? boilStartGravity
         : boilEndGravity;
 
@@ -364,10 +367,10 @@ class App extends Component {
             value={ibuCalcMode}
             onChange={this.onIBUCalcModeChanged.bind(this)}
           >
-            <MenuItem value="minute-by-minute-gravity" key="0">
-              Tinseth, minute-by-minute gravity
+            <MenuItem value={IBU_INTERMEDIATE_GRAVITY} key="0">
+              Tinseth, intermediate gravity
             </MenuItem>
-            <MenuItem value="end-gravity" key="1">
+            <MenuItem value={IBU_FINAL_GRAVITY} key="1">
               Tinseth, end boil gravity (e.g. BrewTarget)
             </MenuItem>
           </Select>
@@ -1049,7 +1052,8 @@ class App extends Component {
     record.intermediateGravity = intermediateGravity;
 
     var gravityForIBUCalc;
-    if (ibuCalcMode === "minute-by-minute-gravity") {
+
+    if (ibuCalcMode === IBU_INTERMEDIATE_GRAVITY) {
       gravityForIBUCalc = intermediateGravity;
     } else {
       gravityForIBUCalc = boilEndGravity;
