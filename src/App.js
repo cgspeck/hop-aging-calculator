@@ -366,11 +366,16 @@ class App extends Component {
           <Select
             value={ibuCalcMode}
             onChange={this.onIBUCalcModeChanged.bind(this)}
+            id="IBUCalculationMode"
           >
-            <MenuItem value={IBU_INTERMEDIATE_GRAVITY} key="0">
+            <MenuItem
+              value={IBU_INTERMEDIATE_GRAVITY}
+              key="0"
+              id="modeIBUIntermediate"
+            >
               Tinseth, intermediate gravity
             </MenuItem>
-            <MenuItem value={IBU_FINAL_GRAVITY} key="1">
+            <MenuItem value={IBU_FINAL_GRAVITY} key="1" id="modeIBUFinal">
               Tinseth, end boil gravity (e.g. BrewTarget)
             </MenuItem>
           </Select>
@@ -722,6 +727,7 @@ class App extends Component {
               }}
               inputProps={{ step: "any", min: 0 }}
               type="number"
+              className="SubstitutionWeightField"
               autoFocus
             ></DebouncedTextField>
           </Grid>
@@ -1188,6 +1194,7 @@ class App extends Component {
                   inputProps={{ step: "any", min: 0 }}
                   value={hopRecord.ibu}
                   onChange={this.onIBUChange.bind(this, index)}
+                  className="HopAdditionIBUField"
                   autoFocus
                 ></DebouncedTextField>
                 {this.hopAdditionIBUStatusTag(ibuRequirementSatisfied)}
