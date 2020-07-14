@@ -349,7 +349,9 @@ Object {
                 >
                   <div
                     aria-haspopup="listbox"
+                    aria-labelledby="IBUCalculationMode"
                     class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                    id="IBUCalculationMode"
                     role="button"
                     tabindex="0"
                   >
@@ -759,7 +761,9 @@ Object {
               >
                 <div
                   aria-haspopup="listbox"
+                  aria-labelledby="IBUCalculationMode"
                   class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                  id="IBUCalculationMode"
                   role="button"
                   tabindex="0"
                 >
@@ -1285,7 +1289,9 @@ Object {
                 >
                   <div
                     aria-haspopup="listbox"
+                    aria-labelledby="IBUCalculationMode"
                     class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                    id="IBUCalculationMode"
                     role="button"
                     tabindex="0"
                   >
@@ -1420,7 +1426,7 @@ Object {
                         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
                       >
                         <div
-                          class="MuiFormControl-root MuiTextField-root"
+                          class="MuiFormControl-root MuiTextField-root HopAdditionIBUField"
                         >
                           <label
                             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"
@@ -1948,7 +1954,9 @@ Object {
               >
                 <div
                   aria-haspopup="listbox"
+                  aria-labelledby="IBUCalculationMode"
                   class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                  id="IBUCalculationMode"
                   role="button"
                   tabindex="0"
                 >
@@ -2083,7 +2091,7 @@ Object {
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
                     >
                       <div
-                        class="MuiFormControl-root MuiTextField-root"
+                        class="MuiFormControl-root MuiTextField-root HopAdditionIBUField"
                       >
                         <label
                           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"
@@ -2668,7 +2676,9 @@ Object {
                 >
                   <div
                     aria-haspopup="listbox"
+                    aria-labelledby="IBUCalculationMode"
                     class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                    id="IBUCalculationMode"
                     role="button"
                     tabindex="0"
                   >
@@ -2803,7 +2813,7 @@ Object {
                         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
                       >
                         <div
-                          class="MuiFormControl-root MuiTextField-root"
+                          class="MuiFormControl-root MuiTextField-root HopAdditionIBUField"
                         >
                           <label
                             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
@@ -3055,7 +3065,7 @@ Object {
                         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
                       >
                         <div
-                          class="MuiFormControl-root MuiTextField-root"
+                          class="MuiFormControl-root MuiTextField-root HopAdditionIBUField"
                         >
                           <label
                             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"
@@ -3583,7 +3593,9 @@ Object {
               >
                 <div
                   aria-haspopup="listbox"
+                  aria-labelledby="IBUCalculationMode"
                   class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                  id="IBUCalculationMode"
                   role="button"
                   tabindex="0"
                 >
@@ -3718,7 +3730,7 @@ Object {
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
                     >
                       <div
-                        class="MuiFormControl-root MuiTextField-root"
+                        class="MuiFormControl-root MuiTextField-root HopAdditionIBUField"
                       >
                         <label
                           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
@@ -3970,7 +3982,7 @@ Object {
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
                     >
                       <div
-                        class="MuiFormControl-root MuiTextField-root"
+                        class="MuiFormControl-root MuiTextField-root HopAdditionIBUField"
                       >
                         <label
                           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"
@@ -4555,7 +4567,9 @@ Object {
                 >
                   <div
                     aria-haspopup="listbox"
+                    aria-labelledby="IBUCalculationMode"
                     class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                    id="IBUCalculationMode"
                     role="button"
                     tabindex="0"
                   >
@@ -4690,7 +4704,7 @@ Object {
                         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
                       >
                         <div
-                          class="MuiFormControl-root MuiTextField-root"
+                          class="MuiFormControl-root MuiTextField-root HopAdditionIBUField"
                         >
                           <label
                             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
@@ -4942,7 +4956,7 @@ Object {
                         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
                       >
                         <div
-                          class="MuiFormControl-root MuiTextField-root"
+                          class="MuiFormControl-root MuiTextField-root HopAdditionIBUField"
                         >
                           <label
                             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"
@@ -5470,7 +5484,9 @@ Object {
               >
                 <div
                   aria-haspopup="listbox"
+                  aria-labelledby="IBUCalculationMode"
                   class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                  id="IBUCalculationMode"
                   role="button"
                   tabindex="0"
                 >
@@ -5605,7 +5621,7 @@ Object {
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
                     >
                       <div
-                        class="MuiFormControl-root MuiTextField-root"
+                        class="MuiFormControl-root MuiTextField-root HopAdditionIBUField"
                       >
                         <label
                           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
@@ -5857,7 +5873,7 @@ Object {
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
                     >
                       <div
-                        class="MuiFormControl-root MuiTextField-root"
+                        class="MuiFormControl-root MuiTextField-root HopAdditionIBUField"
                       >
                         <label
                           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-focused Mui-focused"

@@ -13,9 +13,13 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: yarn install
-      - name: Run the tests
+      - name: Jest unit tests
         if: success()
         run: yarn test --ci
+      - name: Cypress integration tests
+        run: |
+          yarn start & yarn run wait-on http://localhost:3000
+          yarn run cypress run
       - name: Build the App
         if: success()
         run: yarn build

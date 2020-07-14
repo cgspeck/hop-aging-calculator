@@ -47,6 +47,8 @@
     ]
   },
   "devDependencies": {
-    "react-test-renderer": "^16.13.1"
+    "cypress": "^4.10.0",
+    "react-test-renderer": "^16.13.1",
+    "wait-on": "^5.1.0"
   }
 }
