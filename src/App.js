@@ -30,8 +30,6 @@ import CardContent from "@material-ui/core/CardContent";
 
 // https://material-ui.com/components/material-icons/
 import AddBox from "@material-ui/icons/AddBox";
-import CancelIcon from "@material-ui/icons/Cancel";
-import Check from "@material-ui/icons/Check";
 
 import IconButton from "@material-ui/core/IconButton";
 import LanguageIcon from "@material-ui/icons/Language";
@@ -70,14 +68,11 @@ import {
   compareFloats,
   createId,
 } from "./util";
+import { IBU_INTERMEDIATE_GRAVITY, IBU_FINAL_GRAVITY } from "./constants";
 
 import ResultField from "./ResultFieldComponent";
 import { debouncedInput } from "./debouncedInput";
-
 const DebouncedTextField = debouncedInput(TextField, { timeout: 500 });
-
-const IBU_INTERMEDIATE_GRAVITY = "intermediate-gravity";
-const IBU_FINAL_GRAVITY = "final-gravity";
 
 class App extends Component {
   constructor() {
@@ -155,60 +150,6 @@ class App extends Component {
       },
       this.calculateSubstitutionValuesForRecipe
     );
-  }
-
-  newSubstitution(baseVariety) {
-    const ratingDate = DateTime.local().minus({ days: 1 });
-    return {
-      maxAmount: "",
-      variety: baseVariety,
-      ratedAlphaAcid: 4.5,
-      ratingDate: ratingDate,
-      storageFactor: 0.5,
-      storageTemperature: -8.0,
-      calculatedRequiredAmount: 0.0,
-      calculatedAge: 0,
-      calculatedEstimatedAA: 0.0,
-      calculatedIBU: 0.0,
-      lowAAWarn: false,
-    };
-  }
-
-  newHopRecord() {
-    const {
-      ibuCalcMode,
-      boilVolume,
-      boilStartGravity,
-      boilEndGravity,
-      boilTime,
-    } = this.state;
-
-    const gravityForIBUCalc =
-      ibuCalcMode === IBU_INTERMEDIATE_GRAVITY
-        ? boilStartGravity
-        : boilEndGravity;
-
-    const utilisationFactor = calculateHopUtilisationFactor(
-      gravityForIBUCalc,
-      boilTime
-    );
-
-    const currentCount = Object.keys(this.state.hopRecords).length;
-
-    const memo = {
-      ibu: "",
-      variety: this.varieties[0],
-      additionTime: boilTime,
-      intermediateVolume: boilVolume,
-      intermediateGravity: boilStartGravity,
-      gravityForIBUCalc,
-      utilisationFactor,
-      substitutions: [],
-      ibuRequirementSatisfied: true,
-      name: `Hop addition ${currentCount + 1}`,
-    };
-
-    return memo;
   }
 
   onNewHopAddition(e) {
@@ -424,17 +365,6 @@ class App extends Component {
     });
   }
 
-  onAddHopSubstitution(index) {
-    var { hopRecords } = this.state;
-    var hopRecord = hopRecords[index];
-    const baseVariety = hopRecord.variety;
-    hopRecords[index].substitutions.push(this.newSubstitution(baseVariety));
-
-    this.setState({
-      hopRecords,
-    });
-  }
-
   calculateSubstitutionValuesForRecipe() {
     const { hopRecords } = this.state;
 
@@ -463,25 +393,6 @@ class App extends Component {
     this.setState({
       hopRecords,
     });
-  }
-
-  onIBUChange(hopRecordIndex, e) {
-    const value = e.target.value;
-    const fV = parseFloat(value);
-    if (isNaN(fV) && value !== "") {
-      return;
-    }
-    const { hopRecords } = this.state;
-    var record = hopRecords[hopRecordIndex];
-    record.ibu = isNaN(fV) ? "" : fV;
-
-    this.setState({
-      hopRecords: update(hopRecords, { [hopRecordIndex]: { $set: record } }),
-    });
-
-    if (!isNaN(fV)) {
-      this.calculateSubstitutionValuesForHopRecord(hopRecordIndex);
-    }
   }
 
   onSubstituteHopChanged(index, hopRecordIndex, e) {
@@ -684,185 +595,6 @@ class App extends Component {
       );
   }
 
-  onDeleteSubstituteRecord(index, hopRecordIndex) {
-    var { hopRecords } = this.state;
-    var hopRecord = hopRecords[hopRecordIndex];
-    hopRecord.substitutions.splice(index, 1);
-    this.setState({ hopRecords });
-    this.calculateSubstitutionValuesForHopRecord(hopRecordIndex);
-  }
-
-  substituteTag(substituteRecord, index, recipeIndex) {
-    return (
-      <Card
-        variant="outlined"
-        className="SubstituteCard"
-        key={`${recipeIndex}_${index}`}
-      >
-        <Grid container spacing={1}>
-          <Grid item xs={1} md={1}>
-            <CancelIcon
-              onClick={this.onDeleteSubstituteRecord.bind(
-                this,
-                index,
-                recipeIndex
-              )}
-              className="SubstutionCancelIcon"
-              color="secondary"
-            />
-          </Grid>
-          <Grid item xs={11} md={3}>
-            <DebouncedTextField
-              label="Up to"
-              value={substituteRecord.maxAmount}
-              onChange={this.onSubstituteMaxAmountChanged.bind(
-                this,
-                index,
-                recipeIndex
-              )}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">gms</InputAdornment>
-                ),
-              }}
-              inputProps={{ step: "any", min: 0 }}
-              type="number"
-              className="SubstitutionWeightField"
-              autoFocus
-            ></DebouncedTextField>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <FormControl>
-              <InputLabel>Substitute Variety</InputLabel>
-              <Select
-                value={substituteRecord.variety}
-                onChange={this.onSubstituteHopChanged.bind(
-                  this,
-                  index,
-                  recipeIndex
-                )}
-              >
-                {this.hopVarietySelectCustomItems()}
-                {this.hopVarietySelectCreateNewItem(recipeIndex, index)}
-                {this.hopVarietySelectDefaultItems()}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <DebouncedTextField
-              label="Rated"
-              value={substituteRecord.ratedAlphaAcid}
-              onChange={this.onSubstituteRatedAlphaAcidChanged.bind(
-                this,
-                index,
-                recipeIndex
-              )}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">% alpha acids</InputAdornment>
-                ),
-              }}
-              inputProps={{ step: 0.1, min: 0 }}
-              type="number"
-            ></DebouncedTextField>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <DatePicker
-              label="Rating Date"
-              format="dd/MM/yyyy"
-              value={substituteRecord.ratingDate.toJSDate()}
-              onChange={this.onSubstituteRatingDateChanged.bind(
-                this,
-                index,
-                recipeIndex
-              )}
-              disableFuture
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <InputLabel>Storage Conditions</InputLabel>
-            <Select
-              value={substituteRecord.storageFactor}
-              onChange={this.onSubstituteStorageFactorChanged.bind(
-                this,
-                index,
-                recipeIndex
-              )}
-            >
-              <MenuItem value={0.5} key="0">
-                Sealed under vacuum or inert atmosphere
-              </MenuItem>
-              <MenuItem value={0.75} key="1">
-                Sealed but not free from oxygen
-              </MenuItem>
-              <MenuItem value={1.0} key="2">
-                Not sealed or sealed in poly bags
-              </MenuItem>
-            </Select>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <DebouncedTextField
-              label="Storage Temperature"
-              value={substituteRecord.storageTemperature}
-              onChange={this.onSubstituteStorageTemperatureChanged.bind(
-                this,
-                index,
-                recipeIndex
-              )}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">&deg;c</InputAdornment>
-                ),
-              }}
-              inputProps={{ max: 20, min: -30 }}
-              type="number"
-            ></DebouncedTextField>
-          </Grid>
-          <Grid item xs={12}>
-            <Card variant="outlined">
-              <CardContent>
-                <Grid container spacing={1}>
-                  <Grid item xs={12} md={3}>
-                    <ResultField
-                      label="Required Amount"
-                      value={substituteRecord.calculatedRequiredAmount.toFixed(
-                        1
-                      )}
-                      postValue="gms"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={3}>
-                    <ResultField
-                      label="Age at Brew date"
-                      value={substituteRecord.calculatedAge}
-                      postValue="days"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={3}>
-                    <ResultField
-                      label="Estimated Alpha Acid"
-                      postValue="%"
-                      value={substituteRecord.calculatedEstimatedAA.toFixed(1)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={3}>
-                    <ResultField
-                      label="Estimated IBU"
-                      value={substituteRecord.calculatedIBU.toFixed(1)}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    {this.lowAAWarningMessage(substituteRecord)}
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-      </Card>
-    );
-  }
-
   onNewCustomHopClick(recipeIndex, substitutionIndex) {
     this.setState({
       newHopName: "New hop",
@@ -980,40 +712,6 @@ class App extends Component {
     );
   }
 
-  hopVarietySelectCustomItems() {
-    const varieties = this.customVarieties;
-    return varieties.map((r, i) => (
-      <MenuItem value={r} key={i}>
-        {r.name}
-      </MenuItem>
-    ));
-  }
-
-  hopVarietySelectCreateNewItem(recipeIndex, substitutionIndex) {
-    return (
-      <MenuItem
-        value="newCustomHop"
-        key="newCustomHop"
-        onClick={this.onNewCustomHopClick.bind(
-          this,
-          recipeIndex,
-          substitutionIndex
-        )}
-      >
-        --- New Custom Hop... ---
-      </MenuItem>
-    );
-  }
-
-  hopVarietySelectDefaultItems() {
-    const varieties = DEFAULT_VARIETIES;
-    return varieties.map((r, i) => (
-      <MenuItem value={r} key={i}>
-        {r.name}
-      </MenuItem>
-    ));
-  }
-
   onAdditionHopChanged(hopRecordIndex, e) {
     const value = e.target.value;
     const { hopRecords } = this.state;
@@ -1078,183 +776,6 @@ class App extends Component {
         [hopRecordIndex]: { $set: record },
       }),
     });
-  }
-
-  onAdditionTimeChange(hopRecordIndex, e) {
-    const value = e.target.value;
-    const iValue = parseInt(value, 10);
-    if (isNaN(iValue) && value !== "") {
-      return;
-    }
-
-    const { boilTime } = this.state;
-    if (iValue > boilTime) {
-      return;
-    }
-
-    const { hopRecords } = this.state;
-    var record = hopRecords[hopRecordIndex];
-
-    if (isNaN(iValue)) {
-      record.additionTime = "";
-
-      return;
-    }
-
-    if (iValue < 0) {
-      return;
-    }
-
-    record.additionTime = iValue;
-    this.setState({
-      hopRecords: update(hopRecords, {
-        [hopRecordIndex]: { $set: record },
-      }),
-    });
-
-    this.calculateIntermediateVolumeAndGravity(hopRecordIndex);
-  }
-
-  hopAdditionIBUStatusTag(ibuRequirementSatisfied) {
-    if (ibuRequirementSatisfied === true) {
-      return <Check className="IBUSatisifed"></Check>;
-    } else {
-      return <p className="IBUUnsatisifed">Insufficient substitute hops!</p>;
-    }
-  }
-
-  aromaUseWarningTag(additionTime) {
-    if (additionTime <= 0) {
-      return (
-        <p className="IBUUnsatisifed">Calculations not for aroma additions</p>
-      );
-    }
-  }
-
-  onHopAdditionNameChange(hopRecordIndex, e) {
-    const value = e.target.value;
-
-    const { hopRecords } = this.state;
-    var record = hopRecords[hopRecordIndex];
-    record.name = value;
-
-    this.setState({
-      hopRecords: update(hopRecords, {
-        [hopRecordIndex]: { $set: record },
-      }),
-    });
-  }
-
-  hopRecordTag(hopRecord, index) {
-    const { additionTime, ibuRequirementSatisfied } = hopRecord;
-
-    return (
-      <Grid item xs={12} key={index}>
-        <Card variant="outlined">
-          <Grid container spacing={1}>
-            <Grid item xs={12} md={6}>
-              <DebouncedTextField
-                value={hopRecord.name}
-                onChange={this.onHopAdditionNameChange.bind(this, index)}
-                className="HopNameTextField"
-              ></DebouncedTextField>
-            </Grid>
-            <Grid item xs={6} md={3}>
-              <Button
-                variant="contained"
-                className="HopAdditionActionButtons"
-                onClick={this.onCloneHopAddition.bind(this, index)}
-              >
-                Copy
-              </Button>
-            </Grid>
-            <Grid item xs={6} md={3}>
-              {" "}
-              <Button
-                variant="contained"
-                className="HopAdditionActionButtons"
-                onClick={this.onDeleteHopAddition.bind(this, index)}
-                color="secondary"
-              >
-                Delete
-              </Button>
-            </Grid>
-          </Grid>
-          <CardContent>
-            <Grid container spacing={1}>
-              <Grid item xs={12} md={3}>
-                <DebouncedTextField
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">IBUs</InputAdornment>
-                    ),
-                  }}
-                  label="Recipe calls for"
-                  type="number"
-                  inputProps={{ step: "any", min: 0 }}
-                  value={hopRecord.ibu}
-                  onChange={this.onIBUChange.bind(this, index)}
-                  className="HopAdditionIBUField"
-                  autoFocus
-                ></DebouncedTextField>
-                {this.hopAdditionIBUStatusTag(ibuRequirementSatisfied)}
-              </Grid>
-              <Grid item xs={12} md={3}>
-                <FormControl>
-                  <InputLabel>of hop</InputLabel>
-                  <Select
-                    value={hopRecord.variety}
-                    onChange={this.onAdditionHopChanged.bind(this, index)}
-                  >
-                    {this.hopVarietySelectCustomItems()}
-                    {this.hopVarietySelectCreateNewItem(index, null)}
-                    {this.hopVarietySelectDefaultItems()}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} md={3}>
-                <DebouncedTextField
-                  label="at"
-                  value={additionTime}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">minutes</InputAdornment>
-                    ),
-                  }}
-                  type="number"
-                  inputProps={{ step: 1, min: 0 }}
-                  onChange={this.onAdditionTimeChange.bind(this, index)}
-                ></DebouncedTextField>
-                {this.aromaUseWarningTag(hopRecord.additionTime)}
-              </Grid>
-              <Grid item xs={12} md={3}>
-                <ResultField
-                  label="Intermediate Gravity"
-                  value={hopRecord.intermediateGravity.toFixed(3)}
-                  postValue="SG"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <h4>I will use the following for this addition:</h4>
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  onClick={this.onAddHopSubstitution.bind(this, index)}
-                  color="primary"
-                  startIcon={<AddBox />}
-                  variant="contained"
-                >
-                  New Row
-                </Button>
-              </Grid>
-              {hopRecord.substitutions.map((r, i) =>
-                this.substituteTag(r, i, index)
-              )}
-            </Grid>
-          </CardContent>
-        </Card>
-      </Grid>
-    );
   }
 
   hopRecordsTags() {
