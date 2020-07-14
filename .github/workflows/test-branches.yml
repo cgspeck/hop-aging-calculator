@@ -18,5 +18,5 @@ jobs:
         run: yarn test --ci
       - name: Cypress integration tests
         run: |
-          yarn start & wait-on http://localhost:3000
+          yarn start & yarn run wait-on http://localhost:3000
           yarn run cypress run
