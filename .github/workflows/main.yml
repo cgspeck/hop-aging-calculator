@@ -17,9 +17,9 @@ jobs:
         if: success()
         run: yarn test --ci
       - name: Cypress integration tests
-        run:
-          - yarn start & wait-on http://localhost:3000
-          - yarn run cypress run
+        run: |
+          yarn start & wait-on http://localhost:3000
+          yarn run cypress run
       - name: Build the App
         if: success()
         run: yarn build
