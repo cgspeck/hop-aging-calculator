@@ -22,14 +22,11 @@ import "fontsource-roboto";
 
 import "./App.css";
 
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-
 // https://material-ui.com/components/material-icons/
 import AddBox from "@material-ui/icons/AddBox";
+
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
 
 import IconButton from "@material-ui/core/IconButton";
 import LanguageIcon from "@material-ui/icons/Language";
@@ -43,7 +40,6 @@ import LuxonUtils from "@date-io/luxon";
 import { DatePicker } from "@material-ui/pickers";
 import { DateTime, Interval } from "luxon";
 
-import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -408,89 +404,6 @@ class App extends Component {
     );
   }
 
-  onSubstituteMaxAmountChanged(index, hopRecordIndex, e) {
-    const value = e.target.value;
-    const fV = parseFloat(value);
-    if (isNaN(fV) && value !== "") {
-      return;
-    }
-    var { hopRecords } = this.state;
-    var hopRecord = hopRecords[hopRecordIndex];
-    var substituteRecord = hopRecord.substitutions[index];
-    substituteRecord.maxAmount = isNaN(fV) ? "" : fV;
-    this.setState({ hopRecords });
-    if (!isNaN(fV)) {
-      this.calculateSubstitutionValuesForHopRecordAndSubstitution(
-        index,
-        hopRecordIndex
-      );
-    }
-  }
-
-  onSubstituteRatedAlphaAcidChanged(index, hopRecordIndex, e) {
-    const value = e.target.value;
-    const fV = parseFloat(value);
-    if (isNaN(fV) && value !== "") {
-      return;
-    }
-    var { hopRecords } = this.state;
-    var hopRecord = hopRecords[hopRecordIndex];
-    var substituteRecord = hopRecord.substitutions[index];
-    substituteRecord.ratedAlphaAcid = isNaN(fV) ? "" : fV;
-    this.setState({ hopRecords });
-    if (!isNaN(fV)) {
-      this.calculateSubstitutionValuesForHopRecordAndSubstitution(
-        index,
-        hopRecordIndex
-      );
-    }
-  }
-
-  onSubstituteStorageTemperatureChanged(index, hopRecordIndex, e) {
-    const value = e.target.value;
-    const fV = parseFloat(value);
-    if (isNaN(fV) && value !== "") {
-      return;
-    }
-    var { hopRecords } = this.state;
-    var hopRecord = hopRecords[hopRecordIndex];
-    var substituteRecord = hopRecord.substitutions[index];
-    substituteRecord.storageTemperature = isNaN(fV) ? "" : fV;
-    this.setState({ hopRecords });
-    if (!isNaN(fV)) {
-      this.calculateSubstitutionValuesForHopRecordAndSubstitution(
-        index,
-        hopRecordIndex
-      );
-    }
-  }
-
-  onSubstituteRatingDateChanged(index, hopRecordIndex, e) {
-    const value = e;
-    var { hopRecords } = this.state;
-    var hopRecord = hopRecords[hopRecordIndex];
-    var substituteRecord = hopRecord.substitutions[index];
-    substituteRecord.ratingDate = value;
-    this.setState({ hopRecords });
-    this.calculateSubstitutionValuesForHopRecordAndSubstitution(
-      index,
-      hopRecordIndex
-    );
-  }
-
-  onSubstituteStorageFactorChanged(index, hopRecordIndex, e) {
-    const value = e.target.value;
-    var { hopRecords } = this.state;
-    var hopRecord = hopRecords[hopRecordIndex];
-    var substituteRecord = hopRecord.substitutions[index];
-    substituteRecord.storageFactor = value;
-    this.setState({ hopRecords });
-    this.calculateSubstitutionValuesForHopRecordAndSubstitution(
-      index,
-      hopRecordIndex
-    );
-  }
-
   calculateSubstitutionValuesForHopRecordAndSubstitution(
     index,
     hopRecordIndex
@@ -583,16 +496,6 @@ class App extends Component {
     hopRecord.ibuRequirementSatisfied = calcIBURequirementSatisifed;
 
     this.setState({ hopRecords });
-  }
-
-  lowAAWarningMessage(substituteRecord) {
-    if (substituteRecord.lowAAWarn === true)
-      return (
-        <div className="LowAAAlert">
-          Less then half of rated alpha acids, you should consider disposing of
-          it.
-        </div>
-      );
   }
 
   onNewCustomHopClick(recipeIndex, substitutionIndex) {

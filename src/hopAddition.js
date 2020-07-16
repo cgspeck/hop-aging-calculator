@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+// https://material-ui.com/components/material-icons/
+import AddBox from "@material-ui/icons/AddBox";
+
 import Button from "@material-ui/core/Button";
 import CancelIcon from "@material-ui/icons/Cancel";
 import Card from "@material-ui/core/Card";
@@ -14,6 +17,7 @@ import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 
 import { DateTime, Interval } from "luxon";
+import { DatePicker } from "@material-ui/pickers";
 
 import {
   calculatePostBoilVolume,
@@ -23,10 +27,12 @@ import {
   calculateIBU,
   compareFloats,
   createId,
+  updateArray,
 } from "./util";
 
 import { IBU_INTERMEDIATE_GRAVITY } from "./constants";
 
+import LowAAWarning from "./lowAAWarning";
 import ResultField from "./ResultFieldComponent";
 import { debouncedInput } from "./debouncedInput";
 const DebouncedTextField = debouncedInput(TextField, { timeout: 500 });
@@ -153,14 +159,15 @@ class HopAddition extends Component {
     ));
   }
 
-  hopVarietySelectCreateNewItem(recipeIndex, substitutionIndex) {
+  hopVarietySelectCreateNewItem(substitutionIndex) {
+    const { index } = this.props;
     return (
       <MenuItem
         value="newCustomHop"
         key="newCustomHop"
         onClick={this.props.onNewCustomHopClick.bind(
           this,
-          recipeIndex,
+          index,
           substitutionIndex
         )}
       >
@@ -185,7 +192,7 @@ class HopAddition extends Component {
 
     const updatedRecord = {
       ...hopRecord,
-      additionTime: isNaN(iValue) ? "" : fV,
+      additionTime: isNaN(iValue) ? "" : iValue,
     };
     this.setState({
       hopRecord: updatedRecord,
@@ -233,30 +240,92 @@ class HopAddition extends Component {
     });
   }
 
-  onDeleteSubstituteRecord(index, hopRecordIndex) {
-    var { hopRecords } = this.state;
-    var hopRecord = hopRecords[hopRecordIndex];
-    hopRecord.substitutions.splice(index, 1);
-    this.setState({ hopRecords });
-    this.calculateSubstitutionValuesForHopRecord(hopRecordIndex);
+  onDeleteSubstituteRecord(index) {
+    const { hopRecord } = this.state;
+    const { substitutions } = hopRecord;
+
+    const newSubstitutiuons = substitutions.filter((_, i) => i !== index);
+
+    this.setState({
+      hopRecord: {
+        ...hopRecord,
+        substitutions: newSubstitutiuons,
+      },
+    });
+  }
+
+  updateSubstituteParamToFloatOrEmpty(index, e, key) {
+    const value = e.target.value;
+    const fV = parseFloat(value);
+    if (isNaN(fV) && value !== "") {
+      return;
+    }
+    this.updateSubstituteParamToValue(index, isNaN(fV) ? "" : fV, key);
+  }
+
+  updateSubstituteParamToValue(index, value, key) {
+    const { hopRecord } = this.state;
+    const { substitutions } = hopRecord;
+    const substituteRecord = substitutions[index];
+    const newSubstituteRecord = {
+      ...substituteRecord,
+      [key]: value,
+    };
+
+    const newSubstitutions = updateArray(
+      substitutions,
+      index,
+      newSubstituteRecord
+    );
+
+    this.setState({
+      ...hopRecord,
+      substitutions: newSubstitutions,
+    });
+  }
+
+  onSubstituteMaxAmountChanged(index, e) {
+    this.updateSubstituteParamToFloatOrEmpty(index, e, "maxAmount");
+  }
+
+  onSubstituteRatedAlphaAcidChanged(index, e) {
+    this.updateSubstituteParamToFloatOrEmpty(index, e, "ratedAlphaAcid");
+  }
+
+  onSubstituteRatingDateChanged(index, e) {
+    this.updateSubstituteParamToValue(index, e, "ratingDate");
+  }
+
+  onSubstituteStorageFactorChanged(index, e) {
+    const value = e.target.value;
+    this.updateSubstituteParamToValue(index, value, "storageFactor");
+  }
+
+  onSubstituteStorageTemperatureChanged(index, e) {
+    this.updateSubstituteParamToFloatOrEmpty(index, e, "storageTemperature");
   }
 
   // TODO: resume here!!!
-  substituteTag(substituteRecord, index, recipeIndex) {
+  substituteTag(substituteRecord, index) {
+    const {
+      maxAmount,
+      ratedAlphaAcid,
+      variety,
+      ratingDate,
+      storageFactor,
+      storageTemperature,
+      calculatedRequiredAmount,
+      calculatedAge,
+      calculatedEstimatedAA,
+      calculatedIBU,
+      lowAAWarn,
+    } = substituteRecord;
     return (
-      <Card
-        variant="outlined"
-        className="SubstituteCard"
-        key={`${recipeIndex}_${index}`}
-      >
+      <Card variant="outlined" className="SubstituteCard" key={`${index}`}>
         <Grid container spacing={1}>
           <Grid item xs={1} md={1}>
             <CancelIcon
-              onClick={this.onDeleteSubstituteRecord.bind(
-                this,
-                index,
-                recipeIndex
-              )}
+              onClick={this.onDeleteSubstituteRecord.bind(this, index)}
               className="SubstutionCancelIcon"
               color="secondary"
             />
@@ -264,12 +333,8 @@ class HopAddition extends Component {
           <Grid item xs={11} md={3}>
             <DebouncedTextField
               label="Up to"
-              value={substituteRecord.maxAmount}
-              onChange={this.onSubstituteMaxAmountChanged.bind(
-                this,
-                index,
-                recipeIndex
-              )}
+              value={maxAmount}
+              onChange={this.onSubstituteMaxAmountChanged.bind(this, index)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">gms</InputAdornment>
@@ -285,15 +350,11 @@ class HopAddition extends Component {
             <FormControl>
               <InputLabel>Substitute Variety</InputLabel>
               <Select
-                value={substituteRecord.variety}
-                onChange={this.onSubstituteHopChanged.bind(
-                  this,
-                  index,
-                  recipeIndex
-                )}
+                value={variety}
+                onChange={this.onSubstituteHopChanged.bind(this, index)}
               >
                 {this.hopVarietySelectCustomItems()}
-                {this.hopVarietySelectCreateNewItem(recipeIndex, index)}
+                {this.hopVarietySelectCreateNewItem(index)}
                 {this.hopVarietySelectDefaultItems()}
               </Select>
             </FormControl>
@@ -301,11 +362,10 @@ class HopAddition extends Component {
           <Grid item xs={12} md={3}>
             <DebouncedTextField
               label="Rated"
-              value={substituteRecord.ratedAlphaAcid}
+              value={ratedAlphaAcid}
               onChange={this.onSubstituteRatedAlphaAcidChanged.bind(
                 this,
-                index,
-                recipeIndex
+                index
               )}
               InputProps={{
                 endAdornment: (
@@ -320,24 +380,16 @@ class HopAddition extends Component {
             <DatePicker
               label="Rating Date"
               format="dd/MM/yyyy"
-              value={substituteRecord.ratingDate.toJSDate()}
-              onChange={this.onSubstituteRatingDateChanged.bind(
-                this,
-                index,
-                recipeIndex
-              )}
+              value={ratingDate.toJSDate()}
+              onChange={this.onSubstituteRatingDateChanged.bind(this, index)}
               disableFuture
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <InputLabel>Storage Conditions</InputLabel>
             <Select
-              value={substituteRecord.storageFactor}
-              onChange={this.onSubstituteStorageFactorChanged.bind(
-                this,
-                index,
-                recipeIndex
-              )}
+              value={storageFactor}
+              onChange={this.onSubstituteStorageFactorChanged.bind(this, index)}
             >
               <MenuItem value={0.5} key="0">
                 Sealed under vacuum or inert atmosphere
@@ -353,11 +405,10 @@ class HopAddition extends Component {
           <Grid item xs={12} md={3}>
             <DebouncedTextField
               label="Storage Temperature"
-              value={substituteRecord.storageTemperature}
+              value={storageTemperature}
               onChange={this.onSubstituteStorageTemperatureChanged.bind(
                 this,
-                index,
-                recipeIndex
+                index
               )}
               InputProps={{
                 endAdornment: (
@@ -375,16 +426,14 @@ class HopAddition extends Component {
                   <Grid item xs={12} md={3}>
                     <ResultField
                       label="Required Amount"
-                      value={substituteRecord.calculatedRequiredAmount.toFixed(
-                        1
-                      )}
+                      value={calculatedRequiredAmount.toFixed(1)}
                       postValue="gms"
                     />
                   </Grid>
                   <Grid item xs={12} md={3}>
                     <ResultField
                       label="Age at Brew date"
-                      value={substituteRecord.calculatedAge}
+                      value={calculatedAge}
                       postValue="days"
                     />
                   </Grid>
@@ -392,17 +441,17 @@ class HopAddition extends Component {
                     <ResultField
                       label="Estimated Alpha Acid"
                       postValue="%"
-                      value={substituteRecord.calculatedEstimatedAA.toFixed(1)}
+                      value={calculatedEstimatedAA.toFixed(1)}
                     />
                   </Grid>
                   <Grid item xs={12} md={3}>
                     <ResultField
                       label="Estimated IBU"
-                      value={substituteRecord.calculatedIBU.toFixed(1)}
+                      value={calculatedIBU.toFixed(1)}
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    {this.lowAAWarningMessage(substituteRecord)}
+                    <LowAAWarning lowAAWarn={lowAAWarn} />
                   </Grid>
                 </Grid>
               </CardContent>
@@ -489,7 +538,7 @@ class HopAddition extends Component {
                     onChange={this.onAdditionHopChanged.bind(this)}
                   >
                     {this.hopVarietySelectCustomItems()}
-                    {this.hopVarietySelectCreateNewItem(index, null)}
+                    {this.hopVarietySelectCreateNewItem(null)}
                     {this.hopVarietySelectDefaultItems()}
                   </Select>
                 </FormControl>
