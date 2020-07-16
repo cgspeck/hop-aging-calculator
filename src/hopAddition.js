@@ -81,6 +81,7 @@ class HopAddition extends Component {
 
   handleCloneHopAddition() {
     const { hopRecord } = this.state;
+    console.log("handleCloneHopAddition", hopRecord);
     this.props.onCloneHopAddition(hopRecord);
   }
 
@@ -194,19 +195,17 @@ class HopAddition extends Component {
   }
 
   onAddHopSubstitution() {
-    const { hopRecord } = this.state;
-    const { baseVariety, substitutions } = hopRecord.variety;
-
-    const newSubstitutions = substitutions.concat(
-      this.newSubstitution(baseVariety)
-    );
-
-    this.setState({
-      hopRecord: {
-        ...hopRecord,
-        substitutions: newSubstitutions,
-      },
-    });
+    // const { hopRecord } = this.state;
+    // const { baseVariety, substitutions } = hopRecord.variety;
+    // const newSubstitutions = substitutions.concat(
+    //   this.newSubstitution(baseVariety)
+    // );
+    // this.setState({
+    //   hopRecord: {
+    //     ...hopRecord,
+    //     substitutions: newSubstitutions,
+    //   },
+    // });
   }
 
   onDeleteSubstituteRecord(index) {
@@ -463,7 +462,7 @@ class HopAddition extends Component {
               <Button
                 variant="contained"
                 className="HopAdditionActionButtons"
-                onClick={this.handleCloneHopAddition}
+                onClick={this.handleCloneHopAddition.bind(this)}
               >
                 Copy
               </Button>
@@ -473,7 +472,7 @@ class HopAddition extends Component {
               <Button
                 variant="contained"
                 className="HopAdditionActionButtons"
-                onClick={this.handleDeleteHopAddition}
+                onClick={this.handleDeleteHopAddition.bind(this)}
                 color="secondary"
               >
                 Delete

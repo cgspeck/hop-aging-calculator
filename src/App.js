@@ -372,31 +372,30 @@ class App extends Component {
   }
 
   onDeleteHopAddition(index) {
-    var { hopRecords } = this.state;
-    delete hopRecords[index];
+    const { hopRecords } = this.state;
+    const newHopRecords = hopRecords.filter((v) => v !== index);
     this.setState({
-      hopRecords,
+      hopRecords: newHopRecords,
     });
   }
 
-  onCloneHopAddition(index) {
+  onCloneHopAddition(srcHopRecord) {
+    console.log("srcHopRecord", srcHopRecord);
     const { hopRecords } = this.state;
-    const sourceRecord = hopRecords[index];
     const newId = createId();
-    var newAdditionRecord = cloneDeep(sourceRecord);
-    // don't want to create a new set of hop varieties because it will break select boxes
-    newAdditionRecord.variety = sourceRecord.variety;
-    newAdditionRecord.name = `Copy of ${sourceRecord.name}`;
+    var newAdditionRecord = cloneDeep(srcHopRecord);
+
+    // // don't want to create a new set of hop varieties because it will break select boxes
+    newAdditionRecord.variety = srcHopRecord.variety;
+    newAdditionRecord.name = `Copy of ${srcHopRecord.name}`;
     // eslint-disable-next-line array-callback-return
     newAdditionRecord.substitutions.map((substitutionRecord, i) => {
-      substitutionRecord.variety = sourceRecord.substitutions[i].variety;
+      substitutionRecord.variety = srcHopRecord.substitutions[i].variety;
     });
 
     this.setState({
-      hopRecords: {
-        ...hopRecords,
-        [newId]: newAdditionRecord,
-      },
+      initialHopRecord: newAdditionRecord,
+      hopRecords: hopRecords.concat([newId]),
     });
   }
 
@@ -739,6 +738,8 @@ class App extends Component {
             index={value}
             {...baseProps}
             onNewCustomHopClick={() => {}}
+            onCloneHopAddition={this.onCloneHopAddition.bind(this)}
+            onDeleteHopAddition={this.onDeleteHopAddition.bind(this)}
             key={value}
           />
         ))}
