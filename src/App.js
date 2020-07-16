@@ -38,7 +38,7 @@ import TextField from "@material-ui/core/TextField";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import LuxonUtils from "@date-io/luxon";
 import { DatePicker } from "@material-ui/pickers";
-import { DateTime, Interval } from "luxon";
+import { DateTime } from "luxon";
 
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -59,9 +59,6 @@ import {
   calculatePostBoilVolume,
   calculateNewGravity,
   calculateHopUtilisationFactor,
-  calculateRequiredGrams,
-  calculateIBU,
-  compareFloats,
   createId,
 } from "./util";
 import { IBU_INTERMEDIATE_GRAVITY, IBU_FINAL_GRAVITY } from "./constants";
