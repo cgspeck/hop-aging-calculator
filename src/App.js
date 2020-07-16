@@ -116,7 +116,6 @@ class App extends Component {
     };
 
     this.state.initialHopRecord = this.newHopRecord();
-    // this.state.hopRecords[createId()] = this.newHopRecord();
     this.state.hopRecords = [createId()];
 
     this.customVarieties = [];
@@ -129,9 +128,13 @@ class App extends Component {
       boilStartGravity,
       boilEndGravity,
       boilTime,
-      recordNo,
       varieties,
     } = this.state;
+
+    const recordNo =
+      this.state.hopRecords.length === undefined
+        ? 1
+        : this.state.hopRecords.length + 1;
 
     const gravityForIBUCalc =
       ibuCalcMode === IBU_INTERMEDIATE_GRAVITY
@@ -182,28 +185,24 @@ class App extends Component {
       boilEndVolume
     );
 
-    this.setState(
-      {
-        boilEndGravity,
-      },
-      this.calculateSubstitutionValuesForRecipe
-    );
+    this.setState({
+      boilEndGravity,
+    });
   }
 
   onNewHopAddition(e) {
     const hopRecords = this.state.hopRecords;
     const newId = createId();
+    const initialHopRecord = this.newHopRecord();
 
     this.setState({
-      hopRecords: {
-        ...hopRecords,
-        [newId]: this.newHopRecord(),
-      },
+      initialHopRecord,
+      hopRecords: hopRecords.concat([newId]),
     });
   }
 
   onBrewDateChanged(brewDate) {
-    this.setState({ brewDate }, this.calculateSubstitutionValuesForRecipe);
+    this.setState({ brewDate });
   }
 
   onBoilVolumeChanged(e) {
@@ -242,9 +241,7 @@ class App extends Component {
   onBoilStartGravityChanged(e) {
     const value = e.target.value;
     const fV = parseFloat(value);
-
     this.setState({ boilStartGravity: isNaN(fV) ? value : fV });
-
     if (!isNaN(fV)) {
       this.calculateBoilEndVolume();
     }
@@ -252,7 +249,7 @@ class App extends Component {
 
   onIBUCalcModeChanged(e) {
     const ibuCalcMode = e.target.value;
-    this.setState({ ibuCalcMode }, this.calculateSubstitutionValuesForRecipe);
+    this.setState({ ibuCalcMode });
   }
 
   recipeControls() {
