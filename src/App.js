@@ -116,6 +116,7 @@ class App extends Component {
     };
 
     this.state.initialHopRecord = this.newHopRecord();
+    this.state.initialSubstitutions = [];
     this.state.hopRecords = [createId()];
 
     this.customVarieties = [];
@@ -194,6 +195,7 @@ class App extends Component {
 
     this.setState({
       initialHopRecord,
+      initialSubstitutions: [],
       hopRecords: hopRecords.concat([newId]),
     });
   }
@@ -376,7 +378,7 @@ class App extends Component {
     });
   }
 
-  onCloneHopAddition(srcHopRecord) {
+  onCloneHopAddition(srcHopRecord, srcSubstitutions) {
     console.log("srcHopRecord", srcHopRecord);
     const { hopRecords } = this.state;
     const newId = createId();
@@ -392,6 +394,7 @@ class App extends Component {
 
     this.setState({
       initialHopRecord: newAdditionRecord,
+      initialSubstitutions: srcSubstitutions,
       hopRecords: hopRecords.concat([newId]),
     });
   }
@@ -695,10 +698,13 @@ class App extends Component {
       boilStartGravity,
       boilVolume,
       boilOffRate,
+      boilEndVolume,
+      brewDate,
       ibuCalcMode,
       boilEndGravity,
       boilTime,
       initialHopRecord,
+      initialSubstitutions,
       customVarieties,
       varieties,
     } = this.state;
@@ -707,11 +713,14 @@ class App extends Component {
       boilStartGravity,
       boilVolume,
       boilOffRate,
+      brewDate,
+      boilEndVolume,
       ibuCalcMode,
       boilEndGravity,
       boilTime,
       varieties,
       initialHopRecord,
+      initialSubstitutions,
       customVarieties,
     };
 

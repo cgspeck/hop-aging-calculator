@@ -43,6 +43,7 @@ class HopAddition extends Component {
     console.log("const", props);
     this.state = {
       hopRecord: props.initialHopRecord,
+      substitutions: props.initialSubstitutions,
     };
     console.log("const state", this.state);
   }
@@ -80,9 +81,9 @@ class HopAddition extends Component {
   }
 
   handleCloneHopAddition() {
-    const { hopRecord } = this.state;
+    const { hopRecord, substitutions } = this.state;
     console.log("handleCloneHopAddition", hopRecord);
-    this.props.onCloneHopAddition(hopRecord);
+    this.props.onCloneHopAddition(hopRecord, substitutions);
   }
 
   handleDeleteHopAddition() {
@@ -195,18 +196,15 @@ class HopAddition extends Component {
   }
 
   onAddHopSubstitution() {
-    const { hopRecord } = this.state;
-    const { variety, substitutions } = hopRecord;
+    const { hopRecord, substitutions } = this.state;
+    const { variety } = hopRecord;
 
     const newSubstitutions = substitutions.concat(
       this.newSubstitution(variety)
     );
 
     this.setState({
-      hopRecord: {
-        ...hopRecord,
-        substitutions: newSubstitutions,
-      },
+      substitutions: newSubstitutions,
     });
   }
 
@@ -234,22 +232,23 @@ class HopAddition extends Component {
   }
 
   updateSubstituteParamToValue(index, value, key) {
-    const { hopRecord } = this.state;
-    const { substitutions } = hopRecord;
+    const { substitutions } = this.state;
     const substituteRecord = substitutions[index];
     const newSubstituteRecord = {
       ...substituteRecord,
       [key]: value,
     };
 
+    console.log("newSubstitutions set prv", substitutions);
     const newSubstitutions = updateArray(
       substitutions,
       index,
       newSubstituteRecord
     );
 
+    console.log("newSubstitutions set val", newSubstitutions);
+
     this.setState({
-      ...hopRecord,
       substitutions: newSubstitutions,
     });
   }
@@ -289,7 +288,7 @@ class HopAddition extends Component {
   }
 
   // TODO: resume here!!!
-  substituteTag(substituteRecord, index) {
+  substituteTag(substituteRecord, index, substitutuionResults) {
     const {
       maxAmount,
       ratedAlphaAcid,
@@ -297,12 +296,16 @@ class HopAddition extends Component {
       ratingDate,
       storageFactor,
       storageTemperature,
+    } = substituteRecord;
+    const {
       calculatedRequiredAmount,
       calculatedAge,
-      calculatedEstimatedAA,
       calculatedIBU,
+      estimatedAA,
       lowAAWarn,
-    } = substituteRecord;
+    } = substitutuionResults;
+    console.log(this.state);
+    console.log(substituteRecord, substitutuionResults);
     return (
       <Card variant="outlined" className="SubstituteCard" key={`${index}`}>
         <Grid container spacing={1}>
@@ -409,7 +412,7 @@ class HopAddition extends Component {
                   <Grid item xs={12} md={3}>
                     <ResultField
                       label="Required Amount"
-                      value={calculatedRequiredAmount.toFixed(1)}
+                      value={(calculatedRequiredAmount || 0).toFixed(1)}
                       postValue="gms"
                     />
                   </Grid>
@@ -424,13 +427,13 @@ class HopAddition extends Component {
                     <ResultField
                       label="Estimated Alpha Acid"
                       postValue="%"
-                      value={calculatedEstimatedAA.toFixed(1)}
+                      value={(estimatedAA || 0).toFixed(1)}
                     />
                   </Grid>
                   <Grid item xs={12} md={3}>
                     <ResultField
                       label="Estimated IBU"
-                      value={calculatedIBU.toFixed(1)}
+                      value={(calculatedIBU || 0).toFixed(1)}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -445,30 +448,125 @@ class HopAddition extends Component {
     );
   }
 
-  render() {
+  calculateSubstitutionResults(
+    utilisationFactor,
+    ibu,
+    substitutions,
+    substituteRecordIdx
+  ) {
+    // var { boilEndVolume, hopRecords } = this.state;
+    // var hopRecord = hopRecords[hopRecordIndex];
+
+    const { brewDate, boilEndVolume } = this.props;
+    const substituteRecord = substitutions[substituteRecordIdx];
     const {
-      additionTime,
-      ibu,
-      ibuRequirementSatisfied,
-      // intermediateGravity,
-      name,
-      variety,
-      substitutions,
-    } = this.state.hopRecord;
+      ratedAlphaAcid,
+      ratingDate,
+      storageTemperature,
+      storageFactor,
+      maxAmount,
+    } = substituteRecord;
+    console.log(ratingDate, brewDate);
+    const interval = Interval.fromDateTimes(ratingDate, brewDate);
+
+    var calculatedRequiredAmount = 0;
+    var calculatedAge, calculatedIBU, estimatedAA;
+    calculatedAge = interval.count("days") - 1;
+    // https://mathbitsnotebook.com/Algebra1/FunctionGraphs/FNGTypeExponential.html
+    // Math.pow(1 - 0.045, 20 - storageTemperature);
+    const temperatureFactor = Math.pow(1 - 0.045, 20 - storageTemperature);
+    // A O = (A N *100)/(100*%Lost)
+    // k = (lnA o - lnA N )/180
+    const { percentLost } = substituteRecord.variety;
+    const invPercentLost = Math.abs(1.0 - percentLost);
+    const An = 1.3;
+    const A0 = (An * 100) / (100 * invPercentLost);
+    const rateConstant = (Math.log(A0) - Math.log(An)) / 180;
+    // future alpha = A*1/e(k*TF*SF*Days)
+    estimatedAA =
+      (ratedAlphaAcid * 1) /
+      Math.exp(
+        rateConstant * temperatureFactor * storageFactor * calculatedAge
+      );
+
+    if (maxAmount <= 0) {
+      calculatedRequiredAmount = 0;
+      calculatedIBU = 0;
+    } else {
+      // const { utilisationFactor, ibu } = hopRecord;
+      // clip wanted ibu to total of this hop addition
+      const existingIBUs = substitutions.reduce((acc, cur, idx) => {
+        if (idx === substituteRecordIdx) {
+          return acc + 0;
+        } else {
+          return acc + cur.calculatedIBU;
+        }
+      }, 0);
+      var wantedIBU = ibu - existingIBUs;
+
+      if (wantedIBU < 0) {
+        wantedIBU = 0;
+      }
+
+      calculatedRequiredAmount = calculateRequiredGrams(
+        boilEndVolume,
+        wantedIBU,
+        estimatedAA,
+        utilisationFactor
+      );
+
+      console.log(
+        "BBB",
+        boilEndVolume,
+        wantedIBU,
+        estimatedAA,
+        utilisationFactor
+      );
+
+      if (calculatedRequiredAmount > maxAmount) {
+        calculatedRequiredAmount = maxAmount;
+      }
+      console.log(
+        "AAA",
+        calculatedRequiredAmount,
+        utilisationFactor,
+        estimatedAA,
+        boilEndVolume
+      );
+
+      calculatedIBU = calculateIBU(
+        calculatedRequiredAmount,
+        utilisationFactor,
+        estimatedAA,
+        boilEndVolume
+      );
+    }
+
+    const lowAAWarn = estimatedAA < ratedAlphaAcid / 2;
+
+    return {
+      calculatedRequiredAmount,
+      calculatedAge,
+      calculatedIBU,
+      estimatedAA,
+      lowAAWarn,
+    };
+  }
+
+  render() {
+    const { hopRecord, substitutions } = this.state;
+    console.log("render substitutions", substitutions);
+    const { additionTime, ibu, name, variety } = hopRecord;
     const {
       index,
       boilTime,
       boilVolume,
       boilOffRate,
       boilStartGravity,
+      ibuCalcMode,
+      boilEndGravity,
     } = this.props;
 
-    // TODO: calculate result fields
-    //     if (!isNaN(fV)) {
-    //   this.calculateSubstitutionValuesForHopRecord(hopRecordIndex);
-    // }
-
-    // const intermediateGravity =
     const intermediateVolume = calculatePostBoilVolume(
       boilVolume,
       boilOffRate,
@@ -480,6 +578,33 @@ class HopAddition extends Component {
       boilStartGravity,
       intermediateVolume
     );
+
+    const gravityForIBUCalc =
+      ibuCalcMode === IBU_INTERMEDIATE_GRAVITY
+        ? boilStartGravity
+        : boilEndGravity;
+
+    const utilisationFactor = calculateHopUtilisationFactor(
+      gravityForIBUCalc,
+      boilTime
+    );
+
+    const substitutuionResults = substitutions.map((_r, i) => {
+      return this.calculateSubstitutionResults(
+        utilisationFactor,
+        ibu,
+        substitutions,
+        i
+      );
+    });
+
+    console.log(substitutuionResults);
+    const ibuTotal = substitutuionResults.reduce((acc, cur, _idx) => {
+      console.log(cur, _idx);
+      return acc + cur.calculatedIBU;
+    }, 0);
+
+    const ibuRequirementSatisfied = compareFloats(ibu, ibuTotal);
 
     return (
       <Grid item xs={12} key={index}>
@@ -580,7 +705,9 @@ class HopAddition extends Component {
                   New Row
                 </Button>
               </Grid>
-              {substitutions.map((r, i) => this.substituteTag(r, i))}
+              {substitutions.map((r, i) =>
+                this.substituteTag(r, i, substitutuionResults[i])
+              )}
             </Grid>
           </CardContent>
         </Card>
@@ -601,6 +728,7 @@ props:
 - boilEndGravity
 - boilTime
 - initialHopRecord
+- initialSubstitutions
 - varieties
 - recordNo
 - onCloneHopAddition
