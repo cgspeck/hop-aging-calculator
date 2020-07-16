@@ -124,7 +124,6 @@ class App extends Component {
   newHopRecord() {
     const {
       ibuCalcMode,
-      boilVolume,
       boilStartGravity,
       boilEndGravity,
       boilTime,
@@ -150,8 +149,6 @@ class App extends Component {
       ibu: "",
       variety: varieties[0],
       additionTime: boilTime,
-      intermediateVolume: boilVolume,
-      intermediateGravity: boilStartGravity,
       gravityForIBUCalc,
       utilisationFactor,
       substitutions: [],
@@ -427,19 +424,6 @@ class App extends Component {
     this.setState({
       hopRecords,
     });
-  }
-
-  onSubstituteHopChanged(index, hopRecordIndex, e) {
-    const value = e.target.value;
-    var { hopRecords } = this.state;
-    var hopRecord = hopRecords[hopRecordIndex];
-    var substituteRecord = hopRecord.substitutions[index];
-    substituteRecord.variety = value;
-    this.setState({ hopRecords });
-    this.calculateSubstitutionValuesForHopRecordAndSubstitution(
-      index,
-      hopRecordIndex
-    );
   }
 
   calculateSubstitutionValuesForHopRecordAndSubstitution(

@@ -156,7 +156,7 @@ class HopAddition extends Component {
     });
   }
 
-  onAdditionHopChanged(hopRecordIndex, e) {
+  onAdditionHopChanged(e) {
     const value = e.target.value;
     const { hopRecord } = this.state;
 
@@ -195,17 +195,19 @@ class HopAddition extends Component {
   }
 
   onAddHopSubstitution() {
-    // const { hopRecord } = this.state;
-    // const { baseVariety, substitutions } = hopRecord.variety;
-    // const newSubstitutions = substitutions.concat(
-    //   this.newSubstitution(baseVariety)
-    // );
-    // this.setState({
-    //   hopRecord: {
-    //     ...hopRecord,
-    //     substitutions: newSubstitutions,
-    //   },
-    // });
+    const { hopRecord } = this.state;
+    const { variety, substitutions } = hopRecord;
+
+    const newSubstitutions = substitutions.concat(
+      this.newSubstitution(variety)
+    );
+
+    this.setState({
+      hopRecord: {
+        ...hopRecord,
+        substitutions: newSubstitutions,
+      },
+    });
   }
 
   onDeleteSubstituteRecord(index) {
@@ -271,6 +273,19 @@ class HopAddition extends Component {
 
   onSubstituteStorageTemperatureChanged(index, e) {
     this.updateSubstituteParamToFloatOrEmpty(index, e, "storageTemperature");
+  }
+
+  onSubstituteHopChanged(index, e) {
+    // const value = e.target.value;
+    // var { hopRecords } = this.state;
+    // var hopRecord = hopRecords[hopRecordIndex];
+    // var substituteRecord = hopRecord.substitutions[index];
+    // substituteRecord.variety = value;
+    // this.setState({ hopRecords });
+    // this.calculateSubstitutionValuesForHopRecordAndSubstitution(
+    //   index,
+    //   hopRecordIndex
+    // );
   }
 
   // TODO: resume here!!!
@@ -435,17 +450,36 @@ class HopAddition extends Component {
       additionTime,
       ibu,
       ibuRequirementSatisfied,
-      intermediateGravity,
+      // intermediateGravity,
       name,
       variety,
       substitutions,
     } = this.state.hopRecord;
-    const { index } = this.props;
+    const {
+      index,
+      boilTime,
+      boilVolume,
+      boilOffRate,
+      boilStartGravity,
+    } = this.props;
 
     // TODO: calculate result fields
     //     if (!isNaN(fV)) {
     //   this.calculateSubstitutionValuesForHopRecord(hopRecordIndex);
     // }
+
+    // const intermediateGravity =
+    const intermediateVolume = calculatePostBoilVolume(
+      boilVolume,
+      boilOffRate,
+      boilTime - additionTime
+    );
+
+    const intermediateGravity = calculateNewGravity(
+      boilVolume,
+      boilStartGravity,
+      intermediateVolume
+    );
 
     return (
       <Grid item xs={12} key={index}>
