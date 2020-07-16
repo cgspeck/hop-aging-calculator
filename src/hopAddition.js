@@ -451,6 +451,7 @@ class HopAddition extends Component {
   calculateSubstitutionResults(
     utilisationFactor,
     ibu,
+    ibuRunningTotal,
     substitutions,
     substituteRecordIdx
   ) {
@@ -495,14 +496,14 @@ class HopAddition extends Component {
     } else {
       // const { utilisationFactor, ibu } = hopRecord;
       // clip wanted ibu to total of this hop addition
-      const existingIBUs = substitutions.reduce((acc, cur, idx) => {
-        if (idx === substituteRecordIdx) {
-          return acc + 0;
-        } else {
-          return acc + cur.calculatedIBU;
-        }
-      }, 0);
-      var wantedIBU = ibu - existingIBUs;
+      // const existingIBUs = substitutions.reduce((acc, cur, idx) => {
+      //   if (idx === substituteRecordIdx) {
+      //     return acc + 0;
+      //   } else {
+      //     return acc + cur.calculatedIBU;
+      //   }
+      // }, 0);
+      var wantedIBU = ibu - ibuRunningTotal;
 
       if (wantedIBU < 0) {
         wantedIBU = 0;
@@ -589,22 +590,27 @@ class HopAddition extends Component {
       boilTime
     );
 
+    var ibuRunningTotal = 0;
+
     const substitutuionResults = substitutions.map((_r, i) => {
-      return this.calculateSubstitutionResults(
+      const memo = this.calculateSubstitutionResults(
         utilisationFactor,
         ibu,
+        ibuRunningTotal,
         substitutions,
         i
       );
+      ibuRunningTotal += memo.calculatedIBU;
+      return memo;
     });
 
     console.log(substitutuionResults);
-    const ibuTotal = substitutuionResults.reduce((acc, cur, _idx) => {
-      console.log(cur, _idx);
-      return acc + cur.calculatedIBU;
-    }, 0);
+    // const ibuTotal = substitutuionResults.reduce((acc, cur, _idx) => {
+    //   console.log(cur, _idx);
+    //   return acc + cur.calculatedIBU;
+    // }, 0);
 
-    const ibuRequirementSatisfied = compareFloats(ibu, ibuTotal);
+    const ibuRequirementSatisfied = compareFloats(ibu, ibuRunningTotal);
 
     return (
       <Grid item xs={12} key={index}>
