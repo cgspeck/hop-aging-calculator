@@ -85,6 +85,16 @@ function compareFloats(f1, f2, error = 0.05) {
   return f1 - error <= f2 && f1 + error >= f2;
 }
 
+function updateArray(oldArray, updateIndex, newValue) {
+  return oldArray.map((v, i) => {
+    if (i === updateIndex) {
+      return newValue;
+    } else {
+      return v;
+    }
+  });
+}
+
 export {
   calculatePostBoilVolume,
   calculateNewGravity,
@@ -93,6 +103,7 @@ export {
   calculateIBU,
   compareFloats,
   createId,
+  updateArray,
   _calculateBignessFactor,
   _calculateBoilTimeFactor,
 };
