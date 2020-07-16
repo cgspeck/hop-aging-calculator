@@ -40,55 +40,11 @@ const DebouncedTextField = debouncedInput(TextField, { timeout: 500 });
 class HopAddition extends Component {
   constructor(props) {
     super(props);
-
-    var hopRecord;
-
-    if (props.initialHopRecord !== null) {
-      hopRecord = props.initialHopRecord;
-    } else {
-      hopRecord = this.newHopRecord();
-    }
-
+    console.log("const", props);
     this.state = {
-      hopRecord,
+      hopRecord: props.initialHopRecord,
     };
-  }
-
-  newHopRecord() {
-    const {
-      ibuCalcMode,
-      boilVolume,
-      boilStartGravity,
-      boilEndGravity,
-      boilTime,
-      recordNo,
-      varieties,
-    } = this.props;
-
-    const gravityForIBUCalc =
-      ibuCalcMode === IBU_INTERMEDIATE_GRAVITY
-        ? boilStartGravity
-        : boilEndGravity;
-
-    const utilisationFactor = calculateHopUtilisationFactor(
-      gravityForIBUCalc,
-      boilTime
-    );
-
-    const memo = {
-      ibu: "",
-      variety: varieties[0],
-      additionTime: boilTime,
-      intermediateVolume: boilVolume,
-      intermediateGravity: boilStartGravity,
-      gravityForIBUCalc,
-      utilisationFactor,
-      substitutions: [],
-      ibuRequirementSatisfied: true,
-      name: `Hop addition ${recordNo}`,
-    };
-
-    return memo;
+    console.log("const state", this.state);
   }
 
   onHopAdditionNameChange(e) {
@@ -193,6 +149,19 @@ class HopAddition extends Component {
     const updatedRecord = {
       ...hopRecord,
       additionTime: isNaN(iValue) ? "" : iValue,
+    };
+    this.setState({
+      hopRecord: updatedRecord,
+    });
+  }
+
+  onAdditionHopChanged(hopRecordIndex, e) {
+    const value = e.target.value;
+    const { hopRecord } = this.state;
+
+    const updatedRecord = {
+      ...hopRecord,
+      variety: value,
     };
     this.setState({
       hopRecord: updatedRecord,
@@ -471,7 +440,7 @@ class HopAddition extends Component {
       name,
       variety,
       substitutions,
-    } = this.hopRecord;
+    } = this.state.hopRecord;
     const { index } = this.props;
 
     // TODO: calculate result fields
@@ -605,7 +574,6 @@ props:
 - onDeleteHopAddition
 - customVarieties
 - onNewCustomHopClick
-
 
 */
 

@@ -66,6 +66,7 @@ import {
 } from "./util";
 import { IBU_INTERMEDIATE_GRAVITY, IBU_FINAL_GRAVITY } from "./constants";
 
+import HopAddition from "./hopAddition";
 import ResultField from "./ResultFieldComponent";
 import { debouncedInput } from "./debouncedInput";
 const DebouncedTextField = debouncedInput(TextField, { timeout: 500 });
@@ -73,7 +74,7 @@ const DebouncedTextField = debouncedInput(TextField, { timeout: 500 });
 class App extends Component {
   constructor() {
     super();
-    this.varieties = DEFAULT_VARIETIES;
+    const varieties = DEFAULT_VARIETIES;
 
     const ibuCalcMode = IBU_FINAL_GRAVITY;
     const boilStartGravity = 1.044;
@@ -110,11 +111,52 @@ class App extends Component {
       newHopPercentLost: (Math.log(newHopHSI / 0.25) * 110) / 100,
       newHopRecipeIndex: null,
       newHopSubstitutionIndex: null,
+      varieties,
+      customVarieties: [],
     };
 
-    this.state.hopRecords[createId()] = this.newHopRecord();
+    this.state.initialHopRecord = this.newHopRecord();
+    // this.state.hopRecords[createId()] = this.newHopRecord();
+    this.state.hopRecords = [createId()];
 
     this.customVarieties = [];
+  }
+
+  newHopRecord() {
+    const {
+      ibuCalcMode,
+      boilVolume,
+      boilStartGravity,
+      boilEndGravity,
+      boilTime,
+      recordNo,
+      varieties,
+    } = this.state;
+
+    const gravityForIBUCalc =
+      ibuCalcMode === IBU_INTERMEDIATE_GRAVITY
+        ? boilStartGravity
+        : boilEndGravity;
+
+    const utilisationFactor = calculateHopUtilisationFactor(
+      gravityForIBUCalc,
+      boilTime
+    );
+
+    const memo = {
+      ibu: "",
+      variety: varieties[0],
+      additionTime: boilTime,
+      intermediateVolume: boilVolume,
+      intermediateGravity: boilStartGravity,
+      gravityForIBUCalc,
+      utilisationFactor,
+      substitutions: [],
+      ibuRequirementSatisfied: true,
+      name: `Hop addition ${recordNo}`,
+    };
+
+    return memo;
   }
 
   calculateBoilEndVolume() {
@@ -615,20 +657,6 @@ class App extends Component {
     );
   }
 
-  onAdditionHopChanged(hopRecordIndex, e) {
-    const value = e.target.value;
-    const { hopRecords } = this.state;
-
-    var record = hopRecords[hopRecordIndex];
-    record.variety = value;
-
-    this.setState({
-      hopRecords: update(hopRecords, {
-        [hopRecordIndex]: { $set: record },
-      }),
-    });
-  }
-
   calculateIntermediateVolumeAndGravity(hopRecordIndex) {
     const {
       boilTime,
@@ -682,12 +710,41 @@ class App extends Component {
   }
 
   hopRecordsTags() {
-    const hopRecords = this.state.hopRecords;
+    const {
+      hopRecords,
+      boilStartGravity,
+      boilVolume,
+      boilOffRate,
+      ibuCalcMode,
+      boilEndGravity,
+      boilTime,
+      initialHopRecord,
+      customVarieties,
+      varieties,
+    } = this.state;
+
+    const baseProps = {
+      boilStartGravity,
+      boilVolume,
+      boilOffRate,
+      ibuCalcMode,
+      boilEndGravity,
+      boilTime,
+      varieties,
+      initialHopRecord,
+      customVarieties,
+    };
+
     return (
       <Container>
-        {Object.entries(hopRecords).map(([key, value]) =>
-          this.hopRecordTag(value, key)
-        )}
+        {Object.entries(hopRecords).map(([_, value]) => (
+          <HopAddition
+            index={value}
+            {...baseProps}
+            onNewCustomHopClick={() => {}}
+            key={value}
+          />
+        ))}
       </Container>
     );
   }
