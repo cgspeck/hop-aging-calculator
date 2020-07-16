@@ -379,12 +379,11 @@ class App extends Component {
   }
 
   onCloneHopAddition(srcHopRecord, srcSubstitutions) {
-    console.log("srcHopRecord", srcHopRecord);
     const { hopRecords } = this.state;
     const newId = createId();
     var newAdditionRecord = cloneDeep(srcHopRecord);
 
-    // // don't want to create a new set of hop varieties because it will break select boxes
+    // don't want to create a new set of hop varieties because it will break select boxes
     newAdditionRecord.variety = srcHopRecord.variety;
     newAdditionRecord.name = `Copy of ${srcHopRecord.name}`;
     // eslint-disable-next-line array-callback-return
@@ -397,130 +396,6 @@ class App extends Component {
       initialSubstitutions: srcSubstitutions,
       hopRecords: hopRecords.concat([newId]),
     });
-  }
-
-  calculateSubstitutionValuesForRecipe() {
-    const { hopRecords } = this.state;
-
-    // eslint-disable-next-line array-callback-return
-    Object.entries(hopRecords).map(([key, _]) => {
-      this.calculateIntermediateVolumeAndGravity(key);
-      this.calculateSubstitutionValuesForHopRecord(key);
-    });
-  }
-
-  calculateSubstitutionValuesForHopRecord(hopRecordIndex) {
-    var { hopRecords } = this.state;
-    const hopRecord = hopRecords[hopRecordIndex];
-    if (hopRecord.substitutions.length > 0) {
-      hopRecord.substitutions.map((_, i) =>
-        this.calculateSubstitutionValuesForHopRecordAndSubstitution(
-          i,
-          hopRecordIndex
-        )
-      );
-    } else {
-      const ibu = hopRecord.ibu;
-      hopRecords[hopRecordIndex].ibuRequirementSatisfied =
-        ibu > 0 ? false : true;
-    }
-    this.setState({
-      hopRecords,
-    });
-  }
-
-  calculateSubstitutionValuesForHopRecordAndSubstitution(
-    index,
-    hopRecordIndex
-  ) {
-    var { boilEndVolume, hopRecords } = this.state;
-    var hopRecord = hopRecords[hopRecordIndex];
-    var substituteRecord = hopRecord.substitutions[index];
-    const brewDate = this.state.brewDate;
-    const {
-      ratedAlphaAcid,
-      ratingDate,
-      storageTemperature,
-      storageFactor,
-      maxAmount,
-    } = substituteRecord;
-    const interval = Interval.fromDateTimes(ratingDate, brewDate);
-
-    var calculatedRequiredAmount = 0;
-    var calculatedAge, calculatedIBU, estimatedAA;
-    calculatedAge = interval.count("days") - 1;
-    // https://mathbitsnotebook.com/Algebra1/FunctionGraphs/FNGTypeExponential.html
-    // Math.pow(1 - 0.045, 20 - storageTemperature);
-    const temperatureFactor = Math.pow(1 - 0.045, 20 - storageTemperature);
-    // A O = (A N *100)/(100*%Lost)
-    // k = (lnA o - lnA N )/180
-    const { percentLost } = substituteRecord.variety;
-    const invPercentLost = Math.abs(1.0 - percentLost);
-    const An = 1.3;
-    const A0 = (An * 100) / (100 * invPercentLost);
-    const rateConstant = (Math.log(A0) - Math.log(An)) / 180;
-    // future alpha = A*1/e(k*TF*SF*Days)
-    estimatedAA =
-      (ratedAlphaAcid * 1) /
-      Math.exp(
-        rateConstant * temperatureFactor * storageFactor * calculatedAge
-      );
-
-    if (estimatedAA < ratedAlphaAcid / 2) {
-      substituteRecord.lowAAWarn = true;
-    }
-
-    if (maxAmount <= 0) {
-      calculatedRequiredAmount = 0;
-      calculatedIBU = 0;
-    } else {
-      const { utilisationFactor, ibu } = hopRecord;
-
-      var calcIBURequirementSatisifed = false;
-      // clip wanted ibu to total of this hop addition
-      const existingIBUs = hopRecord.substitutions.reduce((acc, cur, idx) => {
-        if (idx === index) {
-          return acc + 0;
-        } else {
-          return acc + cur.calculatedIBU;
-        }
-      }, 0);
-      var wantedIBU = ibu - existingIBUs;
-
-      if (wantedIBU < 0) {
-        wantedIBU = 0;
-      }
-
-      calculatedRequiredAmount = calculateRequiredGrams(
-        boilEndVolume,
-        wantedIBU,
-        estimatedAA,
-        utilisationFactor
-      );
-
-      if (calculatedRequiredAmount > maxAmount) {
-        calculatedRequiredAmount = maxAmount;
-      }
-
-      calculatedIBU = calculateIBU(
-        calculatedRequiredAmount,
-        utilisationFactor,
-        estimatedAA,
-        boilEndVolume
-      );
-
-      if (compareFloats(calculatedIBU, wantedIBU)) {
-        calcIBURequirementSatisifed = true;
-      }
-    }
-
-    substituteRecord.calculatedRequiredAmount = calculatedRequiredAmount;
-    substituteRecord.calculatedAge = calculatedAge;
-    substituteRecord.calculatedIBU = calculatedIBU;
-    substituteRecord.calculatedEstimatedAA = estimatedAA;
-    hopRecord.ibuRequirementSatisfied = calcIBURequirementSatisifed;
-
-    this.setState({ hopRecords });
   }
 
   onNewCustomHopClick(recipeIndex, substitutionIndex) {
@@ -638,58 +513,6 @@ class App extends Component {
         </DialogActions>
       </Dialog>
     );
-  }
-
-  calculateIntermediateVolumeAndGravity(hopRecordIndex) {
-    const {
-      boilTime,
-      boilVolume,
-      boilStartGravity,
-      boilEndGravity,
-      boilOffRate,
-      ibuCalcMode,
-    } = this.state;
-
-    const { hopRecords } = this.state;
-    var record = hopRecords[hopRecordIndex];
-    const { additionTime } = record;
-
-    const intermediateVolume = calculatePostBoilVolume(
-      boilVolume,
-      boilOffRate,
-      boilTime - additionTime
-    );
-    record.intermediateVolume = intermediateVolume;
-
-    const intermediateGravity = calculateNewGravity(
-      boilVolume,
-      boilStartGravity,
-      intermediateVolume
-    );
-
-    record.intermediateGravity = intermediateGravity;
-
-    var gravityForIBUCalc;
-
-    if (ibuCalcMode === IBU_INTERMEDIATE_GRAVITY) {
-      gravityForIBUCalc = intermediateGravity;
-    } else {
-      gravityForIBUCalc = boilEndGravity;
-    }
-
-    const utilisationFactor = calculateHopUtilisationFactor(
-      gravityForIBUCalc,
-      additionTime
-    );
-
-    record.gravityForIBUCalc = gravityForIBUCalc;
-    record.utilisationFactor = utilisationFactor;
-
-    this.setState({
-      hopRecords: update(hopRecords, {
-        [hopRecordIndex]: { $set: record },
-      }),
-    });
   }
 
   hopRecordsTags() {
