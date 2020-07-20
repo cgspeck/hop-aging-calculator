@@ -54,13 +54,10 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 
 import cloneDeep from "lodash.clonedeep";
 
+import ReactGA from "react-ga";
+
 import { DEFAULT_VARIETIES } from "./data";
-import {
-  calculatePostBoilVolume,
-  calculateNewGravity,
-  calculateHopUtilisationFactor,
-  createId,
-} from "./util";
+import { calculatePostBoilVolume, calculateNewGravity, calculateHopUtilisationFactor, createId } from "./util";
 import { IBU_INTERMEDIATE_GRAVITY, IBU_FINAL_GRAVITY } from "./constants";
 
 import HopAddition from "./hopAddition";
@@ -78,17 +75,9 @@ class App extends Component {
     const boilVolume = 60.0;
     const boilOffRate = 11;
     const boilTime = 60;
-    const boilEndVolume = calculatePostBoilVolume(
-      boilVolume,
-      boilOffRate,
-      boilTime
-    );
+    const boilEndVolume = calculatePostBoilVolume(boilVolume, boilOffRate, boilTime);
 
-    const boilEndGravity = calculateNewGravity(
-      boilVolume,
-      boilStartGravity,
-      boilEndVolume
-    );
+    const boilEndGravity = calculateNewGravity(boilVolume, boilStartGravity, boilEndVolume);
 
     const newHopHSI = 0.6;
 
@@ -119,29 +108,21 @@ class App extends Component {
     this.customVarieties = [];
   }
 
+  componentDidMount() {
+    if (process.env.NODE_ENV === "production") {
+      ReactGA.initialize(process.env.REACT_APP_GA_CODE);
+      ReactGA.pageview(window.location.pathname + window.location.search);
+    }
+  }
+
   newHopRecord() {
-    const {
-      ibuCalcMode,
-      boilStartGravity,
-      boilEndGravity,
-      boilTime,
-      varieties,
-    } = this.state;
+    const { ibuCalcMode, boilStartGravity, boilEndGravity, boilTime, varieties } = this.state;
 
-    const recordNo =
-      this.state.hopRecords.length === undefined
-        ? 1
-        : this.state.hopRecords.length + 1;
+    const recordNo = this.state.hopRecords.length === undefined ? 1 : this.state.hopRecords.length + 1;
 
-    const gravityForIBUCalc =
-      ibuCalcMode === IBU_INTERMEDIATE_GRAVITY
-        ? boilStartGravity
-        : boilEndGravity;
+    const gravityForIBUCalc = ibuCalcMode === IBU_INTERMEDIATE_GRAVITY ? boilStartGravity : boilEndGravity;
 
-    const utilisationFactor = calculateHopUtilisationFactor(
-      gravityForIBUCalc,
-      boilTime
-    );
+    const utilisationFactor = calculateHopUtilisationFactor(gravityForIBUCalc, boilTime);
 
     const memo = {
       ibu: "",
@@ -160,11 +141,7 @@ class App extends Component {
   calculateBoilEndVolume() {
     const { boilVolume, boilOffRate, boilTime } = this.state;
 
-    const boilEndVolume = calculatePostBoilVolume(
-      boilVolume,
-      boilOffRate,
-      boilTime
-    );
+    const boilEndVolume = calculatePostBoilVolume(boilVolume, boilOffRate, boilTime);
     this.setState({
       boilEndVolume,
     });
@@ -174,11 +151,7 @@ class App extends Component {
   calculateBoilEndGravity() {
     const { boilVolume, boilStartGravity, boilEndVolume } = this.state;
 
-    const boilEndGravity = calculateNewGravity(
-      boilVolume,
-      boilStartGravity,
-      boilEndVolume
-    );
+    const boilEndGravity = calculateNewGravity(boilVolume, boilStartGravity, boilEndVolume);
 
     this.setState({
       boilEndGravity,
@@ -270,9 +243,7 @@ class App extends Component {
             value={this.state.boilTime}
             onChange={this.onBoilTimeChanged.bind(this)}
             InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">minutes</InputAdornment>
-              ),
+              endAdornment: <InputAdornment position="end">minutes</InputAdornment>,
             }}
             inputProps={{ step: 1, min: 0 }}
             type="number"
@@ -296,9 +267,7 @@ class App extends Component {
             value={boilVolume}
             onChange={this.onBoilVolumeChanged.bind(this)}
             InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">liters</InputAdornment>
-              ),
+              endAdornment: <InputAdornment position="end">liters</InputAdornment>,
             }}
             inputProps={{ step: "any", min: 0 }}
             type="number"
@@ -310,9 +279,7 @@ class App extends Component {
             value={boilOffRate}
             onChange={this.onBoilOffRateChanged.bind(this)}
             InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">liters/hour</InputAdornment>
-              ),
+              endAdornment: <InputAdornment position="end">liters/hour</InputAdornment>,
             }}
             type="number"
             step="0.1"
@@ -320,31 +287,15 @@ class App extends Component {
           ></DebouncedTextField>
         </Grid>
         <Grid item xs={12} md={4}>
-          <ResultField
-            label="End volume"
-            postValue="liters"
-            value={boilEndVolume.toFixed(1)}
-          />
+          <ResultField label="End volume" postValue="liters" value={boilEndVolume.toFixed(1)} />
         </Grid>
         <Grid item xs={12} md={4}>
-          <ResultField
-            label="Boil End Gravity"
-            value={this.state.boilEndGravity.toFixed(3)}
-            postValue="SG"
-          />
+          <ResultField label="Boil End Gravity" value={this.state.boilEndGravity.toFixed(3)} postValue="SG" />
         </Grid>
         <Grid item xs={12} md={12}>
           <InputLabel>IBU Calculation Mode</InputLabel>
-          <Select
-            value={ibuCalcMode}
-            onChange={this.onIBUCalcModeChanged.bind(this)}
-            id="IBUCalculationMode"
-          >
-            <MenuItem
-              value={IBU_INTERMEDIATE_GRAVITY}
-              key="0"
-              id="modeIBUIntermediate"
-            >
+          <Select value={ibuCalcMode} onChange={this.onIBUCalcModeChanged.bind(this)} id="IBUCalculationMode">
+            <MenuItem value={IBU_INTERMEDIATE_GRAVITY} key="0" id="modeIBUIntermediate">
               Tinseth, intermediate gravity
             </MenuItem>
             <MenuItem value={IBU_FINAL_GRAVITY} key="1" id="modeIBUFinal">
@@ -353,13 +304,7 @@ class App extends Component {
           </Select>
         </Grid>
         <Grid item xs={12}>
-          <Button
-            onClick={this.onNewHopAddition.bind(this)}
-            color="primary"
-            startIcon={<AddBox />}
-            variant="contained"
-            className="NewHopAdditionButton"
-          >
+          <Button onClick={this.onNewHopAddition.bind(this)} color="primary" startIcon={<AddBox />} variant="contained" className="NewHopAdditionButton">
             New Hop Addition
           </Button>
         </Grid>
@@ -469,14 +414,7 @@ class App extends Component {
       <Dialog open={this.state.newHopShouldOpen}>
         <DialogTitle>New Custom Hop</DialogTitle>
         <DialogContent>
-          <DebouncedTextField
-            autoFocus
-            margin="dense"
-            label="Name"
-            value={this.state.newHopName}
-            onChange={this.onCustomHopNameChange.bind(this)}
-            fullWidth
-          />
+          <DebouncedTextField autoFocus margin="dense" label="Name" value={this.state.newHopName} onChange={this.onCustomHopNameChange.bind(this)} fullWidth />
           <DebouncedTextField
             autoFocus
             margin="dense"
@@ -489,22 +427,13 @@ class App extends Component {
             type="number"
             fullWidth
           />
-          <ResultField
-            label="Percent Lost"
-            value={this.state.newHopPercentLost.toFixed(2)}
-          />
+          <ResultField label="Percent Lost" value={this.state.newHopPercentLost.toFixed(2)} />
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={this.onNewCustomHopDialogCancel.bind(this)}
-            color="primary"
-          >
+          <Button onClick={this.onNewCustomHopDialogCancel.bind(this)} color="primary">
             Cancel
           </Button>
-          <Button
-            onClick={this.onNewCustomHopDialogSave.bind(this)}
-            color="primary"
-          >
+          <Button onClick={this.onNewCustomHopDialogSave.bind(this)} color="primary">
             Save
           </Button>
         </DialogActions>
@@ -568,11 +497,7 @@ class App extends Component {
             <h1>Hop Aging Calculator</h1>
             <p>
               &copy; Chris Speck and licensed under the{" "}
-              <a
-                href="https://spdx.org/licenses/AGPL-3.0-or-later.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://spdx.org/licenses/AGPL-3.0-or-later.html" target="_blank" rel="noopener noreferrer">
                 AGPL-3.0-or-later license
               </a>
               , use at your own risk.
@@ -580,23 +505,17 @@ class App extends Component {
 
             <p>
               Want instructions or more information? &nbsp;
-              <a
-                href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://github.com/cgspeck/hop-aging-calculator#how-to-use" target="_blank" rel="noopener noreferrer">
                 Click here
               </a>
             </p>
 
             <p>
-            Checkout <a
-                href="https://www.westgatebrewers.org/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              Checkout &nbsp;
+              <a href="https://www.westgatebrewers.org/" target="_blank" rel="noopener noreferrer">
                 Westgate Brewers
-              </a> my homebrew club.
+              </a>
+              , my homebrew club.
             </p>
 
             <Grid container spacing={1}>
@@ -604,32 +523,17 @@ class App extends Component {
               {this.hopRecordsTags()}
             </Grid>
             <Container className="AppFooter">
-              <a
-                href="https://www.chrisspeck.com"
-                className="IconLink"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://www.chrisspeck.com" className="IconLink" target="_blank" rel="noopener noreferrer">
                 <IconButton>
                   <LanguageIcon />
                 </IconButton>
               </a>
-              <a
-                href="https://github.com/cgspeck"
-                className="IconLink"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://github.com/cgspeck" className="IconLink" target="_blank" rel="noopener noreferrer">
                 <IconButton>
                   <GitHubIcon />
                 </IconButton>
               </a>
-              <a
-                href="https://www.linkedin.com/in/cgspeck/"
-                className="IconLink"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://www.linkedin.com/in/cgspeck/" className="IconLink" target="_blank" rel="noopener noreferrer">
                 <IconButton>
                   <LinkedInIcon />
                 </IconButton>
