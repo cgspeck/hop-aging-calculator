@@ -275,13 +275,13 @@ Object {
                     role="button"
                     tabindex="0"
                   >
-                    Tinseth, end boil gravity (e.g. BrewTarget)
+                    Tinseth, intermediate gravity
                   </div>
                   <input
                     aria-hidden="true"
                     class="MuiSelect-nativeInput"
                     tabindex="-1"
-                    value="final-gravity"
+                    value="intermediate-gravity"
                   />
                   <svg
                     aria-hidden="true"
@@ -701,13 +701,13 @@ Object {
                   role="button"
                   tabindex="0"
                 >
-                  Tinseth, end boil gravity (e.g. BrewTarget)
+                  Tinseth, intermediate gravity
                 </div>
                 <input
                   aria-hidden="true"
                   class="MuiSelect-nativeInput"
                   tabindex="-1"
-                  value="final-gravity"
+                  value="intermediate-gravity"
                 />
                 <svg
                   aria-hidden="true"
@@ -1243,13 +1243,13 @@ Object {
                     role="button"
                     tabindex="0"
                   >
-                    Tinseth, end boil gravity (e.g. BrewTarget)
+                    Tinseth, intermediate gravity
                   </div>
                   <input
                     aria-hidden="true"
                     class="MuiSelect-nativeInput"
                     tabindex="-1"
-                    value="final-gravity"
+                    value="intermediate-gravity"
                   />
                   <svg
                     aria-hidden="true"
@@ -1922,13 +1922,13 @@ Object {
                   role="button"
                   tabindex="0"
                 >
-                  Tinseth, end boil gravity (e.g. BrewTarget)
+                  Tinseth, intermediate gravity
                 </div>
                 <input
                   aria-hidden="true"
                   class="MuiSelect-nativeInput"
                   tabindex="-1"
-                  value="final-gravity"
+                  value="intermediate-gravity"
                 />
                 <svg
                   aria-hidden="true"
@@ -2658,13 +2658,13 @@ Object {
                     role="button"
                     tabindex="0"
                   >
-                    Tinseth, end boil gravity (e.g. BrewTarget)
+                    Tinseth, intermediate gravity
                   </div>
                   <input
                     aria-hidden="true"
                     class="MuiSelect-nativeInput"
                     tabindex="-1"
-                    value="final-gravity"
+                    value="intermediate-gravity"
                   />
                   <svg
                     aria-hidden="true"
@@ -3589,13 +3589,13 @@ Object {
                   role="button"
                   tabindex="0"
                 >
-                  Tinseth, end boil gravity (e.g. BrewTarget)
+                  Tinseth, intermediate gravity
                 </div>
                 <input
                   aria-hidden="true"
                   class="MuiSelect-nativeInput"
                   tabindex="-1"
-                  value="final-gravity"
+                  value="intermediate-gravity"
                 />
                 <svg
                   aria-hidden="true"
@@ -4577,13 +4577,13 @@ Object {
                     role="button"
                     tabindex="0"
                   >
-                    Tinseth, end boil gravity (e.g. BrewTarget)
+                    Tinseth, intermediate gravity
                   </div>
                   <input
                     aria-hidden="true"
                     class="MuiSelect-nativeInput"
                     tabindex="-1"
-                    value="final-gravity"
+                    value="intermediate-gravity"
                   />
                   <svg
                     aria-hidden="true"
@@ -5508,13 +5508,13 @@ Object {
                   role="button"
                   tabindex="0"
                 >
-                  Tinseth, end boil gravity (e.g. BrewTarget)
+                  Tinseth, intermediate gravity
                 </div>
                 <input
                   aria-hidden="true"
                   class="MuiSelect-nativeInput"
                   tabindex="-1"
-                  value="final-gravity"
+                  value="intermediate-gravity"
                 />
                 <svg
                   aria-hidden="true"

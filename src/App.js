@@ -73,7 +73,7 @@ class App extends Component {
     super();
     const varieties = DEFAULT_VARIETIES;
 
-    const ibuCalcMode = IBU_FINAL_GRAVITY;
+    const ibuCalcMode = IBU_INTERMEDIATE_GRAVITY;
     const boilStartGravity = 1.044;
     const boilVolume = 60.0;
     const boilOffRate = 11;
