@@ -578,54 +578,63 @@ class App extends Component {
               , use at your own risk.
             </p>
 
-            <a
-              href="https://www.chrisspeck.com"
-              className="IconLink"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <IconButton>
-                <LanguageIcon />
-              </IconButton>
-            </a>
-
-            <a
-              href="https://github.com/cgspeck"
-              className="IconLink"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <IconButton>
-                <GitHubIcon />
-              </IconButton>
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/cgspeck/"
-              className="IconLink"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <IconButton>
-                <LinkedInIcon />
-              </IconButton>
-            </a>
-
             <p>
-              Want instructions or more information? <br />
+              Want instructions or more information? &nbsp;
               <a
                 href="https://github.com/cgspeck/hop-aging-calculator#how-to-use"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Click here.
+                Click here
               </a>
+            </p>
+
+            <p>
+            Checkout <a
+                href="https://www.westgatebrewers.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Westgate Brewers
+              </a> my homebrew club.
             </p>
 
             <Grid container spacing={1}>
               {this.recipeControls()}
               {this.hopRecordsTags()}
             </Grid>
+            <Container className="AppFooter">
+              <a
+                href="https://www.chrisspeck.com"
+                className="IconLink"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IconButton>
+                  <LanguageIcon />
+                </IconButton>
+              </a>
+              <a
+                href="https://github.com/cgspeck"
+                className="IconLink"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IconButton>
+                  <GitHubIcon />
+                </IconButton>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/cgspeck/"
+                className="IconLink"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IconButton>
+                  <LinkedInIcon />
+                </IconButton>
+              </a>
+            </Container>
           </Container>
           {this.newCustomHopDialogTags()}
         </div>
